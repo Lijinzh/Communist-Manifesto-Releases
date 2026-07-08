@@ -103,6 +103,22 @@ Stop -> done
 
 请升级到最新版本 AutoClipboard。新版本会优先使用事件自身时间戳判断 `done`，避免 Codex 会话文件被触碰时把旧的完成事件误判为新的完成事件。
 
+### Linux 日志里出现 `inotify_add_watch ... No space left on device`
+
+这通常不是磁盘空间满了，而是 Linux 的 inotify 文件监听额度被其它程序用完了。可以临时提高额度：
+
+```bash
+sudo sysctl fs.inotify.max_user_watches=1048576
+sudo sysctl fs.inotify.max_user_instances=1024
+```
+
+如果确认有效，可以永久写入：
+
+```bash
+printf "fs.inotify.max_user_watches=1048576\nfs.inotify.max_user_instances=1024\n" | sudo tee /etc/sysctl.d/99-autoclipboard-inotify.conf
+sudo sysctl --system
+```
+
 ### 手柄没有提醒
 
 1. 确认手柄已经通过 BLE 连接 AutoClipboard。
@@ -117,4 +133,3 @@ Stop -> done
 
 - `~/.codex/hooks.json`
 - `~/.claude/settings.json`
-
