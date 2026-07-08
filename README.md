@@ -20,6 +20,16 @@ AutoClipboard checks the latest Release in this repository.
 - Software update picks the installer matching the current operating system.
 - Firmware update picks the `CommunistManifestoKB-firmware-<version>.zip` asset and flashes `firmware.bin` at `0x10000` by default, preserving NVS settings and custom icons.
 
+## Agent Status Monitor
+
+AutoClipboard can watch Codex / Claude Code work states and sync them to the handle light ring and screen notifications.
+
+- Chinese setup guide: [`docs/agent-signal-setup.md`](docs/agent-signal-setup.md)
+- Linux one-click helper: [`scripts/configure-agent-signal-linux.sh`](scripts/configure-agent-signal-linux.sh)
+- Windows one-click helper: [`scripts/configure-agent-signal-windows.ps1`](scripts/configure-agent-signal-windows.ps1)
+
+After setup, keep AutoClipboard running in the background. Codex / Claude hooks write local state files, and AutoClipboard relays the aggregated state to the paired handle over BLE.
+
 ## Maintainer Upload
 
 The private development repository can publish here automatically when a matching version tag is pushed:
