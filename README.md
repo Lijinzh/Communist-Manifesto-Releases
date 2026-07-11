@@ -11,7 +11,8 @@ Open the latest GitHub Release and download the asset for your platform:
 - Windows: `AutoClipboardSetup-<version>.exe`
 - Linux / Ubuntu: `auto-clipboard_<version>_<arch>.deb`
 - macOS: `AutoClipboard-<version>-macOS.dmg`
-- ESP32 firmware: `CommunistManifestoKB-firmware-<version>.zip`
+- ESP32 firmware: `CommunistManifestoKB-firmware-d4-<version>.zip` or `CommunistManifestoKB-firmware-v3-<version>.zip`
+- AI agent Skill: `ai-coding-handle-skill-<version>.zip`
 
 ## Auto Update
 
@@ -29,6 +30,24 @@ AutoClipboard can watch Codex / Claude Code work states and sync them to the han
 - Windows one-click helper: [`scripts/configure-agent-signal-windows.ps1`](scripts/configure-agent-signal-windows.ps1)
 
 After setup, keep AutoClipboard running in the background. Codex / Claude hooks write local state files, and AutoClipboard relays the aggregated state to the paired handle over BLE.
+
+## Install the AI Coding Handle Skill
+
+The open-source Skill is available at [`skills/ai-coding-handle`](skills/ai-coding-handle). It can install the matching AutoClipboard release and configure supported agent status hooks after the user grants permission.
+
+Install it for Codex, Claude Code, OpenCode, or another supported Agent Skills client with the cross-agent installer:
+
+```bash
+npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle -g
+```
+
+List the detected Skill before installing:
+
+```bash
+npx skills add Lijinzh/Communist-Manifesto-Releases --list
+```
+
+The same versioned Skill is also attached to every GitHub Release as a ZIP for manual installation.
 
 ## Maintainer Upload
 
@@ -63,4 +82,4 @@ gh auth login
 
 ## Notes
 
-This repository does not contain source code. Please use the Release page for downloads.
+This repository contains only the MIT-licensed AI Coding Handle Skill source and public release support files. AutoClipboard and firmware application source code remain private; use the Release page for compiled downloads.
