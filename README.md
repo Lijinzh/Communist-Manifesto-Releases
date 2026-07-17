@@ -13,12 +13,19 @@ The main development repository remains private. This repository only hosts comp
 Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) and download the asset for your platform:
 
 - Windows: `AutoClipboardSetup-<version>.exe`
+- Windows CH343 USB serial driver: `CH343SER.EXE`
 - Linux / Ubuntu: `auto-clipboard_<version>_<arch>.deb`
 - macOS: `AutoClipboard-<version>-macOS.dmg`
 - ESP32 firmware: `CommunistManifestoKB-firmware-d4-<version>.zip` or `CommunistManifestoKB-firmware-v3-<version>.zip`
 - AI agent Skill: `ai-coding-handle-skill-<version>.zip`
 
 Choose the D4 or V3 firmware package that matches your physical board. Do not flash a package intended for another board revision.
+
+## Windows CH343 Serial Driver
+
+If Windows does not create a COM port after the handle is connected over USB Type-C, download the signed [CH343SER.EXE](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/download/v0.3.48/CH343SER.EXE) driver supplied by WCH. Follow the [English installation and troubleshooting guide](docs/ch343-driver-installation.md) or the [简体中文指南](docs/ch343-driver-installation.zh-CN.md).
+
+The repository file is Authenticode-signed by `Nanjing Qinheng Microelectronics Co., Ltd.` and has SHA-256 `99f16f9c4cf9c315dc9a17b29021d82d522014ecc053d9ee1c7b38c214dea40b`.
 
 ## Auto Update
 

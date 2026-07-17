@@ -29,6 +29,7 @@ The main development repository remains private. This repository only hosts comp
 Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) and download the asset for your platform:
 
 - Windows: `AutoClipboardSetup-<version>.exe`
+- Windows CH343 USB serial driver: `CH343SER.EXE`
 - Linux / Ubuntu: `auto-clipboard_<version>_<arch>.deb`
 - macOS: `AutoClipboard-<version>-macOS.dmg`
 - ESP32 firmware: `CommunistManifestoKB-firmware-d4-<version>.zip` or `CommunistManifestoKB-firmware-v3-<version>.zip`
@@ -41,12 +42,28 @@ Choose the D4 or V3 firmware package that matches your physical board. Do not fl
 打开[最新 GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest)，然后下载与你的平台对应的文件：
 
 - Windows：`AutoClipboardSetup-<version>.exe`
+- Windows CH343 USB 串口驱动：`CH343SER.EXE`
 - Linux / Ubuntu：`auto-clipboard_<version>_<arch>.deb`
 - macOS：`AutoClipboard-<version>-macOS.dmg`
 - ESP32 固件：`CommunistManifestoKB-firmware-d4-<version>.zip` 或 `CommunistManifestoKB-firmware-v3-<version>.zip`
 - AI Agent Skill：`ai-coding-handle-skill-<version>.zip`
 
 请根据手中实体设备的板型选择 D4 或 V3 固件包，不要跨板型刷写。
+<!-- endsection -->
+
+<!-- section:windows-serial-driver -->
+<!-- lang:en -->
+## Windows CH343 Serial Driver
+
+If Windows does not create a COM port after the handle is connected over USB Type-C, download the signed [CH343SER.EXE](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/download/v0.3.48/CH343SER.EXE) driver supplied by WCH. Follow the [English installation and troubleshooting guide](docs/ch343-driver-installation.md) or the [简体中文指南](docs/ch343-driver-installation.zh-CN.md).
+
+The repository file is Authenticode-signed by `Nanjing Qinheng Microelectronics Co., Ltd.` and has SHA-256 `99f16f9c4cf9c315dc9a17b29021d82d522014ecc053d9ee1c7b38c214dea40b`.
+<!-- lang:zh-CN -->
+## Windows CH343 串口驱动
+
+手柄通过 USB Type-C 连接 Windows 后，如果系统没有创建 COM 端口，请下载由 WCH 提供并带有效数字签名的 [CH343SER.EXE](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/download/v0.3.48/CH343SER.EXE)。安装与排障步骤见[简体中文指南](docs/ch343-driver-installation.zh-CN.md)或 [English guide](docs/ch343-driver-installation.md)。
+
+本仓库文件的 Authenticode 签名者为 `Nanjing Qinheng Microelectronics Co., Ltd.`，SHA-256 为 `99f16f9c4cf9c315dc9a17b29021d82d522014ecc053d9ee1c7b38c214dea40b`。
 <!-- endsection -->
 
 <!-- section:auto-update -->
