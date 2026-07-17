@@ -1,12 +1,16 @@
+<!-- Generated from docs/README.bilingual.md by scripts/sync_readmes.py. Do not edit directly. -->
+
+**English** | [简体中文](README.zh-CN.md)
+
 # Communist Manifesto Releases
 
 This public repository is the release channel for **AutoClipboard** and **CommunistManifestoKB**.
 
-The main development repository remains private. This repository only hosts compiled release assets, user-facing release notes, and update instructions.
+The main development repository remains private. This repository only hosts compiled release assets, user-facing release notes, update instructions, and the open-source AI Coding Handle Skill.
 
 ## Download
 
-Open the latest GitHub Release and download the asset for your platform:
+Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) and download the asset for your platform:
 
 - Windows: `AutoClipboardSetup-<version>.exe`
 - Linux / Ubuntu: `auto-clipboard_<version>_<arch>.deb`
@@ -14,18 +18,20 @@ Open the latest GitHub Release and download the asset for your platform:
 - ESP32 firmware: `CommunistManifestoKB-firmware-d4-<version>.zip` or `CommunistManifestoKB-firmware-v3-<version>.zip`
 - AI agent Skill: `ai-coding-handle-skill-<version>.zip`
 
+Choose the D4 or V3 firmware package that matches your physical board. Do not flash a package intended for another board revision.
+
 ## Auto Update
 
 AutoClipboard checks the latest Release in this repository.
 
-- Software update picks the installer matching the current operating system.
-- Firmware update picks the `CommunistManifestoKB-firmware-<version>.zip` asset and flashes `firmware.bin` at `0x10000` by default, preserving NVS settings and custom icons.
+- Software update selects the installer matching the current operating system.
+- Firmware update selects the D4 or V3 package matching the connected board and flashes `firmware.bin` at `0x10000` by default, preserving NVS settings and custom icons.
 
 ## Agent Status Monitor
 
 AutoClipboard can watch Codex / Claude Code work states and sync them to the handle light ring and screen notifications.
 
-- Chinese setup guide: [`docs/agent-signal-setup.md`](docs/agent-signal-setup.md)
+- Setup guide: [`docs/agent-signal-setup.md`](docs/agent-signal-setup.md)
 - Linux one-click helper: [`scripts/configure-agent-signal-linux.sh`](scripts/configure-agent-signal-linux.sh)
 - Windows one-click helper: [`scripts/configure-agent-signal-windows.ps1`](scripts/configure-agent-signal-windows.ps1)
 
@@ -33,7 +39,7 @@ After setup, keep AutoClipboard running in the background. Codex / Claude hooks 
 
 ## Install the AI Coding Handle Skill
 
-The open-source Skill is available at [`skills/ai-coding-handle`](skills/ai-coding-handle). It can install the matching AutoClipboard release and configure supported agent status hooks after the user grants permission.
+The open-source Skill is available at [`skills/ai-coding-handle`](skills/ai-coding-handle). After the user grants permission, it can install the matching AutoClipboard release and configure supported agent status hooks.
 
 Install it for Codex, Claude Code, OpenCode, or another supported Agent Skills client with the cross-agent installer:
 
@@ -79,6 +85,16 @@ Windows machines need GitHub CLI authentication first:
 winget install --id GitHub.cli
 gh auth login
 ```
+
+## Keeping Both Languages in Sync
+
+`README.md` and `README.zh-CN.md` are generated from [`docs/README.bilingual.md`](docs/README.bilingual.md). Update both language blocks in that source file, then run:
+
+```bash
+python scripts/sync_readmes.py
+```
+
+GitHub Actions runs `python scripts/sync_readmes.py --check` on every relevant change. The check fails if a translation block is missing or either generated README is stale.
 
 ## Notes
 
