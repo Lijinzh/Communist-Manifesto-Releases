@@ -1,4 +1,4 @@
 interface:
   display_name: "AI Coding Handle"
-  short_description: "Install AutoClipboard and connect AI agent status hooks"
-  default_prompt: "Use $ai-coding-handle to install AutoClipboard and connect this agent to the handle status bridge."
+  short_description: "Install AutoClipboard, connect agents, and update firmware"
+  default_prompt: "Use $ai-coding-handle to install or diagnose AutoClipboard, connect this agent to the handle, and safely check or update handle firmware."

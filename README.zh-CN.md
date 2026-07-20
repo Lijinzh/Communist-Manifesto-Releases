@@ -21,6 +21,16 @@
 
 请根据手中实体设备的板型选择 D4 或 V3 固件包，不要跨板型刷写。
 
+## AutoClipboard 0.3.49 更新重点
+
+- 手柄状态页右上角现在显示“正在工作的 Agent 数量”气泡；数量为 0 时自动隐藏。
+- 蓝牙主机管理已移入小屏 `Settings > BLE Hosts`：可以查看已保存主机数量、切换三个槽位、为空槽配对，或长按已有槽位删除记录。
+- 移除了机械结构无法完成的“按住拨轮中键同时滚动”操作，并同步更新了上位机中英文配对指南。
+- 改进 Windows BLE 重连和连接所有权：退出 AutoClipboard 不再断开 HID 键盘连接，重新打开软件后也能更快恢复 IMU 预览。
+- 包含最新的 V3 IMU 预览、Halo 演讲光圈、设备设置窗口自适应和固件稳定性修复。
+
+请从 [v0.3.49 Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/tag/v0.3.49) 下载对应的软件安装包和固件。
+
 ## Windows CH343 串口驱动
 
 手柄通过 USB Type-C 连接 Windows 后，如果系统没有创建 COM 端口，请下载由 WCH 提供并带有效数字签名的 [CH343SER.EXE](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/download/v0.3.48/CH343SER.EXE)。安装与排障步骤见[简体中文指南](docs/ch343-driver-installation.zh-CN.md)或 [English guide](docs/ch343-driver-installation.md)。
@@ -62,6 +72,8 @@ npx skills add Lijinzh/Communist-Manifesto-Releases --list
 
 每个 GitHub Release 也会附带相同版本的 Skill ZIP，便于手动安装。
 
+仓库中的 Skill 与版本化 ZIP 均由同一份规范源生成。Skill 可以通过已安装的 AutoClipboard Maintenance CLI 识别已连接的 D4/V3 手柄、检查正式发布的固件版本、校验匹配的固件包，并且只会在用户针对该更新再次明确确认后执行刷写。本地开发固件刷写仅在 Skill 运行于 Communist-Manifesto 源码仓库内、且用户明确提出测试刷写请求时可用。
+
 ## 维护者上传说明
 
 在私有开发仓库推送匹配的版本标签后，可以自动发布到本仓库：
@@ -102,6 +114,8 @@ python scripts/sync_readmes.py
 ```
 
 每次相关改动都会由 GitHub Actions 执行 `python scripts/sync_readmes.py --check`。如果缺少任一语言段落，或生成的 README 没有更新，检查就会失败。
+
+私有开发仓库的发布工作流还会把同一个版本化 Skill ZIP 原样同步到本仓库的 `skills/ai-coding-handle` 目录，因此通过仓库安装和手动安装 ZIP 在每个正式发布版本中会得到相同文件。
 
 ## 说明
 

@@ -32,7 +32,7 @@ Every command can write an atomic JSON result with `--result-file`:
   "schema_version": 1,
   "command": "doctor",
   "success": true,
-  "app_version": "0.3.47",
+  "app_version": "0.3.48",
   "agent_bridge_version": 1,
   "platform": "linux",
   "checks": [],

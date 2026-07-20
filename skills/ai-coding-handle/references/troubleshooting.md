@@ -27,3 +27,21 @@ Codex and Claude Code have native install support. For Hermes, OpenCL, or anothe
 ## Doctor passes but the handle does not react
 
 Doctor proves host-side configuration unless `--live-test` was explicitly authorized. Check that AutoClipboard is running, the device is paired and connected, and the selected state is visible. Record that hardware end-to-end validation remains unverified when the physical handle is unavailable.
+
+## Firmware preflight cannot identify one device
+
+- `device_not_connected`: ask the user to connect one supported handle and check USB/serial access. Do not guess a port.
+- `ambiguous_device`: stop and ask the user to leave exactly one intended handle connected. Never select one arbitrarily.
+- `board_unknown`: stop and obtain a valid device-reported D4/V3 identity. Never infer the board from an asset name or user preference.
+
+Rerun `firmware-check` after the physical issue is resolved. Do not bypass preflight or call PlatformIO/`esptool` directly.
+
+## Firmware plan or update fails
+
+- `plan_invalid`: the plan, digest, package, or expiry is invalid. Discard it and run a fresh check; never edit the plan.
+- `plan_replayed`: the target is already present or the one-time plan was reused. Do not flash it again.
+- `device_busy`: another dangerous device operation owns the lock. Stop the competing operation and retry through Maintenance; never bypass the lock.
+- `verification_failed`: flashing may have completed but the target version was not verified. Do not report success; reconnect and diagnose.
+- `recovery_required`: flashing may have completed but the device did not recover or re-enumerate reliably. Preserve the result/logs, warn the user, and do not automatically retry, erase flash, reset NVS, or perform a full flash.
+
+Any fresh `confirmation_required` plan needs its own current second confirmation. Never reuse a prior software or blanket authorization.

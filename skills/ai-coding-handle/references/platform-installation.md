@@ -6,7 +6,11 @@ The bootstrap scripts always read metadata from:
 
 They accept only HTTPS assets below `github.com/Lijinzh/Communist-Manifesto-Releases/releases/.../download/...`, then verify the declared byte size and SHA-256 before installation. An explicitly authorized install or hook-configuration bootstrap may access this metadata and its selected installer asset over the network. A local metadata file is accepted only together with dry-run and is intended for offline validation; generic-agent offline dry-run continues to validate the asset without probing or modifying an installed application.
 
+Before a real installation, upgrade, or Hook configuration, explain the selected platform package and obtain one explicit software confirmation. This confirmation covers the software/Hook transaction only, never firmware flashing.
+
 Bootstrap result files use stable statuses: `verified` for a validated dry-run, `ready` after native hook installation and doctor, `configuration_required` when a generic agent still needs a verified lifecycle hook or Codex still needs user Hook approval, and `failed` for rejected or incomplete operations. `configuration_required` deliberately uses `success: false` while the bootstrap process may still exit zero so the calling Agent can continue configuration without mistaking the bridge for ready.
+
+After a real install or configuration attempt, read the result JSON and retain its absolute `executable`. All later Maintenance and Agent Bridge commands must invoke that exact path; do not assume `auto-clipboard` is on `PATH`. A dry-run `verified` result may omit the executable because it did not install anything.
 
 ## Windows
 

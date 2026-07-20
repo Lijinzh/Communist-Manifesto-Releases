@@ -21,6 +21,16 @@ Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-
 
 Choose the D4 or V3 firmware package that matches your physical board. Do not flash a package intended for another board revision.
 
+## AutoClipboard 0.3.49 Highlights
+
+- The handle status screen now shows a notification-style badge for the number of currently working Agents. The badge disappears when the count is zero.
+- Bluetooth host management is now available directly under `Settings > BLE Hosts`: view the saved-host count, switch among three slots, pair an empty slot, or long-press a saved slot to delete it.
+- Removed the mechanically impossible “hold the wheel button while rotating” host-switch gesture and updated the in-app bilingual pairing guide.
+- Improved Windows BLE reconnection and ownership behavior so closing AutoClipboard does not tear down the HID keyboard link, while reopening the app can recover the IMU preview more quickly.
+- Includes the latest V3 IMU preview, Halo presenter, adaptive settings-window, and firmware stability fixes.
+
+Download the matching installer and firmware from the [v0.3.49 Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/tag/v0.3.49).
+
 ## Windows CH343 Serial Driver
 
 If Windows does not create a COM port after the handle is connected over USB Type-C, download the signed [CH343SER.EXE](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/download/v0.3.48/CH343SER.EXE) driver supplied by WCH. Follow the [English installation and troubleshooting guide](docs/ch343-driver-installation.md) or the [简体中文指南](docs/ch343-driver-installation.zh-CN.md).
@@ -62,6 +72,8 @@ npx skills add Lijinzh/Communist-Manifesto-Releases --list
 
 The same versioned Skill is also attached to every GitHub Release as a ZIP for manual installation.
 
+The repository Skill and the versioned ZIP are generated from the same canonical source. The Skill can use the installed AutoClipboard Maintenance CLI to identify a connected D4/V3 handle, check published firmware versions, validate the matching package, and update the firmware only after a separate explicit confirmation. Local development-firmware flashing is available only when the Skill is running inside the Communist-Manifesto source repository and the user explicitly requests it.
+
 ## Maintainer Upload
 
 The private development repository can publish here automatically when a matching version tag is pushed:
@@ -102,6 +114,8 @@ python scripts/sync_readmes.py
 ```
 
 GitHub Actions runs `python scripts/sync_readmes.py --check` on every relevant change. The check fails if a translation block is missing or either generated README is stale.
+
+The private release workflow also extracts the exact versioned Skill ZIP into this repository's `skills/ai-coding-handle` directory. Repository-based installation and manual ZIP installation therefore receive the same files for each published version.
 
 ## Notes
 
