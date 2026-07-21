@@ -33,6 +33,17 @@ DOCUMENTS = (
             "en": "[简体中文](user-guide.zh-CN.md) | **English** | [Back to repository](../README.en.md)",
         },
     },
+    {
+        "source": ROOT / "docs" / "software-interface-manual" / "README.bilingual.md",
+        "outputs": {
+            "zh-CN": ROOT / "docs" / "software-interface-manual" / "README.md",
+            "en": ROOT / "docs" / "software-interface-manual" / "README.en.md",
+        },
+        "language_nav": {
+            "zh-CN": "**简体中文** | [English](README.en.md) | [返回完整使用说明](../user-guide.zh-CN.md) | [返回仓库首页](../../README.md)",
+            "en": "[简体中文](README.md) | **English** | [Back to the complete guide](../user-guide.en.md) | [Back to repository](../../README.en.md)",
+        },
+    },
 )
 SECTION_PATTERN = re.compile(
     r"<!-- section:(?P<name>[a-z0-9-]+) -->\s*"

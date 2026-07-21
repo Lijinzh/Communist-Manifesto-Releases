@@ -298,7 +298,7 @@ AutoClipboard is the desktop companion application. It can display the active Bl
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard device settings" width="900">
 </p>
 
-Screenshots are illustrative and may differ slightly from the latest release. Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
+The screenshots show the current real interface. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/software-interface-manual/README.en.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
 <!-- lang:zh-CN -->
 ## AutoClipboard 桌面软件
 
@@ -312,7 +312,7 @@ AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard 设备设置界面" width="900">
 </p>
 
-截图用于帮助识别界面，最新版本的文字或布局可能略有变化。使用 Agent 状态同步、Profile 快开、IMU 预览或演讲光圈时，请让 AutoClipboard 保持后台运行。
+这里展示的是当前真实界面。需要查看编号分区图、逐个控件的作用，以及“只改软件”和“会写入硬件”的明确区别，请阅读 [AutoClipboard 软件界面详细说明书](docs/software-interface-manual/README.md)。使用 Agent 状态同步、Profile 快开、IMU 预览或演讲光圈时，请让 AutoClipboard 保持后台运行。
 <!-- endsection -->
 
 <!-- section:download -->

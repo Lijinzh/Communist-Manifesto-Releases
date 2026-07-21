@@ -142,7 +142,7 @@ AutoClipboard is the desktop companion application. It can display the active Bl
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard device settings" width="900">
 </p>
 
-Screenshots are illustrative and may differ slightly from the latest release. Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
+The screenshots show the current real interface. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/software-interface-manual/README.en.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
 
 ## Downloads
 

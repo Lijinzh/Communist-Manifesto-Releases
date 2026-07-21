@@ -285,7 +285,7 @@ The device settings window can provide:
 - IMU three-dimensional preview, calibration, recording, and presenter Halo controls.
 - Type-C device selection, serial diagnostics, Bluetooth repair entry points, and firmware maintenance.
 
-Screenshots are illustrative; labels and layout may move as releases improve.
+The screenshots show the current real interface. Read the [AutoClipboard software interface manual](software-interface-manual/README.en.md) for numbered crops, every visible area, software-versus-hardware classification, and the result of each action.
 
 ### Understand the two Bluetooth layers
 

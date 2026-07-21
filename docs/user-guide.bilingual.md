@@ -578,7 +578,7 @@ The device settings window can provide:
 - IMU three-dimensional preview, calibration, recording, and presenter Halo controls.
 - Type-C device selection, serial diagnostics, Bluetooth repair entry points, and firmware maintenance.
 
-Screenshots are illustrative; labels and layout may move as releases improve.
+The screenshots show the current real interface. Read the [AutoClipboard software interface manual](software-interface-manual/README.en.md) for numbered crops, every visible area, software-versus-hardware classification, and the result of each action.
 
 ### Understand the two Bluetooth layers
 
@@ -611,7 +611,7 @@ It is therefore possible for macro buttons to type correctly while AutoClipboard
 - 使用 IMU 三维预览、校准、记录和演讲光圈。
 - 选择 Type-C 设备，进行串口诊断、蓝牙修复和固件维护。
 
-截图用于帮助识别功能区域；软件更新后，文字和布局可能有所调整。
+这里展示的是当前真实界面。编号局部图、每个可见区域的用途、软件与硬件分类以及操作结果，请阅读 [AutoClipboard 软件界面详细说明书](software-interface-manual/README.md)。
 
 ### 理解两条不同的蓝牙链路
 
