@@ -162,6 +162,7 @@ V3 is the currently maintained hardware revision. Do not flash firmware for a di
 ## Quick troubleshooting
 
 - **`CommunistKB-XXXX` is not visible:** wake the handle, double-click the wheel, open `Settings > BLE Hosts`, select `EMPTY`, and wait for `PAIR` before scanning again.
+- **Ubuntu shows only an unnamed HID address:** use `bluetoothctl` to verify that the unique current-scan candidate matches an independently known MAC suffix and exposes HID `0x1812` plus Battery `0x180F` before pairing by address. This is a fallback for affected BlueZ systems, not a replacement for firmware that advertises the complete name.
 - **Bluetooth is paired but AutoClipboard is not ready:** keep the handle awake, start AutoClipboard, and let the Skill run read-only `inventory` and `doctor` diagnostics.
 - **Macro keys work but Agent status does not:** the Bluetooth HID connection is working; configure the Agent Hook/Bridge and keep AutoClipboard running.
 - **No COM port over Type-C:** try a data-capable cable, another USB port, and the signed [CH343 Windows driver guide](docs/ch343-driver-installation.md).

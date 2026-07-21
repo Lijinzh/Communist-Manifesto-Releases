@@ -28,6 +28,69 @@ Codex and Claude Code have native install support. For Hermes, OpenCL, or anothe
 
 Doctor proves host-side configuration unless `--live-test` was explicitly authorized. Check that AutoClipboard is running, the device is paired and connected, and the selected state is visible. Record that hardware end-to-end validation remains unverified when the physical handle is unavailable.
 
+## Ubuntu or BlueZ shows only an unnamed HID address
+
+Use this fallback only when the graphical Bluetooth settings cannot show `CommunistKB-XXXX`.
+It does not replace a firmware update that restores the complete name in the primary
+advertisement.
+
+Start read-only. If the Bluetooth adapter is off, ask the user to enable it; do not run
+`power on` without authorization. Power off the intended handle, start a current scan, then
+power it on, explicitly enter an empty host slot, and require the screen to show `PAIR`. The
+candidate must disappear while the handle is off and reappear in the current scan; do not rely
+on an address that exists only in BlueZ's cached device list. Keep scanning for at least 10
+seconds after the candidate first appears and inspect every candidate. Open one interactive
+`bluetoothctl` session:
+
+```text
+bluetoothctl
+scan on
+devices
+info AA:BB:CC:DD:1C:96
+```
+
+Do not pair an address until exactly one candidate satisfies every check:
+
+- The handle screen currently shows `PAIR`.
+- The last two address bytes match an independently known device-name suffix from a previous
+  pairing record, device label, or verified USB/serial inventory; for example, `...:1C:96`
+  matches `CommunistKB-1C96`. If no independent suffix is available, require the off/on
+  disappearance-and-reappearance check above with only one physical handle placed in `PAIR`;
+  never treat the candidate address as proof of itself.
+- `info` exposes HID `0x1812` (`00001812-0000-1000-8000-00805f9b34fb`).
+- `info` exposes Battery `0x180F` (`0000180f-0000-1000-8000-00805f9b34fb`).
+- No second candidate matches the same evidence. If candidates remain ambiguous, stop and ask
+  the user to power off the other handles or otherwise identify the intended address. Never
+  choose one arbitrarily.
+
+Diagnosis remains read-only: finish with `scan off`, report the verified address and evidence,
+but do not enable a pairing agent, pair, trust, or connect. Before changing Bluetooth state,
+show the exact verified address and obtain authorization for each intended action. Do not infer
+permission for `trust` or `connect` from a request that only says to pair. When the user
+explicitly authorizes all three actions, continue in the same session:
+
+```text
+agent on
+default-agent
+pair AA:BB:CC:DD:1C:96
+trust AA:BB:CC:DD:1C:96
+connect AA:BB:CC:DD:1C:96
+info AA:BB:CC:DD:1C:96
+scan off
+quit
+```
+
+Require `Paired: yes`, `Connected: yes`, and `LINK` on the handle before reporting success.
+If the user authorized only a subset of the actions, stop after that subset and report only the
+states actually verified. The `pair` command may itself establish a connection and produce
+`Connected: yes`; observing that state does not authorize an extra explicit `connect` command.
+Do not reset the Bluetooth adapter, delete existing bonds, clear handle slots, or alter SMP
+authentication merely because the GUI omitted the name. If logs contain
+`unexpected SMP command 0x0b` but pairing, connection, and `LINK` all succeed, record it as a
+separate compatibility clue; it is not evidence that security settings must change. If pairing
+fails, preserve the `bluetoothctl` and BlueZ logs and continue diagnosis without broadening the
+authorized changes.
+
 ## Firmware preflight cannot identify one device
 
 - `device_not_connected`: ask the user to connect one supported handle and check USB/serial access. Do not guess a port.
