@@ -1,11 +1,15 @@
-name: README translation sync
+name: Bilingual documentation sync
 
 on:
   pull_request:
     paths:
       - "README.md"
-      - "README.zh-CN.md"
+      - "README.en.md"
       - "docs/README.bilingual.md"
+      - "docs/user-guide.bilingual.md"
+      - "docs/user-guide.zh-CN.md"
+      - "docs/user-guide.en.md"
+      - "docs/assets/user-guide/**"
       - "scripts/sync_readmes.py"
       - ".github/workflows/readme-sync.yml"
   push:
@@ -13,8 +17,12 @@ on:
       - main
     paths:
       - "README.md"
-      - "README.zh-CN.md"
+      - "README.en.md"
       - "docs/README.bilingual.md"
+      - "docs/user-guide.bilingual.md"
+      - "docs/user-guide.zh-CN.md"
+      - "docs/user-guide.en.md"
+      - "docs/assets/user-guide/**"
       - "scripts/sync_readmes.py"
       - ".github/workflows/readme-sync.yml"
 
@@ -27,5 +35,5 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Verify generated README files
+      - name: Verify generated bilingual documentation
         run: python3 scripts/sync_readmes.py --check
