@@ -36,7 +36,7 @@ try {
         }
     }
 
-    $arguments = @($syncScript, 'sync-latest')
+    $arguments = @($syncScript, 'sync-latest', '--keep-latest-only')
     if ($ReplaceExistingAssets) {
         $arguments += '--replace-existing'
     }
@@ -48,7 +48,7 @@ try {
         throw "Gitee Release synchronization failed with exit code $LASTEXITCODE."
     }
 
-    & $uv run --no-project python $syncScript verify
+    & $uv run --no-project python $syncScript verify --latest-only
     if ($LASTEXITCODE -ne 0) {
         throw "Gitee public verification failed with exit code $LASTEXITCODE."
     }
