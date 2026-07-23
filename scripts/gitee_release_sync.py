@@ -51,7 +51,6 @@ class SyncResult:
     replaced: tuple[str, ...]
     skipped: tuple[str, ...]
     pruned: tuple[str, ...]
-    removed_releases: tuple[str, ...]
 
 
 def _credential_token(owner: str) -> str:
@@ -84,6 +83,28 @@ def _credential_token(owner: str) -> str:
     if not token:
         raise RuntimeError("Windows Git Credential Manager returned no Gitee token.")
     return token
+
+
+def _optional_github_token() -> str:
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    if token:
+        return token
+    result = subprocess.run(
+        ["git", "credential", "fill"],
+        input="protocol=https\nhost=github.com\n\n",
+        text=True,
+        capture_output=True,
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+        check=False,
+    )
+    if result.returncode != 0:
+        return ""
+    fields = {}
+    for line in result.stdout.splitlines():
+        key, separator, value = line.partition("=")
+        if separator:
+            fields[key] = value
+    return fields.get("password", "").strip()
 
 
 class GiteeClient:
@@ -175,13 +196,17 @@ def _read_json_response(request: urllib.request.Request, expected: Iterable[int]
 
 
 def _github_json(path: str) -> object:
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": USER_AGENT,
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    token = _optional_github_token()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     request = urllib.request.Request(
         f"{GITHUB_API_BASE}{path}",
-        headers={
-            "Accept": "application/vnd.github+json",
-            "User-Agent": USER_AGENT,
-            "X-GitHub-Api-Version": "2022-11-28",
-        },
+        headers=headers,
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
@@ -304,33 +329,6 @@ def _ensure_release(
     return payload
 
 
-def _remove_older_releases(
-    client: GiteeClient,
-    owner: str,
-    repo: str,
-    keep_tag: str,
-) -> tuple[str, ...]:
-    base = f"/repos/{urllib.parse.quote(owner)}/{urllib.parse.quote(repo)}/releases"
-    removed: list[str] = []
-    page = 1
-    while True:
-        payload = client.request_json("GET", base, fields={"per_page": 100, "page": page})
-        if not isinstance(payload, list):
-            raise RuntimeError("Gitee release listing returned an unexpected payload.")
-        for item in payload:
-            if not isinstance(item, dict):
-                continue
-            tag = str(item.get("tag_name") or "").strip()
-            if not tag or tag == keep_tag:
-                continue
-            client.request_json("DELETE", f"{base}/{int(item['id'])}", expected=(204,))
-            removed.append(tag)
-        if len(payload) < 100:
-            break
-        page += 1
-    return tuple(removed)
-
-
 def _download_asset(asset: dict[str, object], destination: Path) -> str:
     name = str(asset.get("name") or "")
     url = str(asset.get("browser_download_url") or "")
@@ -364,7 +362,6 @@ def sync_latest_release(
     *,
     replace_existing: bool,
     prune: bool,
-    keep_latest_only: bool,
 ) -> SyncResult:
     github_payload = _github_json(f"/repos/{github_repo}/releases/latest")
     if not isinstance(github_payload, dict):
@@ -432,21 +429,17 @@ def sync_latest_release(
             )
             pruned.append(name)
 
-    latest_tag = str(github_payload.get("tag_name") or "")
-    removed_releases = _remove_older_releases(client, owner, repo, latest_tag) if keep_latest_only else ()
-
     return SyncResult(
         repository=f"{owner}/{repo}",
-        tag=latest_tag,
+        tag=str(github_payload.get("tag_name") or ""),
         uploaded=tuple(uploaded),
         replaced=tuple(replaced),
         skipped=tuple(skipped),
         pruned=tuple(pruned),
-        removed_releases=removed_releases,
     )
 
 
-def verify_public_mirror(owner: str, repo: str, *, latest_only: bool = False) -> dict[str, object]:
+def verify_public_mirror(owner: str, repo: str) -> dict[str, object]:
     release = _public_json(f"/repos/{owner}/{repo}/releases/latest")
     if not isinstance(release, dict):
         raise RuntimeError("Gitee public latest release returned an unexpected payload.")
@@ -454,16 +447,6 @@ def verify_public_mirror(owner: str, repo: str, *, latest_only: bool = False) ->
     attachments = _public_json(f"/repos/{owner}/{repo}/releases/{release_id}/attach_files?per_page=100")
     if not isinstance(attachments, list) or not attachments:
         raise RuntimeError("Gitee public latest release contains no downloadable attachments.")
-    if latest_only:
-        releases = _public_json(f"/repos/{owner}/{repo}/releases?per_page=2")
-        if not isinstance(releases, list) or len(releases) != 1:
-            count = len(releases) if isinstance(releases, list) else "unknown"
-            raise RuntimeError(f"Gitee must expose exactly one Release, found {count}.")
-        retained_release = releases[0]
-        if not isinstance(retained_release, dict):
-            raise RuntimeError("Gitee retained Release payload is invalid.")
-        if str(retained_release.get("tag_name") or "") != str(release.get("tag_name") or ""):
-            raise RuntimeError("Gitee latest Release does not match the only retained Release.")
     return {
         "repository": f"https://gitee.com/{owner}/{repo}",
         "tag": str(release.get("tag_name") or ""),
@@ -504,24 +487,16 @@ def _parser() -> argparse.ArgumentParser:
     sync = subparsers.add_parser("sync-latest", help="Mirror the latest GitHub Release and all of its assets.")
     sync.add_argument("--replace-existing", action="store_true")
     sync.add_argument("--prune", action="store_true")
-    sync.add_argument("--keep-latest-only", action="store_true")
 
     subparsers.add_parser("make-public", help="Make the populated Gitee mirror publicly readable.")
-    verify = subparsers.add_parser("verify", help="Verify anonymous public access to the Gitee mirror.")
-    verify.add_argument("--latest-only", action="store_true")
+    subparsers.add_parser("verify", help="Verify anonymous public access to the Gitee mirror.")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "verify":
-        print(
-            json.dumps(
-                verify_public_mirror(args.owner, args.repo, latest_only=args.latest_only),
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
+        print(json.dumps(verify_public_mirror(args.owner, args.repo), ensure_ascii=False, indent=2))
         return 0
 
     client = GiteeClient(_credential_token(args.owner))
@@ -549,7 +524,6 @@ def main(argv: list[str] | None = None) -> int:
             args.github_repo,
             replace_existing=args.replace_existing,
             prune=args.prune,
-            keep_latest_only=args.keep_latest_only,
         )
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
         return 0

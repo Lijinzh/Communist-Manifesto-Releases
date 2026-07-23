@@ -4,7 +4,7 @@
 
 - GitHub 是正式主发布源。
 - Gitee 同步 `main`、Git 标签和最新 Release 的全部附件，作为国内网络备用源。
-- Gitee Release 只保留当前最新版，不回填历史 Release 附件；历史 Git 标签继续保留用于追溯。
+- 不批量迁移启用 Gitee 镜像之前的全部 GitHub 历史 Release；从启用镜像开始，同步到 Gitee 的每个新 Release 都继续保留。
 - AutoClipboard 应优先访问 GitHub；GitHub 元数据或附件下载失败时，再自动尝试 Gitee。
 
 Gitee 公开仓库：<https://gitee.com/shan-yujun/Communist-Manifesto-Releases>
@@ -33,8 +33,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\sync-github-to-gitee
 3. 将 `main` 和标签推送到 Gitee。
 4. 读取 GitHub 最新 Release。
 5. 在 Gitee 创建或更新同名 Release，并同步全部附件。
-6. 删除更旧的 Gitee Release 条目及其附件，只保留当前最新版。
-7. 以匿名方式验证 Gitee 只有一个最新版 Release，且附件可以公开读取。
+6. 以匿名方式验证 Gitee 最新 Release 和附件是否可以公开读取。
 
 如果 GitHub Release 中同名附件被重新上传，使用：
 
@@ -47,7 +46,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\sync-github-to-gitee
 ## 单独验证
 
 ```powershell
-uv run --no-project python scripts\gitee_release_sync.py verify --latest-only
+uv run --no-project python scripts\gitee_release_sync.py verify
 ```
 
-该命令不需要私人令牌，可用于确认国内用户是否能够匿名读取唯一保留的最新版本和附件下载地址。
+该命令不需要私人令牌，可用于确认国内用户是否能够匿名读取最新版本和附件下载地址。
