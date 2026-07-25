@@ -53,6 +53,64 @@ class SyncResult:
     pruned: tuple[str, ...]
 
 
+def release_asset_map(items: object) -> dict[str, int]:
+    if isinstance(items, dict):
+        items = items.get("assets")
+    if not isinstance(items, list):
+        raise RuntimeError("release assets returned an unexpected payload")
+    assets: dict[str, int] = {}
+    for item in items:
+        if not isinstance(item, dict):
+            raise RuntimeError("release asset returned an unexpected payload")
+        name = str(item.get("name") or "").strip()
+        size = int(item.get("size") or 0)
+        if not name or Path(name).name != name or size <= 0:
+            raise RuntimeError("release asset metadata is incomplete")
+        if name in assets:
+            raise RuntimeError(f"duplicate release asset: {name}")
+        assets[name] = size
+    return assets
+
+
+def compare_release_mirrors(
+    github_tag: str,
+    github_assets: dict[str, int],
+    gitee_tag: str,
+    gitee_assets: dict[str, int],
+) -> list[str]:
+    failures: list[str] = []
+    if github_tag != gitee_tag:
+        failures.append(f"release tag differs: GitHub={github_tag}, Gitee={gitee_tag}")
+    for name in sorted(github_assets.keys() - gitee_assets.keys()):
+        failures.append(f"missing on Gitee: {name}")
+    for name in sorted(gitee_assets.keys() - github_assets.keys()):
+        failures.append(f"extra on Gitee: {name}")
+    for name in sorted(github_assets.keys() & gitee_assets.keys()):
+        if github_assets[name] != gitee_assets[name]:
+            failures.append(
+                f"asset size differs for {name}: "
+                f"GitHub={github_assets[name]}, Gitee={gitee_assets[name]}"
+            )
+    return failures
+
+
+def compare_git_refs(
+    github_refs: dict[str, str],
+    gitee_refs: dict[str, str],
+) -> list[str]:
+    failures: list[str] = []
+    for name in sorted(github_refs.keys() & gitee_refs.keys()):
+        if github_refs[name] != gitee_refs[name]:
+            failures.append(
+                f"Git ref differs for {name}: GitHub={github_refs[name]}, Gitee={gitee_refs[name]}"
+            )
+    for name in sorted(github_refs.keys() - gitee_refs.keys()):
+        failures.append(f"missing Git ref on Gitee: {name}")
+    for name in sorted(gitee_refs.keys() - github_refs.keys()):
+        failures.append(f"extra Git ref on Gitee: {name}")
+    return failures
+
+
 def _credential_token(owner: str) -> str:
     token = os.environ.get("GITEE_TOKEN", "").strip()
     if token:
@@ -439,7 +497,52 @@ def sync_latest_release(
     )
 
 
-def verify_public_mirror(owner: str, repo: str) -> dict[str, object]:
+def _git_refs(url: str) -> dict[str, str]:
+    result = subprocess.run(
+        ["git", "ls-remote", "--refs", url, "refs/heads/main", "refs/tags/*"],
+        text=True,
+        capture_output=True,
+        env={**os.environ, "GIT_TERMINAL_PROMPT": "0"},
+        check=False,
+    )
+    if result.returncode != 0:
+        detail = result.stderr.strip() or result.stdout.strip() or f"exit {result.returncode}"
+        raise RuntimeError(f"Could not read public Git refs from {url}: {detail}")
+    refs: dict[str, str] = {}
+    for line in result.stdout.splitlines():
+        object_id, separator, name = line.partition("\t")
+        if not separator or not object_id or not name:
+            raise RuntimeError(f"Git ls-remote returned an unexpected line for {url}: {line}")
+        refs[name] = object_id
+    if "refs/heads/main" not in refs:
+        raise RuntimeError(f"Public repository has no main branch: {url}")
+    return refs
+
+
+def _verify_public_download(url: str, name: str) -> None:
+    if not url.startswith("https://"):
+        raise RuntimeError(f"Gitee asset has a non-HTTPS URL: {name}")
+    request = urllib.request.Request(
+        url,
+        headers={"Range": "bytes=0-0", "User-Agent": USER_AGENT},
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            first_byte = response.read(1)
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"Could not anonymously read Gitee asset {name}: {exc.reason}") from exc
+    if not first_byte:
+        raise RuntimeError(f"Gitee asset returned no readable data: {name}")
+
+
+def verify_public_mirror(
+    owner: str,
+    repo: str,
+    github_repo: str = DEFAULT_GITHUB_REPO,
+) -> dict[str, object]:
+    github_release = _github_json(f"/repos/{github_repo}/releases/latest")
+    if not isinstance(github_release, dict):
+        raise RuntimeError("GitHub public latest release returned an unexpected payload.")
     release = _public_json(f"/repos/{owner}/{repo}/releases/latest")
     if not isinstance(release, dict):
         raise RuntimeError("Gitee public latest release returned an unexpected payload.")
@@ -447,18 +550,41 @@ def verify_public_mirror(owner: str, repo: str) -> dict[str, object]:
     attachments = _public_json(f"/repos/{owner}/{repo}/releases/{release_id}/attach_files?per_page=100")
     if not isinstance(attachments, list) or not attachments:
         raise RuntimeError("Gitee public latest release contains no downloadable attachments.")
+    github_assets = release_asset_map(github_release)
+    gitee_assets = release_asset_map(attachments)
+    failures = compare_release_mirrors(
+        str(github_release.get("tag_name") or ""),
+        github_assets,
+        str(release.get("tag_name") or ""),
+        gitee_assets,
+    )
+    github_refs = _git_refs(f"https://github.com/{github_repo}.git")
+    gitee_refs = _git_refs(f"https://gitee.com/{owner}/{repo}.git")
+    failures.extend(compare_git_refs(github_refs, gitee_refs))
+    if failures:
+        raise RuntimeError("Public mirror verification failed:\n- " + "\n- ".join(failures))
+
+    verified_assets: list[dict[str, object]] = []
+    for item in attachments:
+        if not isinstance(item, dict):
+            raise RuntimeError("Gitee public attachment returned an unexpected payload.")
+        name = str(item.get("name") or "")
+        download_url = str(item.get("browser_download_url") or "")
+        _verify_public_download(download_url, name)
+        verified_assets.append(
+            {
+                "name": name,
+                "size": int(item.get("size") or 0),
+                "download_url": download_url,
+            }
+        )
     return {
+        "github_repository": f"https://github.com/{github_repo}",
         "repository": f"https://gitee.com/{owner}/{repo}",
         "tag": str(release.get("tag_name") or ""),
-        "assets": [
-            {
-                "name": str(item.get("name") or ""),
-                "size": int(item.get("size") or 0),
-                "download_url": str(item.get("browser_download_url") or ""),
-            }
-            for item in attachments
-            if isinstance(item, dict)
-        ],
+        "main": github_refs["refs/heads/main"],
+        "tags": len([name for name in github_refs if name.startswith("refs/tags/")]),
+        "assets": sorted(verified_assets, key=lambda item: str(item["name"])),
     }
 
 
@@ -486,7 +612,12 @@ def _parser() -> argparse.ArgumentParser:
 
     sync = subparsers.add_parser("sync-latest", help="Mirror the latest GitHub Release and all of its assets.")
     sync.add_argument("--replace-existing", action="store_true")
-    sync.add_argument("--prune", action="store_true")
+    sync.add_argument("--prune", action="store_true", help=argparse.SUPPRESS)
+    sync.add_argument(
+        "--keep-extra-assets",
+        action="store_true",
+        help="Keep extra assets on the latest Gitee release (not valid for formal publication).",
+    )
 
     subparsers.add_parser("make-public", help="Make the populated Gitee mirror publicly readable.")
     subparsers.add_parser("verify", help="Verify anonymous public access to the Gitee mirror.")
@@ -496,7 +627,13 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     if args.command == "verify":
-        print(json.dumps(verify_public_mirror(args.owner, args.repo), ensure_ascii=False, indent=2))
+        print(
+            json.dumps(
+                verify_public_mirror(args.owner, args.repo, args.github_repo),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
         return 0
 
     client = GiteeClient(_credential_token(args.owner))
@@ -523,7 +660,7 @@ def main(argv: list[str] | None = None) -> int:
             args.repo,
             args.github_repo,
             replace_existing=args.replace_existing,
-            prune=args.prune,
+            prune=not args.keep_extra_assets,
         )
         print(json.dumps(result.__dict__, ensure_ascii=False, indent=2))
         return 0

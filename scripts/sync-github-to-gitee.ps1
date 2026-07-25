@@ -1,8 +1,7 @@
 [CmdletBinding()]
 param(
     [switch]$SkipCodePush,
-    [switch]$ReplaceExistingAssets,
-    [switch]$PruneExtraAssets
+    [switch]$ReplaceExistingAssets
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,13 +13,17 @@ Push-Location $repoRoot
 try {
     & $uv run --no-project python scripts/sync_docs.py --check
     if ($LASTEXITCODE -ne 0) {
-        throw "README synchronization check failed with exit code $LASTEXITCODE."
+        throw "Documentation synchronization check failed with exit code $LASTEXITCODE."
     }
 
     if (-not $SkipCodePush) {
         $branch = git branch --show-current
         if ($LASTEXITCODE -ne 0 -or $branch -ne 'main') {
             throw 'Run Gitee publishing from the main branch.'
+        }
+        $giteeUrl = git remote get-url gitee 2>$null
+        if ($LASTEXITCODE -ne 0 -or -not $giteeUrl) {
+            throw 'The gitee remote is missing. Configure the public Gitee repository before publishing.'
         }
         git push origin main
         if ($LASTEXITCODE -ne 0) {
@@ -39,9 +42,6 @@ try {
     $arguments = @($syncScript, 'sync-latest')
     if ($ReplaceExistingAssets) {
         $arguments += '--replace-existing'
-    }
-    if ($PruneExtraAssets) {
-        $arguments += '--prune'
     }
     & $uv run --no-project python @arguments
     if ($LASTEXITCODE -ne 0) {

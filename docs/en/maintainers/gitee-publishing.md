@@ -40,6 +40,8 @@ The script performs these steps:
 
 Historical Gitee Releases are never deleted. Exact-set cleanup applies only to extra assets on the current latest Gitee Release.
 
+If a same-name, same-size GitHub asset was deliberately replaced and must be uploaded again, run the command with `-ReplaceExistingAssets`.
+
 <!-- section:s004 -->
 ## Standalone verification
 
