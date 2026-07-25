@@ -1,19 +1,59 @@
-# 发布仓库项目规则
+# 发布仓库项目规则 / Release Repository Rules
 
-## 双平台发布是强制要求
+## 中文规则
 
-- GitHub 是正式构建和主发布源，Gitee 是中国大陆网络备用发布源。任何正式版本必须同时在 GitHub 和 Gitee 完成发布，不能只完成其中一个平台。
-- GitHub Release 构建完成后，统一运行 `git sync-release-mirrors`。该命令必须同步 `main`、Git 标签和当前最新 Release 的全部附件，并验证 Gitee 匿名访问。
-- 只有 GitHub 最新 Release 与 Gitee 最新 Release 的版本号、附件名称和附件大小一致，并且 Gitee 附件可公开读取，才能把发布标记为完成。任意一步失败都必须报告发布未完成。
+### 文档必须成对同步
 
-## 不批量迁移旧历史，保留已同步版本
+- 根目录只有两个主要文档入口：`README.md`（中文）和 `README.en.md`（英文）。两者必须拥有相同顺序的 `<!-- section:... -->` 章节 ID 和对应的树状导航。
+- 项目规范文档分别位于 `docs/zh-CN/` 与 `docs/en/`；Skill 技术参考分别位于 `skills/ai-coding-handle/references/zh-CN/` 与 `skills/ai-coding-handle/references/en/`。两棵树的相对 Markdown 路径和章节 ID 必须完全一致。
+- 修改任何人类可读文档时，必须在同一轮、同一提交中同步修改另一种语言的对应文件。不得提交只有一种语言的新文档或章节。
+- 旧公开路径是由 `scripts/sync_docs.py` 生成的兼容跳转页，不得直接编辑正文。
+- 文档修改后必须运行：
 
-- 不批量回填或搬运启用 Gitee 镜像之前的全部 GitHub 历史 Release 附件。
-- 从启用镜像开始，每次同步到 Gitee 的新 Release 都必须永久保留；后续发布不得自动删除旧的 Gitee Release 或其附件。
-- `main` 和历史 Git 标签始终同步并保留，用于代码与版本追溯。
+  ```powershell
+  uv run --no-project python scripts/sync_docs.py
+  uv run --no-project python scripts/sync_docs.py --check
+  uv run --no-project python -m unittest discover -s tests -v
+  ```
 
-## 修改与验证
+### 双平台发布是强制要求
 
-- README 的事实来源是 `docs/README.bilingual.md`；修改后运行 `uv run --no-project python scripts/sync_readmes.py` 和 `uv run --no-project python scripts/sync_readmes.py --check`。
-- 发布同步规则或脚本变更后，至少运行 PowerShell 语法检查、`git diff --check` 和 `uv run --no-project python scripts/gitee_release_sync.py verify`。
+- GitHub 是正式构建和主发布源，Gitee 是中国大陆网络备用发布源。任何正式版本必须同时完成两个平台的发布。
+- GitHub Release 构建完成后，统一运行仓库内的 `scripts/sync-github-to-gitee.ps1`。该命令必须同步 `main`、全部 Git 标签和当前最新 Release 的准确附件集合，并执行严格匿名验证。
+- 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
+- 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件永久保留。只允许清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。
+
+### 修改与验证
+
+- 文档同步工具或结构变更后，运行文档检查、完整单元测试和 `git diff --check`。
+- 发布同步规则或脚本变更后，额外运行 PowerShell AST 语法检查和 `uv run --no-project python scripts/gitee_release_sync.py verify`。
 - 只暂存本轮相关文件，不使用 `git add -A`，不把令牌写入仓库、远端 URL、脚本或 `.env`。
+
+## English rules
+
+### Documentation must stay paired
+
+- The repository has exactly two primary documentation entries: `README.md` in Chinese and `README.en.md` in English. They must use the same ordered `<!-- section:... -->` IDs and corresponding tree navigation.
+- Canonical project documents live under `docs/zh-CN/` and `docs/en/`. Skill technical references live under `skills/ai-coding-handle/references/zh-CN/` and `skills/ai-coding-handle/references/en/`. Each pair of trees must contain identical relative Markdown paths and section IDs.
+- Every human-readable documentation change must update its other-language counterpart in the same change and commit. Never add a single-language document or section.
+- Legacy public paths are generated compatibility pages managed by `scripts/sync_docs.py`; do not edit their bodies directly.
+- After documentation changes, run:
+
+  ```powershell
+  uv run --no-project python scripts/sync_docs.py
+  uv run --no-project python scripts/sync_docs.py --check
+  uv run --no-project python -m unittest discover -s tests -v
+  ```
+
+### Dual-platform publication is mandatory
+
+- GitHub is the official build and primary release source. Gitee is the China-accessible fallback. Every formal version must be published on both platforms.
+- After the GitHub Release is complete, run the repository-owned `scripts/sync-github-to-gitee.ps1`. It must synchronize `main`, every Git tag, and the exact latest Release asset set, then perform strict anonymous verification.
+- Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
+- Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every historical Gitee Release and attachment already synchronized. Extra-asset cleanup is allowed only on the current latest Gitee Release.
+
+### Changes and validation
+
+- After documentation tooling or structure changes, run documentation validation, the complete unit-test suite, and `git diff --check`.
+- After release synchronization rules or scripts change, also run PowerShell AST syntax checks and `uv run --no-project python scripts/gitee_release_sync.py verify`.
+- Stage only files related to the current change. Do not use `git add -A`, and never write tokens into the repository, remote URLs, scripts, or `.env`.

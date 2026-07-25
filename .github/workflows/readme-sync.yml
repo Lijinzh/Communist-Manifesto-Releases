@@ -1,39 +1,62 @@
-name: Bilingual documentation sync
+name: Repository documentation and release checks
 
 on:
   pull_request:
     paths:
-      - "README.md"
-      - "README.en.md"
-      - "docs/README.bilingual.md"
-      - "docs/user-guide.bilingual.md"
-      - "docs/user-guide.zh-CN.md"
-      - "docs/user-guide.en.md"
-      - "docs/assets/user-guide/**"
-      - "scripts/sync_readmes.py"
+      - "**/*.md"
+      - "docs/assets/**"
+      - "scripts/**"
+      - "skills/ai-coding-handle/scripts/**"
+      - "tests/**"
       - ".github/workflows/readme-sync.yml"
   push:
     branches:
       - main
     paths:
-      - "README.md"
-      - "README.en.md"
-      - "docs/README.bilingual.md"
-      - "docs/user-guide.bilingual.md"
-      - "docs/user-guide.zh-CN.md"
-      - "docs/user-guide.en.md"
-      - "docs/assets/user-guide/**"
-      - "scripts/sync_readmes.py"
+      - "**/*.md"
+      - "docs/assets/**"
+      - "scripts/**"
+      - "skills/ai-coding-handle/scripts/**"
+      - "tests/**"
       - ".github/workflows/readme-sync.yml"
 
 permissions:
   contents: read
 
 jobs:
-  check-readmes:
+  repository-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
-      - name: Verify generated bilingual documentation
-        run: python3 scripts/sync_readmes.py --check
+
+      - name: Run unit tests
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Verify bilingual documentation
+        run: python3 scripts/sync_docs.py --check
+
+      - name: Check PowerShell syntax
+        shell: pwsh
+        run: |
+          $errors = @()
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null
+            $parseErrors = $null
+            $content = Get-Content -Raw -Encoding utf8 $_.FullName
+            [System.Management.Automation.Language.Parser]::ParseInput(
+              $content,
+              [ref]$tokens,
+              [ref]$parseErrors
+            ) | Out-Null
+            $errors += $parseErrors
+          }
+          if ($errors.Count -gt 0) {
+            $errors | Format-List
+            exit 1
+          }
+
+      - name: Check shell syntax
+        run: |
+          find scripts skills/ai-coding-handle/scripts -type f -name '*.sh' -print0 \
+            | xargs -0 -r -n1 bash -n

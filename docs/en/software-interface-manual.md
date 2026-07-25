@@ -27,7 +27,7 @@ Changing a value in Device Settings is not always a harmless preview. Brightness
 ## 1. Main window overview
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-window-numbered.webp" alt="AutoClipboard main window numbered overview" width="920">
+  <img src="../assets/software-interface-manual/main-window-numbered.webp" alt="AutoClipboard main window numbered overview" width="920">
 </p>
 
 | Number | Area | Primary role |
@@ -42,7 +42,7 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 ## 2. Main-window device status and quick actions
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-device-status.webp" alt="AutoClipboard device status and quick actions" width="900">
+  <img src="../assets/software-interface-manual/main-device-status.webp" alt="AutoClipboard device status and quick actions" width="900">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -62,7 +62,7 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 ## 3. Main-window clipboard and Typeless area
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-editor-typeless.webp" alt="AutoClipboard clipboard editor and Typeless capture area" width="900">
+  <img src="../assets/software-interface-manual/main-editor-typeless.webp" alt="AutoClipboard clipboard editor and Typeless capture area" width="900">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -92,7 +92,7 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 ## 4. Agent dashboard
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-agent-dashboard.webp" alt="AutoClipboard Agent dashboard" width="430">
+  <img src="../assets/software-interface-manual/main-agent-dashboard.webp" alt="AutoClipboard Agent dashboard" width="430">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -108,7 +108,7 @@ When status-light integration is configured, normalized states can also drive th
 ## 5. Device Settings / IMU Preview overview
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-settings-numbered.webp" alt="Device Settings numbered overview" width="1180">
+  <img src="../assets/software-interface-manual/device-settings-numbered.webp" alt="Device Settings numbered overview" width="1180">
 </p>
 
 | Number | Area | Primary role |
@@ -125,7 +125,7 @@ The window mixes software-only and hardware-changing controls. Read the tables b
 ## 6. Connection and layout bar
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-top-status.webp" alt="Device Settings connection and layout bar" width="1180">
+  <img src="../assets/software-interface-manual/device-top-status.webp" alt="Device Settings connection and layout bar" width="1180">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -141,7 +141,7 @@ The BLE status at the top and the Type-C serial selector in the maintenance area
 ## 7. IMU 3D preview
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-imu-preview.webp" alt="Device Settings IMU preview controls" width="500">
+  <img src="../assets/software-interface-manual/device-imu-preview.webp" alt="Device Settings IMU preview controls" width="500">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -160,7 +160,7 @@ Calibration and preview-heading reset are not the same operation: calibration ch
 ## 8. Profile, four external macros, and quick launch
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-profile-and-quick-launch.webp" alt="Device Settings Profile macros and quick launch" width="1120">
+  <img src="../assets/software-interface-manual/device-profile-and-quick-launch.webp" alt="Device Settings Profile macros and quick launch" width="1120">
 </p>
 
 <!-- section:s012 -->
@@ -193,7 +193,7 @@ Quick launch and hardware macros are independent: a quick-launch target stays on
 ## 9. Device basics, appearance, and power
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-appearance-and-power.webp" alt="Device Settings appearance and power controls" width="900">
+  <img src="../assets/software-interface-manual/device-appearance-and-power.webp" alt="Device Settings appearance and power controls" width="900">
 </p>
 
 | Item | What it does | Changes | Result |
@@ -217,7 +217,7 @@ Power-policy rules require a non-zero screen-off timeout to occur before deep sl
 ## 10. Device maintenance, Bluetooth recovery, and firmware
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-maintenance.webp" alt="Device Settings maintenance controls" width="520">
+  <img src="../assets/software-interface-manual/device-maintenance.webp" alt="Device Settings maintenance controls" width="520">
 </p>
 
 | Item | What it does | Changes | Result / caution |

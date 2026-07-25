@@ -12,7 +12,7 @@ $uv = (Get-Command uv -ErrorAction Stop).Source
 
 Push-Location $repoRoot
 try {
-    & $uv run --no-project python scripts/sync_readmes.py --check
+    & $uv run --no-project python scripts/sync_docs.py --check
     if ($LASTEXITCODE -ne 0) {
         throw "README synchronization check failed with exit code $LASTEXITCODE."
     }

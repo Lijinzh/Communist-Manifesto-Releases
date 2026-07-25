@@ -1,7 +1,6 @@
-<!-- Generated from docs/README.bilingual.md by scripts/sync_readmes.py. Do not edit directly. -->
-
 [简体中文](README.md) | **English**
 
+<!-- section:s001 -->
 # ZKO AI Coding Handle
 
 > Keep your eyes on the code and your hand on the workflow.
@@ -16,6 +15,7 @@ The ZKO AI Coding Handle combines four programmable macro buttons, a color scree
 
 This repository is the public download and documentation channel for AutoClipboard, handle firmware, drivers, and the open-source AI Coding Handle Skill.
 
+<!-- section:s002 -->
 ## Download sources: GitHub first, Gitee fallback
 
 GitHub remains the primary release source. If GitHub is slow or unavailable on your network, use the Gitee mirror in mainland China. The mirror carries the same release files and integrity metadata.
@@ -27,6 +27,7 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 
 Starting with the next AutoClipboard release, application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
+<!-- section:s003 -->
 ## Recommended first step: install the Skill
 
 If you use Codex, Claude Code, OpenCode, or another Agent Skills-compatible client, install the **AI Coding Handle Skill before configuring the handle manually**. The Skill can locate the appropriate AutoClipboard release, help configure supported Agent status hooks, identify D4/V3 hardware, and run read-only USB, serial, Bluetooth, and application diagnostics.
@@ -41,8 +42,9 @@ You can also send this request directly to your coding agent:
 
 The Skill may diagnose automatically, but it does not silently reset system Bluetooth settings or flash firmware. Any firmware update still requires a separate, explicit confirmation for the exact device and update plan.
 
-No compatible agent client? Continue with the manual steps below or open the [complete English user guide](docs/user-guide.en.md).
+No compatible agent client? Continue with the manual steps below or open the [complete English user guide](docs/en/user-guide.md).
 
+<!-- section:s004 -->
 ## Five-minute first setup
 
 1. **Install with the Skill or download AutoClipboard manually.** Windows is the primary supported platform; use the package matching your operating system from the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest), or the [Gitee mirror](https://gitee.com/shan-yujun/Communist-Manifesto-Releases/releases) if GitHub is unavailable.
@@ -52,8 +54,9 @@ No compatible agent client? Continue with the manual steps below or open the [co
 5. **Start AutoClipboard and leave it running in the background.** Basic Bluetooth keyboard macros work without AutoClipboard, but Agent status, IMU preview, advanced configuration, and quick launch require the application.
 6. **Test the controls.** Rotate the wheel to change Profile, press a macro button, and double-click the wheel's middle button to open `Settings`.
 
-For screenshots, multi-host pairing, Profile details, and troubleshooting, follow the [complete user guide](docs/user-guide.en.md).
+For screenshots, multi-host pairing, Profile details, and troubleshooting, follow the [complete user guide](docs/en/user-guide.md).
 
+<!-- section:s005 -->
 ## Know the hardware
 
 <p align="center">
@@ -77,6 +80,7 @@ The USB Type-C connector shown on the left side of the photo is used for chargin
 
 The default Vibe Coding Profile maps the four buttons to `Right Alt`, `Enter`, `Ctrl+V`, and `Ctrl+Alt+0`. All four mappings can be changed in AutoClipboard.
 
+<!-- section:s006 -->
 ## Bluetooth name and pairing
 
 The current firmware advertises as:
@@ -87,6 +91,7 @@ CommunistKB-XXXX
 
 `XXXX` is the last two bytes of the ESP32 MAC address rendered as four uppercase hexadecimal characters. For example, one handle may appear as `CommunistKB-A216`. This is already part of the advertised name; the user does not add the suffix.
 
+<!-- section:s007 -->
 ### First pairing
 
 1. Open the operating system's Bluetooth settings and choose **Add device**.
@@ -95,6 +100,7 @@ CommunistKB-XXXX
 4. Select the full `CommunistKB-XXXX` name shown by the operating system.
 5. After pairing, the screen changes to `LINK` when the host connection is ready.
 
+<!-- section:s008 -->
 ### Pair a second or third computer
 
 1. Double-click the wheel middle button to enter `Settings`.
@@ -104,8 +110,10 @@ CommunistKB-XXXX
 
 The handle stores three host slots. In `BLE Hosts`, single-click a saved slot to switch to it, or long-press a saved slot to delete that host record.
 
+<!-- section:s009 -->
 ## Wheel and screen controls
 
+<!-- section:s010 -->
 ### On the normal status screen
 
 | Action | Result |
@@ -115,6 +123,7 @@ The handle stores three host slots. In `BLE Hosts`, single-click a saved slot to
 | Double-click the middle button | Enter `Settings` |
 | Long-press the middle button | Enter `Settings` |
 
+<!-- section:s011 -->
 ### Inside Settings
 
 | Action | Result |
@@ -125,6 +134,7 @@ The handle stores three host slots. In `BLE Hosts`, single-click a saved slot to
 
 Do not attempt to hold the middle button while rotating the wheel. The physical mechanism does not support that gesture, and Bluetooth host switching does not use it.
 
+<!-- section:s012 -->
 ## Understand the screen and Agent light
 
 <p align="center">
@@ -141,6 +151,7 @@ The promotional image demonstrates the visual concept. The current firmware uses
 
 The screen also shows the current Profile, battery, time, device state, and the number of working Agents. The light ring can reflect idle, working, attention, permission, blocked, and completed states. Agent synchronization requires AutoClipboard and a configured Agent Hook/Bridge.
 
+<!-- section:s013 -->
 ## AutoClipboard
 
 AutoClipboard is the desktop companion application. It can display the active Bluetooth device, configure Profile names and icons, record macros, adjust the screen, light ring and buzzer, preview IMU orientation, configure the presenter Halo, and perform controlled firmware updates.
@@ -153,8 +164,9 @@ AutoClipboard is the desktop companion application. It can display the active Bl
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard device settings" width="900">
 </p>
 
-The screenshots show the current real interface. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/software-interface-manual/README.en.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
+The screenshots show the current real interface. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/en/software-interface-manual.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
 
+<!-- section:s014 -->
 ## Downloads
 
 Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) and select the file matching your platform or task:
@@ -170,23 +182,41 @@ Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-
 
 V3 is the currently maintained hardware revision. Do not flash firmware for a different board revision. If you are uncertain, ask the Skill to identify the device before downloading or updating firmware.
 
+<!-- section:s015 -->
 ## Quick troubleshooting
 
 - **`CommunistKB-XXXX` is not visible:** wake the handle, double-click the wheel, open `Settings > BLE Hosts`, select `EMPTY`, and wait for `PAIR` before scanning again.
 - **Ubuntu shows only an unnamed HID address:** use `bluetoothctl` to verify that the unique current-scan candidate matches an independently known MAC suffix and exposes HID `0x1812` plus Battery `0x180F` before pairing by address. This is a fallback for affected BlueZ systems, not a replacement for firmware that advertises the complete name.
 - **Bluetooth is paired but AutoClipboard is not ready:** keep the handle awake, start AutoClipboard, and let the Skill run read-only `inventory` and `doctor` diagnostics.
 - **Macro keys work but Agent status does not:** the Bluetooth HID connection is working; configure the Agent Hook/Bridge and keep AutoClipboard running.
-- **No COM port over Type-C:** try a data-capable cable, another USB port, and the signed [CH343 Windows driver guide](docs/ch343-driver-installation.md).
+- **No COM port over Type-C:** try a data-capable cable, another USB port, and the signed [CH343 Windows driver guide](docs/en/ch343-driver-installation.md).
 - **Firmware update is offered:** verify the V3 device identity and review the exact update plan before confirming.
 
-The [complete troubleshooting chapter](docs/user-guide.en.md#12-troubleshooting) includes more symptoms and step-by-step checks.
+The [complete troubleshooting chapter](docs/en/user-guide.md#12-troubleshooting) includes more symptoms and step-by-step checks.
 
+<!-- section:s016 -->
 ## Documentation
 
-- [Complete English user guide](docs/user-guide.en.md)
-- [简体中文使用说明书](docs/user-guide.zh-CN.md)
-- [Agent status setup](docs/agent-signal-setup.md)
-- [Windows CH343 driver installation](docs/ch343-driver-installation.md)
+```text
+English project home (this file)
+├─ Complete user guide
+│  ├─ Hardware, Bluetooth, wheel, Profiles, and firmware updates
+│  ├─ Agent status synchronization
+│  ├─ Detailed AutoClipboard interface manual
+│  └─ Windows CH343 driver installation and troubleshooting
+├─ Maintainer documentation
+│  └─ GitHub primary releases and the Gitee China mirror
+└─ AI Coding Handle Skill
+   ├─ English technical references
+   └─ 中文技术参考
+```
+
+- [Complete English user guide](docs/en/user-guide.md)
+- [Agent status setup](docs/en/agent-signal-setup.md)
+- [Detailed AutoClipboard interface manual](docs/en/software-interface-manual.md)
+- [Windows CH343 driver installation](docs/en/ch343-driver-installation.md)
+- [GitHub and Gitee publishing guide](docs/en/maintainers/gitee-publishing.md)
+- [简体中文文档树](README.md)
 - [Open-source AI Coding Handle Skill](skills/ai-coding-handle)
 - [Product introduction website](https://shenqiqishi.github.io/zko_page/)
 

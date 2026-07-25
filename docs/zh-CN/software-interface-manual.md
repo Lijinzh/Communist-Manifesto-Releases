@@ -27,7 +27,7 @@
 ## 1. 主窗口总览
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-window-numbered.webp" alt="AutoClipboard 主窗口编号总览" width="920">
+  <img src="../assets/software-interface-manual/main-window-numbered.webp" alt="AutoClipboard 主窗口编号总览" width="920">
 </p>
 
 | 编号 | 区域 | 主要作用 |
@@ -42,7 +42,7 @@
 ## 2. 主窗口：设备状态与快捷操作区
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-device-status.webp" alt="AutoClipboard 设备状态与快捷操作区" width="900">
+  <img src="../assets/software-interface-manual/main-device-status.webp" alt="AutoClipboard 设备状态与快捷操作区" width="900">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -62,7 +62,7 @@
 ## 3. 主窗口：剪贴板与 Typeless 工作区
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-editor-typeless.webp" alt="AutoClipboard 剪贴板编辑器与 Typeless 捕获区" width="900">
+  <img src="../assets/software-interface-manual/main-editor-typeless.webp" alt="AutoClipboard 剪贴板编辑器与 Typeless 捕获区" width="900">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -92,7 +92,7 @@
 ## 4. Agent 工作台
 
 <p align="center">
-  <img src="../software-interface-manual/assets/main-agent-dashboard.webp" alt="AutoClipboard Agent 工作台" width="430">
+  <img src="../assets/software-interface-manual/main-agent-dashboard.webp" alt="AutoClipboard Agent 工作台" width="430">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -108,7 +108,7 @@
 ## 5. “设备设置 / IMU 预览”总览
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-settings-numbered.webp" alt="设备设置窗口编号总览" width="1180">
+  <img src="../assets/software-interface-manual/device-settings-numbered.webp" alt="设备设置窗口编号总览" width="1180">
 </p>
 
 | 编号 | 区域 | 主要作用 |
@@ -125,7 +125,7 @@
 ## 6. 顶部连接状态与布局栏
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-top-status.webp" alt="设备设置顶部连接状态与布局栏" width="1180">
+  <img src="../assets/software-interface-manual/device-top-status.webp" alt="设备设置顶部连接状态与布局栏" width="1180">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -141,7 +141,7 @@
 ## 7. IMU 三维预览区
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-imu-preview.webp" alt="设备设置 IMU 三维预览区" width="500">
+  <img src="../assets/software-interface-manual/device-imu-preview.webp" alt="设备设置 IMU 三维预览区" width="500">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -160,7 +160,7 @@
 ## 8. Profile、四枚外接按键宏与快开应用
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-profile-and-quick-launch.webp" alt="设备设置 Profile 宏与快开应用区" width="1120">
+  <img src="../assets/software-interface-manual/device-profile-and-quick-launch.webp" alt="设备设置 Profile 宏与快开应用区" width="1120">
 </p>
 
 <!-- section:s012 -->
@@ -193,7 +193,7 @@
 ## 9. 设备基础、外观与电源区
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-appearance-and-power.webp" alt="设备设置外观与电源区" width="900">
+  <img src="../assets/software-interface-manual/device-appearance-and-power.webp" alt="设备设置外观与电源区" width="900">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果 |
@@ -217,7 +217,7 @@
 ## 10. 设备维护、蓝牙修复与固件更新区
 
 <p align="center">
-  <img src="../software-interface-manual/assets/device-maintenance.webp" alt="设备设置维护区" width="520">
+  <img src="../assets/software-interface-manual/device-maintenance.webp" alt="设备设置维护区" width="520">
 </p>
 
 | 界面项目 | 用途 | 改动对象 | 产生的效果与注意事项 |

@@ -1,7 +1,6 @@
-<!-- Generated from docs/README.bilingual.md by scripts/sync_readmes.py. Do not edit directly. -->
-
 **简体中文** | [English](README.en.md)
 
+<!-- section:s001 -->
 # 苍虬 · AI 编程手柄
 
 > 写代码，不用再低头找快捷键。
@@ -16,6 +15,7 @@
 
 本仓库是 AutoClipboard、手柄固件、驱动程序、公开文档和开源 AI Coding Handle Skill 的正式下载入口。
 
+<!-- section:s002 -->
 ## 下载源：优先 GitHub，国内网络自动回退 Gitee
 
 GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超时或无法连接，可以使用面向中国大陆网络的 Gitee 镜像。两个发布源提供相同的安装包、固件和完整性校验信息。
@@ -27,6 +27,7 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
+<!-- section:s003 -->
 ## 首先推荐：让大模型安装 Skill
 
 如果你正在使用 Codex、Claude Code、OpenCode 或其他支持 Agent Skills 的客户端，建议在手动配置之前，先安装 **AI Coding Handle Skill**。它可以帮助选择并安装合适的 AutoClipboard、配置受支持的 Agent 状态 Hook、识别 D4/V3 硬件，并以只读方式检查 USB、串口、蓝牙和软件状态。
@@ -41,8 +42,9 @@ npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle -g
 
 Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷写固件。任何固件更新仍然需要针对当前设备和更新方案进行单独、明确的确认。
 
-没有可用的大模型客户端也没有关系，可以继续按照下面的手动步骤操作，或直接阅读[完整中文使用说明书](docs/user-guide.zh-CN.md)。
+没有可用的大模型客户端也没有关系，可以继续按照下面的手动步骤操作，或直接阅读[完整中文使用说明书](docs/zh-CN/user-guide.md)。
 
+<!-- section:s004 -->
 ## 5 分钟完成首次使用
 
 1. **使用 Skill 安装，或手动下载 AutoClipboard。** Windows 是当前主要支持平台；请优先从 [GitHub 最新 Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest)下载与你的系统相符的安装包。如果 GitHub 无法访问，请改用 [Gitee 国内备用发布页](https://gitee.com/shan-yujun/Communist-Manifesto-Releases/releases)。
@@ -52,8 +54,9 @@ Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷�
 5. **启动 AutoClipboard，并让它在后台运行。** 基础蓝牙键盘宏可以脱离软件使用；Agent 状态、小屏时间、IMU 预览、深度配置和 Profile 快开需要 AutoClipboard。
 6. **测试操作。** 上下拨动波轮切换 Profile，按一下宏按键，再双击波轮中键进入 `Settings`。
 
-需要查看图片、连接多台电脑、了解 Profile 或排查问题时，请继续阅读[完整中文使用说明书](docs/user-guide.zh-CN.md)。
+需要查看图片、连接多台电脑、了解 Profile 或排查问题时，请继续阅读[完整中文使用说明书](docs/zh-CN/user-guide.md)。
 
+<!-- section:s005 -->
 ## 认识手柄硬件
 
 <p align="center">
@@ -77,6 +80,7 @@ Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷�
 
 默认的 Vibe Coding Profile 将四枚按键设置为 `Right Alt`、`Enter`、`Ctrl+V` 和 `Ctrl+Alt+0`。这四个按键都可以在 AutoClipboard 中重新配置。
 
+<!-- section:s006 -->
 ## 蓝牙名称与配对
 
 当前固件的蓝牙广播名称固定为：
@@ -87,6 +91,7 @@ CommunistKB-XXXX
 
 `XXXX` 是 ESP32 MAC 地址最后 2 个字节生成的 4 位大写十六进制编号。例如某台手柄可能显示为 `CommunistKB-A216`。这个编号已经包含在系统扫描到的完整名称中，用户不需要自己添加后缀。
 
+<!-- section:s007 -->
 ### 第一次配对
 
 1. 打开 Windows、Linux 或 macOS 的蓝牙设置，选择“添加设备”。
@@ -95,6 +100,7 @@ CommunistKB-XXXX
 4. 在电脑上选择完整的 `CommunistKB-XXXX` 名称。
 5. 配对完成并建立连接后，小屏会显示 `LINK`。
 
+<!-- section:s008 -->
 ### 连接第二台或第三台电脑
 
 1. 双击波轮中键进入 `Settings`。
@@ -104,8 +110,10 @@ CommunistKB-XXXX
 
 手柄可以保存 3 个主机槽位。在 `BLE Hosts` 页面中，单击已有槽位可以切换到该电脑，长按已有槽位可以删除该主机记录。
 
+<!-- section:s009 -->
 ## 波轮与小屏操作
 
+<!-- section:s010 -->
 ### 在正常状态页
 
 | 操作 | 结果 |
@@ -115,6 +123,7 @@ CommunistKB-XXXX
 | 双击中键 | 进入 `Settings` |
 | 长按中键 | 也可以进入 `Settings` |
 
+<!-- section:s011 -->
 ### 在 Settings 设置界面
 
 | 操作 | 结果 |
@@ -125,6 +134,7 @@ CommunistKB-XXXX
 
 不要尝试“按住中键同时拨动波轮”。机械结构不支持这种组合动作，蓝牙主机切换也不使用这种操作。
 
+<!-- section:s012 -->
 ## 看懂小屏与 Agent 状态灯
 
 <p align="center">
@@ -141,6 +151,7 @@ CommunistKB-XXXX
 
 小屏还会显示当前 Profile、电量、时间、设备状态和正在工作的 Agent 数量。灯环可以反馈空闲、工作中、需要注意、等待授权、阻塞和完成等状态。Agent 状态同步需要 AutoClipboard 和已经配置好的 Agent Hook/Bridge。
 
+<!-- section:s013 -->
 ## AutoClipboard 桌面软件
 
 AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙设备，配置 Profile 名称和图标，录制宏按键，调整小屏、灯环和蜂鸣器，查看 IMU 三维姿态，配置演讲光圈，并在受控流程中更新固件。
@@ -153,8 +164,9 @@ AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard 设备设置界面" width="900">
 </p>
 
-这里展示的是当前真实界面。需要查看编号分区图、逐个控件的作用，以及“只改软件”和“会写入硬件”的明确区别，请阅读 [AutoClipboard 软件界面详细说明书](docs/software-interface-manual/README.md)。使用 Agent 状态同步、Profile 快开、IMU 预览或演讲光圈时，请让 AutoClipboard 保持后台运行。
+这里展示的是当前真实界面。需要查看编号分区图、逐个控件的作用，以及“只改软件”和“会写入硬件”的明确区别，请阅读 [AutoClipboard 软件界面详细说明书](docs/zh-CN/software-interface-manual.md)。使用 Agent 状态同步、Profile 快开、IMU 预览或演讲光圈时，请让 AutoClipboard 保持后台运行。
 
+<!-- section:s014 -->
 ## 下载文件
 
 打开[最新 GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest)，根据系统或用途选择文件：
@@ -170,23 +182,41 @@ AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙
 
 V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的固件。如果不能确定板型，请先让 Skill 识别设备，再下载或更新固件。
 
+<!-- section:s015 -->
 ## 快速排障
 
 - **系统里找不到 `CommunistKB-XXXX`：** 唤醒手柄，双击波轮进入 `Settings > BLE Hosts`，选择 `EMPTY`，等小屏出现 `PAIR` 后重新扫描。
 - **Ubuntu 只显示无名 HID 地址：** 使用 `bluetoothctl` 确认当前扫描中只有一个候选，其 MAC 后缀与独立记录一致，并同时暴露 HID `0x1812` 和 Battery `0x180F` 后，才能按地址配对。这只是受影响 BlueZ 系统的兜底方式，不能替代完整名称进入主广播的固件修复。
 - **系统已经配对，但 AutoClipboard 没有就绪：** 保持手柄唤醒，启动 AutoClipboard，再让 Skill 执行只读的 `inventory` 和 `doctor` 检查。
 - **宏按键能用，但没有 Agent 状态：** 说明蓝牙键盘连接已经正常；还需要配置 Agent Hook/Bridge，并保持 AutoClipboard 运行。
-- **Type-C 连接后没有 COM 端口：** 更换支持数据的线缆和 USB 接口，并查看[CH343 Windows 驱动安装指南](docs/ch343-driver-installation.zh-CN.md)。
+- **Type-C 连接后没有 COM 端口：** 更换支持数据的线缆和 USB 接口，并查看[CH343 Windows 驱动安装指南](docs/zh-CN/ch343-driver-installation.md)。
 - **软件提示更新固件：** 确认当前设备是 V3，并阅读准确的更新方案后再确认。
 
-更多现象和逐步检查方法见[完整说明书的故障排查章节](docs/user-guide.zh-CN.md#12-故障排查)。
+更多现象和逐步检查方法见[完整说明书的故障排查章节](docs/zh-CN/user-guide.md#12-故障排查)。
 
+<!-- section:s016 -->
 ## 使用文档
 
-- [完整中文使用说明书](docs/user-guide.zh-CN.md)
-- [English user guide](docs/user-guide.en.md)
-- [Agent 状态同步配置](docs/agent-signal-setup.md)
-- [Windows CH343 驱动安装与排障](docs/ch343-driver-installation.zh-CN.md)
+```text
+中文项目主页（本文件）
+├─ 完整使用指南
+│  ├─ 硬件、蓝牙、波轮、Profile 与固件更新
+│  ├─ Agent 状态同步配置
+│  ├─ AutoClipboard 软件界面详细说明
+│  └─ Windows CH343 驱动安装与排障
+├─ 维护者文档
+│  └─ GitHub 主发布与 Gitee 国内镜像
+└─ AI Coding Handle Skill
+   ├─ 中文技术参考
+   └─ English technical references
+```
+
+- [完整中文使用指南](docs/zh-CN/user-guide.md)
+- [Agent 状态同步配置](docs/zh-CN/agent-signal-setup.md)
+- [AutoClipboard 软件界面详细说明](docs/zh-CN/software-interface-manual.md)
+- [Windows CH343 驱动安装与排障](docs/zh-CN/ch343-driver-installation.md)
+- [GitHub 与 Gitee 发布维护指南](docs/zh-CN/maintainers/gitee-publishing.md)
+- [English documentation tree](README.en.md)
 - [开源 AI Coding Handle Skill](skills/ai-coding-handle)
 - [苍虬产品介绍网页](https://shenqiqishi.github.io/zko_page/)
 

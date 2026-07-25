@@ -9,6 +9,7 @@ from scripts.sync_docs import (
     render_redirect,
     section_ids,
     sync_redirects,
+    validate_document_pair,
     validate_local_links,
     validate_pair_trees,
 )
@@ -97,6 +98,21 @@ class SyncDocsTests(unittest.TestCase):
             stale = sync_redirects(root, redirects, check=True)
 
             self.assertEqual(stale, [Path("docs/guide.zh-CN.md")])
+
+    def test_document_pair_requires_matching_section_ids(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            zh = root / "README.md"
+            en = root / "README.en.md"
+            zh.write_text("<!-- section:intro -->\n# 中文\n", encoding="utf-8")
+            en.write_text("<!-- section:download -->\n# English\n", encoding="utf-8")
+
+            failures = validate_document_pair(zh, en, label="root README")
+
+            self.assertEqual(
+                failures,
+                ["section IDs differ for root README: zh-CN=('intro',), en=('download',)"],
+            )
 
 
 if __name__ == "__main__":

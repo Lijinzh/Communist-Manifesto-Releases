@@ -46,8 +46,8 @@ def sync(check: bool) -> int: ...
 - Move: `docs/software-interface-manual/README.en.md` → `docs/en/software-interface-manual.md`
 - Move: `docs/agent-signal-setup.md` → `docs/zh-CN/agent-signal-setup.md`
 - Create: `docs/en/agent-signal-setup.md`
-- Move: `docs/ch343-driver-installation.zh-CN.md` → `docs/zh-CN/maintainers/ch343-driver-installation.md`
-- Move: `docs/ch343-driver-installation.md` → `docs/en/maintainers/ch343-driver-installation.md`
+- Move: `docs/ch343-driver-installation.zh-CN.md` → `docs/zh-CN/ch343-driver-installation.md`
+- Move: `docs/ch343-driver-installation.md` → `docs/en/ch343-driver-installation.md`
 - Move: `docs/gitee-publishing.md` → `docs/zh-CN/maintainers/gitee-publishing.md`
 - Create: `docs/en/maintainers/gitee-publishing.md`
 - Modify: canonical documents to add stable `<!-- section:id -->` markers and correct relative links

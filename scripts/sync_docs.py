@@ -184,6 +184,16 @@ def validate_pair_trees(left: Path, right: Path) -> list[str]:
     return failures
 
 
+def validate_document_pair(left: Path, right: Path, *, label: str) -> list[str]:
+    left_ids = section_ids(left)
+    right_ids = section_ids(right)
+    if left_ids == right_ids:
+        return []
+    return [
+        f"section IDs differ for {label}: zh-CN={left_ids}, en={right_ids}"
+    ]
+
+
 def _link_targets(content: str) -> list[str]:
     targets = [match.group("target") for match in MARKDOWN_LINK_PATTERN.finditer(content)]
     targets.extend(match.group("target") for match in HTML_LINK_PATTERN.finditer(content))
@@ -214,6 +224,9 @@ def sync(check: bool) -> int:
     failures: list[str] = []
     stale = sync_redirects(ROOT, REDIRECTS, check=check)
     failures.extend(f"stale compatibility page: {path.as_posix()}" for path in stale)
+    failures.extend(
+        validate_document_pair(ROOT / "README.md", ROOT / "README.en.md", label="root README")
+    )
     failures.extend(validate_pair_trees(ROOT / "docs" / "zh-CN", ROOT / "docs" / "en"))
     failures.extend(
         validate_pair_trees(
@@ -221,7 +234,8 @@ def sync(check: bool) -> int:
             ROOT / "skills" / "ai-coding-handle" / "references" / "en",
         )
     )
-    canonical_paths = sorted((ROOT / "docs" / "zh-CN").rglob("*.md"))
+    canonical_paths = [ROOT / "README.md", ROOT / "README.en.md"]
+    canonical_paths.extend(sorted((ROOT / "docs" / "zh-CN").rglob("*.md")))
     canonical_paths.extend(sorted((ROOT / "docs" / "en").rglob("*.md")))
     canonical_paths.extend(
         sorted(

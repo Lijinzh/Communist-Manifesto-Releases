@@ -35,8 +35,8 @@ docs/
 │  ├─ user-guide.md
 │  ├─ software-interface-manual.md
 │  ├─ agent-signal-setup.md
+│  ├─ ch343-driver-installation.md
 │  └─ maintainers/
-│     ├─ ch343-driver-installation.md
 │     ├─ gitee-publishing.md
 │     └─ designs/
 ├─ en/

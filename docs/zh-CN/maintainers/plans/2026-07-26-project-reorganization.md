@@ -46,8 +46,8 @@ def sync(check: bool) -> int: ...
 - 迁移：`docs/software-interface-manual/README.en.md` → `docs/en/software-interface-manual.md`
 - 迁移：`docs/agent-signal-setup.md` → `docs/zh-CN/agent-signal-setup.md`
 - 新建：`docs/en/agent-signal-setup.md`
-- 迁移：`docs/ch343-driver-installation.zh-CN.md` → `docs/zh-CN/maintainers/ch343-driver-installation.md`
-- 迁移：`docs/ch343-driver-installation.md` → `docs/en/maintainers/ch343-driver-installation.md`
+- 迁移：`docs/ch343-driver-installation.zh-CN.md` → `docs/zh-CN/ch343-driver-installation.md`
+- 迁移：`docs/ch343-driver-installation.md` → `docs/en/ch343-driver-installation.md`
 - 迁移：`docs/gitee-publishing.md` → `docs/zh-CN/maintainers/gitee-publishing.md`
 - 新建：`docs/en/maintainers/gitee-publishing.md`
 - 修改：所有规范文档，加入稳定 `<!-- section:id -->` 标记并修正相对链接

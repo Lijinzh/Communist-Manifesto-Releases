@@ -10,8 +10,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_DIR = ROOT / "docs" / "software-interface-manual" / "assets"
+ASSET_DIR = ROOT / "docs" / "assets" / "software-interface-manual"
 MAIN_SOURCE = ROOT / "docs" / "assets" / "user-guide" / "autoclipboard-main.webp"
+DEVICE_SOURCE = ROOT / "docs" / "assets" / "user-guide" / "autoclipboard-settings.webp"
 
 
 MAIN_REGIONS = {
@@ -95,9 +96,6 @@ def build(device_source: Path) -> None:
     if device.size != (1442, 852):
         raise ValueError(f"unexpected device screenshot size: {device.size}")
 
-    _save_webp(main, ASSET_DIR / "main-window-full.webp")
-    _save_webp(device, ASSET_DIR / "device-settings-full.webp")
-    _save_webp(device, ROOT / "docs" / "assets" / "user-guide" / "autoclipboard-settings.webp")
     _crop_all(main, MAIN_REGIONS)
     _crop_all(device, DEVICE_REGIONS)
 
@@ -129,8 +127,8 @@ def main() -> int:
     parser.add_argument(
         "--device-source",
         type=Path,
-        default=ASSET_DIR / "device-settings-full.webp",
-        help="real device-settings screenshot; defaults to the committed full image",
+        default=DEVICE_SOURCE,
+        help="real device-settings screenshot; defaults to the shared user-guide image",
     )
     args = parser.parse_args()
     build(args.device_source.resolve())
