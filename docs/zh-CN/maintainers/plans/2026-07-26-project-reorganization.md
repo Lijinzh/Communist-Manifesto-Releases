@@ -1,3 +1,4 @@
+<!-- section:s001 -->
 # 项目整理实施计划
 
 > **供代理执行：** 必须使用 `superpowers:executing-plans` 逐项执行本计划。所有步骤使用复选框跟踪。
@@ -10,6 +11,7 @@
 
 ---
 
+<!-- section:s002 -->
 ### 任务 1：建立文档同步检查器
 
 **文件：**
@@ -34,6 +36,7 @@ def validate_local_links(paths: Iterable[Path]) -> list[str]: ...
 def sync(check: bool) -> int: ...
 ```
 
+<!-- section:s003 -->
 ### 任务 2：迁移项目文档并生成兼容页
 
 **文件：**
@@ -59,6 +62,7 @@ def sync(check: bool) -> int: ...
 - [ ] 运行 `git diff --check` 并检查删除内容都已迁移。
 - [ ] 提交：`docs: organize mirrored documentation trees`。
 
+<!-- section:s004 -->
 ### 任务 3：迁移并翻译 Skill 技术参考
 
 **文件：**
@@ -75,6 +79,7 @@ def sync(check: bool) -> int: ...
 - [ ] 运行文档测试和 `sync_docs.py --check`。
 - [ ] 提交：`docs: add mirrored skill reference trees`。
 
+<!-- section:s005 -->
 ### 任务 4：整理主 README、规则、CI 和图片
 
 **文件：**
@@ -97,6 +102,7 @@ def sync(check: bool) -> int: ...
 - [ ] 运行测试、文档检查、图片引用扫描和 `git diff --check`。
 - [ ] 提交：`refactor: clarify repository documentation structure`。
 
+<!-- section:s006 -->
 ### 任务 5：以测试驱动修复 Release 验证
 
 **文件：**
@@ -128,6 +134,7 @@ def compare_release_mirrors(
 ) -> list[str]: ...
 ```
 
+<!-- section:s007 -->
 ### 任务 6：完成验证、推送和线上修复
 
 **文件：**

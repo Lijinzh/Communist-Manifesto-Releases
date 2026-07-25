@@ -1,9 +1,12 @@
+<!-- section:s001 -->
 # 项目整理与双语文档设计
 
+<!-- section:s002 -->
 ## 目标
 
 在不破坏现有公开文档路径、不丢失必要内容的前提下，将仓库整理为两个主要 README、两棵严格对应的中英文文档树、一个共享资源区、一个独立 Skill 发布区和一套可验证的双平台发布流程。
 
+<!-- section:s003 -->
 ## 已确认的问题
 
 - 三份双语源文件生成六份公开文档，源文件与生成文件混在同一文档层级，维护职责不清。
@@ -14,6 +17,7 @@
 - `gitee_release_sync.py verify` 只检查 Gitee 元数据存在，没有比较 GitHub/Gitee 最新 Release，也没有验证匿名附件读取。
 - 当前线上 `v0.3.51` 不一致：GitHub 有 8 个附件，Gitee 有 7 个；Linux 安装包和 `latest.json` 也不同。
 
+<!-- section:s004 -->
 ## 文档信息架构
 
 根目录只保留两个实质性 README：
@@ -54,6 +58,7 @@ skills/ai-coding-handle/
 
 `AGENTS.md`、`SKILL.md` 和 `LICENSE` 因平台发现规则或法律文本保留固定路径；`AGENTS.md` 同时提供中英文规则，`SKILL.md` 将 Codex 路由到对应语言参考树。
 
+<!-- section:s005 -->
 ## 兼容策略
 
 现有公开文档路径不删除。旧路径改为简短、自动生成的兼容页，链接到新的中文或英文规范文档。兼容页不再承载第二份正文，因此既保留外部链接，又消除实质内容重复。
@@ -70,6 +75,7 @@ skills/ai-coding-handle/
 - 三个现有 `.bilingual.md` 路径
 - `skills/ai-coding-handle/references/*.md`
 
+<!-- section:s006 -->
 ## 防误删迁移流程
 
 1. 先用 `git mv` 将现有公开正文迁移到规范路径，保留历史。
@@ -79,6 +85,7 @@ skills/ai-coding-handle/
 5. 主 README 只移除已在详细文档完整保留的重复说明，并改为摘要加链接。
 6. 每次删除前检查引用、哈希和 Git diff，确保事实至少在每种语言的一处规范文档中保留。
 
+<!-- section:s007 -->
 ## 双语同步机制
 
 新增统一文档工具 `scripts/sync_docs.py`，负责：
@@ -92,12 +99,14 @@ skills/ai-coding-handle/
 
 `AGENTS.md` 明确规定所有人类可读文档必须在同一次修改中更新中英文对应文件，并要求运行同步与检查命令。GitHub Actions 对所有 Markdown、共享图片、文档脚本和工作流变更执行相同检查。
 
+<!-- section:s008 -->
 ## 图片整理
 
 共享图片统一放在 `docs/assets/`。软件界面手册的派生裁剪图放在 `docs/assets/software-interface-manual/`。构建脚本直接使用共享完整截图作为输入，不再提交重复的完整截图或未引用的重编码副本。
 
 只删除已经通过 SHA-256 和引用扫描确认的冗余文件；所有实际被文档引用的裁剪图继续保留。
 
+<!-- section:s009 -->
 ## 发布同步修复
 
 `gitee_release_sync.py verify` 必须验证：
@@ -112,6 +121,7 @@ skills/ai-coding-handle/
 
 本轮将在代码验证通过后修复线上 `v0.3.51`：上传缺少的 `CH343SER.EXE`，替换错误的 Linux 安装包和 `latest.json`，然后逐项复核 8 个附件。
 
+<!-- section:s010 -->
 ## 测试与完成标准
 
 - 文档双语树、章节 ID、兼容页和本地链接检查通过。
@@ -122,6 +132,7 @@ skills/ai-coding-handle/
 - Gitee 最新 Release 的全部附件可匿名读取。
 - 工作区最终干净，相关提交已推送到两个平台。
 
+<!-- section:s011 -->
 ## 非目标
 
 - 不搬运启用 Gitee 镜像之前的历史 Release 附件。

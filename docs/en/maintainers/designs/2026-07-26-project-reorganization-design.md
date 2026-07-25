@@ -1,9 +1,12 @@
+<!-- section:s001 -->
 # Project Reorganization and Bilingual Documentation Design
 
+<!-- section:s002 -->
 ## Goal
 
 Reorganize the repository without breaking existing public documentation paths or losing necessary content. The target is two primary READMEs, two strictly mirrored language trees, one shared asset area, one isolated Skill distribution area, and a verifiable dual-platform release process.
 
+<!-- section:s003 -->
 ## Confirmed problems
 
 - Three bilingual source files generate six public documents, while sources and generated outputs share the same visible hierarchy and have unclear ownership.
@@ -14,6 +17,7 @@ Reorganize the repository without breaking existing public documentation paths o
 - `gitee_release_sync.py verify` only checks that Gitee metadata exists; it neither compares the latest GitHub and Gitee releases nor verifies anonymous asset reads.
 - The live `v0.3.51` releases currently differ: GitHub has eight assets and Gitee has seven, with different Linux packages and `latest.json` files.
 
+<!-- section:s004 -->
 ## Documentation architecture
 
 Only two substantive README files remain at the repository root:
@@ -54,6 +58,7 @@ skills/ai-coding-handle/
 
 `AGENTS.md`, `SKILL.md`, and `LICENSE` retain fixed paths for platform discovery or legal reasons. `AGENTS.md` contains both Chinese and English rules, while `SKILL.md` routes Codex to the appropriate reference tree.
 
+<!-- section:s005 -->
 ## Compatibility policy
 
 Existing public documentation paths are not removed. Each legacy path becomes a short generated compatibility page that links to the new Chinese or English canonical document. Compatibility pages no longer carry a second copy of the body text, preserving external links while eliminating substantive duplication.
@@ -70,6 +75,7 @@ The paths include, but are not limited to:
 - the three existing `.bilingual.md` paths
 - `skills/ai-coding-handle/references/*.md`
 
+<!-- section:s006 -->
 ## Loss-prevention migration
 
 1. Move existing public bodies to canonical paths with `git mv` so history remains traceable.
@@ -79,6 +85,7 @@ The paths include, but are not limited to:
 5. Shorten a primary README only when the complete detail remains in a linked document, replacing the repeated block with a summary and link.
 6. Before every deletion, inspect references, hashes, and the Git diff so each fact remains in at least one canonical document per language.
 
+<!-- section:s007 -->
 ## Bilingual synchronization mechanism
 
 A unified `scripts/sync_docs.py` tool will:
@@ -92,12 +99,14 @@ A unified `scripts/sync_docs.py` tool will:
 
 `AGENTS.md` will require every human-readable documentation change to update both language counterparts in the same change and to run the synchronization and validation commands. GitHub Actions will run the same checks for every Markdown, shared asset, documentation script, or workflow change.
 
+<!-- section:s008 -->
 ## Asset cleanup
 
 Shared images live under `docs/assets/`. Derived software-interface crops live under `docs/assets/software-interface-manual/`. The asset builder reads the shared full screenshots directly and no longer commits duplicate full screenshots or unreferenced re-encoded copies.
 
 Only files proven redundant by SHA-256 comparison and reference scanning are deleted. Every crop referenced by a document remains.
 
+<!-- section:s009 -->
 ## Release mirror repair
 
 `gitee_release_sync.py verify` must confirm:
@@ -112,6 +121,7 @@ The formal synchronization command makes the latest release asset set exact by d
 
 After code validation, this work will repair the live `v0.3.51` release by uploading the missing `CH343SER.EXE`, replacing the incorrect Linux package and `latest.json`, and verifying all eight assets individually.
 
+<!-- section:s010 -->
 ## Testing and completion criteria
 
 - Bilingual trees, section IDs, compatibility pages, and local-link checks pass.
@@ -122,6 +132,7 @@ After code validation, this work will repair the live `v0.3.51` release by uploa
 - Every latest Gitee release asset is anonymously readable.
 - The final worktree is clean and the relevant commits are pushed to both platforms.
 
+<!-- section:s011 -->
 ## Non-goals
 
 - Do not backfill release assets from before the Gitee mirror was enabled.

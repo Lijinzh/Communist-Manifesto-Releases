@@ -1,3 +1,4 @@
+<!-- section:s001 -->
 # Project Reorganization Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:executing-plans` to execute this plan task by task. Steps use checkbox syntax for tracking.
@@ -10,6 +11,7 @@
 
 ---
 
+<!-- section:s002 -->
 ### Task 1: Build the documentation synchronizer
 
 **Files:**
@@ -34,6 +36,7 @@ def validate_local_links(paths: Iterable[Path]) -> list[str]: ...
 def sync(check: bool) -> int: ...
 ```
 
+<!-- section:s003 -->
 ### Task 2: Migrate project documentation and generate compatibility pages
 
 **Files:**
@@ -59,6 +62,7 @@ def sync(check: bool) -> int: ...
 - [ ] Run `git diff --check` and confirm all removed bodies exist at canonical paths.
 - [ ] Commit `docs: organize mirrored documentation trees`.
 
+<!-- section:s004 -->
 ### Task 3: Migrate and translate Skill technical references
 
 **Files:**
@@ -75,6 +79,7 @@ def sync(check: bool) -> int: ...
 - [ ] Run documentation tests and `sync_docs.py --check`.
 - [ ] Commit `docs: add mirrored skill reference trees`.
 
+<!-- section:s005 -->
 ### Task 4: Clean up primary READMEs, rules, CI, and assets
 
 **Files:**
@@ -97,6 +102,7 @@ def sync(check: bool) -> int: ...
 - [ ] Run tests, documentation checks, image reference scans, and `git diff --check`.
 - [ ] Commit `refactor: clarify repository documentation structure`.
 
+<!-- section:s006 -->
 ### Task 5: Repair release verification with TDD
 
 **Files:**
@@ -128,6 +134,7 @@ def compare_release_mirrors(
 ) -> list[str]: ...
 ```
 
+<!-- section:s007 -->
 ### Task 6: Verify, push, and repair the live mirror
 
 **Files:**
