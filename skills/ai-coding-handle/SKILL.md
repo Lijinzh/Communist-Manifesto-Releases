@@ -13,14 +13,14 @@ Use the bundled bootstrap and the installed AutoClipboard Maintenance/Agent Brid
 - Diagnosis is read-only. Run Maintenance `inventory`/`doctor` without repairing anything. For Agent or Hook integrity, also run `--agent-bridge doctor` and combine the findings. A `--live-test` still needs separate consent because it changes visible device state.
 - Before software installation, upgrade, or Hook configuration, explain the changes and obtain one explicit software confirmation. Software authorization does not authorize firmware flashing.
 - `firmware-check` is a non-destructive preflight: it may open the selected serial device and download and verify a firmware package, but it must not flash. Run firmware-check before asking for firmware consent.
-- Repository development flashing is for locally built test firmware before release. It does not require a published release; read [references/development-flashing.md](references/development-flashing.md) and keep release updates on the Maintenance contract.
+- Repository development flashing is for locally built test firmware before release. It does not require a published release; read [references/en/development-flashing.md](references/en/development-flashing.md) and keep release updates on the Maintenance contract.
 
 ## Dispatch
 
 1. For installation, upgrade, or Hook configuration, run `scripts/bootstrap-autoclipboard.ps1` on Windows or `scripts/bootstrap-autoclipboard.sh` on Linux/macOS after the software confirmation.
 2. Read the bootstrap JSON result. After installation, every Maintenance and Agent Bridge command must use the returned absolute `executable`; never assume `auto-clipboard` is on `PATH`.
-3. For host diagnosis, run the read-only Maintenance commands. For Hook diagnosis or setup, follow [references/agent-bridge-contract.md](references/agent-bridge-contract.md).
-4. For published firmware version or update requests, follow [references/maintenance-contract.md](references/maintenance-contract.md). For an explicit local source build and flash request, follow [references/development-flashing.md](references/development-flashing.md). Never guess D4 or V3, a port, or which device to use.
+3. For host diagnosis, run the read-only Maintenance commands. For Hook diagnosis or setup, follow [references/en/agent-bridge-contract.md](references/en/agent-bridge-contract.md).
+4. For published firmware version or update requests, follow [references/en/maintenance-contract.md](references/en/maintenance-contract.md). For an explicit local source build and flash request, follow [references/en/development-flashing.md](references/en/development-flashing.md). Never guess D4 or V3, a port, or which device to use.
 
 Only when `firmware-check` returns `success: true` and `status: confirmation_required`, show the user the device serial, port, board, current version, target version, asset name, asset SHA-256, plan expiry, and a warning not to disconnect power or USB. Then obtain a new, explicit, present-tense second confirmation for that exact plan. A previous “approve everything”, software confirmation, or one-time blanket authorization does not count. Run firmware-update only after the second explicit confirmation.
 
@@ -38,4 +38,4 @@ Use this path only inside the Communist-Manifesto repository when the user expli
 - Treat process exit code and JSON `success` as authoritative. Never report hardware end-to-end success when the physical handle was unavailable.
 - Codex Hook trust remains a user boundary. Require the core preflight (`hook_executable_available`, `platform_poll_supported`, `state_directory_writable`) and final doctor. A sole `hook_trust_granted` failure is actionable only when `hook_trust_probe_available`, `hook_trust_metadata_complete`, and `hook_runtime_enabled` are true. Never edit `trusted_hash` or use `--dangerously-bypass-hook-trust`.
 
-Read [references/platform-installation.md](references/platform-installation.md) for bootstrap behavior and [references/troubleshooting.md](references/troubleshooting.md) for failure handling. Native install is only for supported Codex/Claude integrations; a generic agent may use verified lifecycle `emit`, otherwise report `unsupported`.
+Read [references/en/platform-installation.md](references/en/platform-installation.md) for bootstrap behavior and [references/en/troubleshooting.md](references/en/troubleshooting.md) for failure handling. For a Chinese-language session, the mirrored references are under [references/zh-CN/](references/zh-CN/). Native install is only for supported Codex/Claude integrations; a generic agent may use verified lifecycle `emit`, otherwise report `unsupported`.

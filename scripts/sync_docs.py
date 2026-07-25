@@ -93,6 +93,23 @@ REDIRECTS = (
         "../README.en.md",
         "English project home",
     ),
+    *(
+        Redirect(
+            f"skills/ai-coding-handle/references/{name}.md",
+            "bilingual",
+            f"zh-CN/{name}.md",
+            chinese_title,
+            f"en/{name}.md",
+            english_title,
+        )
+        for name, chinese_title, english_title in (
+            ("agent-bridge-contract", "Agent Bridge 协议", "Agent Bridge contract"),
+            ("development-flashing", "仓库开发固件刷写", "repository development flashing"),
+            ("maintenance-contract", "Maintenance 协议", "Maintenance contract"),
+            ("platform-installation", "平台安装", "platform installation"),
+            ("troubleshooting", "故障排查", "troubleshooting"),
+        )
+    ),
 )
 
 
@@ -206,6 +223,14 @@ def sync(check: bool) -> int:
     )
     canonical_paths = sorted((ROOT / "docs" / "zh-CN").rglob("*.md"))
     canonical_paths.extend(sorted((ROOT / "docs" / "en").rglob("*.md")))
+    canonical_paths.extend(
+        sorted(
+            (ROOT / "skills" / "ai-coding-handle" / "references" / "zh-CN").rglob("*.md")
+        )
+    )
+    canonical_paths.extend(
+        sorted((ROOT / "skills" / "ai-coding-handle" / "references" / "en").rglob("*.md"))
+    )
     canonical_paths.extend(
         ROOT / redirect.path for redirect in REDIRECTS if (ROOT / redirect.path).exists()
     )
