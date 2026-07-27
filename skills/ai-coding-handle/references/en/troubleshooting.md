@@ -34,6 +34,66 @@ Codex and Claude Code have native install support. For Hermes, OpenCL, or anothe
 
 Doctor proves host-side configuration unless `--live-test` was explicitly authorized. Check that AutoClipboard is running, the device is paired and connected, and the selected state is visible. Record that hardware end-to-end validation remains unverified when the physical handle is unavailable.
 
+<!-- section:s006-linux-bluetooth -->
+## Linux handle improves while observed but stalls when idle
+
+Use this path when Linux input occasionally pauses while the handle still shows `LINK`, changes
+to `WAIT` after idle, reconnects with a flashing blue LED, or becomes noticeably more stable while
+AutoClipboard or an agent is actively observing it. Continuous BLE activity can keep a USB
+Bluetooth controller awake, so this pattern can expose `btusb` USB autosuspend rather than a
+firmware key-scan delay.
+
+Start with the bundled read-only check:
+
+```bash
+/absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --check
+```
+
+The script must resolve an `hciN` controller through its `btusb` interface to one USB parent that
+has `idVendor`, `idProduct`, and `power/control`. Stop on `device_not_found` or
+`ambiguous_device`; do not select an adapter by order. If multiple controllers exist, identify the
+intended one from independent host evidence and rerun with `--hci hciN`.
+
+Treat adapter-specific `power/control=on` as the recommended Linux default for this failure mode
+only when the result reports `recommended: true`. The common matching evidence is
+`btusb_autosuspend: "Y"` together with `power_control: "auto"`, or a temporary live value of
+`"on"` whose `persistent_rule_state` is still `missing`. A result of `configured` means the exact
+VID/PID rule is already active; do not rewrite it. When the evidence does not match, continue BLE,
+HID, radio-interference, and firmware diagnostics instead of applying this repair.
+
+Read-only kernel evidence may include repeated messages such as:
+
+```text
+Bluetooth: hci0: ACL packet for unknown connection handle ...
+```
+
+That message can support a host-controller transport diagnosis, but it does not by itself prove
+that the handle firmware rebooted. Require separate serial reset output, reset-cause evidence, or
+USB re-enumeration before reporting a firmware reset.
+
+Before applying the repair, show the user all fields returned by the check: `hci`, `vendor_id`,
+`product_id`, `usb_device`, `power_control`, `btusb_autosuspend`, `persistent_rule`, and
+`udev_rule`. Explain that the command immediately writes `on` to that exact USB device and
+installs the exact VID/PID udev rule for reboot and replug persistence. Obtain explicit
+system-configuration authorization, then use the absolute script path and the exact verified HCI:
+
+```bash
+pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --apply --hci hci0
+```
+
+Report success only when the JSON result has `success: true`, `status: "configured"`,
+`power_control: "on"`, and `persistent_rule_state: "managed"`. Do not restart BlueZ, power-cycle
+the adapter, clear pairings, disable autosuspend globally, or change another USB device. Validate
+the real symptom after an idle period rather than treating a successful sysfs write as proof that
+all BLE issues are fixed.
+
+Rollback is also a system change and needs explicit authorization. It removes only the managed
+rule for the selected VID/PID and restores the current adapter to `power/control=auto`:
+
+```bash
+pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --remove --hci hci0
+```
+
 <!-- section:s007 -->
 ## Ubuntu or BlueZ shows only an unnamed HID address
 

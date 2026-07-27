@@ -34,6 +34,63 @@ Codex 和 Claude Code 支持原生安装。对于 Hermes、OpenCL 或其他通�
 
 除非明确授权了 `--live-test`，doctor 只证明主机侧配置。检查 AutoClipboard 正在运行、设备已经配对并连接，而且选定状态可见。物理手柄不可用时，必须记录硬件端到端验证仍未完成。
 
+<!-- section:s006-linux-bluetooth -->
+## Linux 手柄在观测时稳定，但空闲后卡顿
+
+当 Linux 输入偶发暂停、手柄仍显示 `LINK`，空闲后变成 `WAIT`，闪蓝灯重新连接，或
+AutoClipboard、Agent 持续观测时明显更稳定，使用本流程。持续 BLE 流量会让 USB 蓝牙
+控制器保持唤醒，因此这种现象可能暴露的是 `btusb` USB 自动挂起，而不是固件按键扫描
+延迟。
+
+先运行随 Skill 提供的只读检查：
+
+```bash
+/absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --check
+```
+
+脚本必须把 `hciN` 控制器经过 `btusb` 接口解析到唯一的 USB 父设备，而且该父设备同时
+具有 `idVendor`、`idProduct` 和 `power/control`。返回 `device_not_found` 或
+`ambiguous_device` 时停止，不能按枚举顺序选择适配器。如果存在多个控制器，必须根据
+独立的主机证据识别目标，再用 `--hci hciN` 重新运行。
+
+只有结果返回 `recommended: true` 时，才把该适配器专用的 `power/control=on` 作为这种
+故障模式下的 Linux 推荐默认值。常见匹配证据是 `btusb_autosuspend: "Y"` 且
+`power_control: "auto"`，或者当前临时值已经是 `"on"`，但
+`persistent_rule_state` 仍为 `missing`。结果为 `configured` 表示准确 VID/PID 的规则
+已经生效，不要重复改写。证据不匹配时继续检查 BLE、HID、无线干扰和固件，不要应用
+本修复。
+
+只读内核证据可能反复包含：
+
+```text
+Bluetooth: hci0: ACL packet for unknown connection handle ...
+```
+
+这条消息可以支持主机控制器传输故障的判断，但不能单独证明手柄固件发生了重启。
+只有另有串口复位输出、复位原因或 USB 重新枚举证据时，才能报告固件重启。
+
+应用修复前，向用户展示检查返回的全部相关字段：`hci`、`vendor_id`、`product_id`、
+`usb_device`、`power_control`、`btusb_autosuspend`、`persistent_rule` 和 `udev_rule`。
+说明该命令会立即向这个准确 USB 设备写入 `on`，并安装准确 VID/PID 的 udev 规则，
+使设置在重启和重新插拔后继续有效。取得明确的系统配置授权后，使用脚本绝对路径和
+已经验证的准确 HCI：
+
+```bash
+pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --apply --hci hci0
+```
+
+只有 JSON 结果同时满足 `success: true`、`status: "configured"`、
+`power_control: "on"` 和 `persistent_rule_state: "managed"` 时才能报告成功。不能重启
+BlueZ、开关适配器电源、清除配对、全局关闭自动挂起或修改其他 USB 设备。必须经过一段
+空闲时间验证真实症状，不能把 sysfs 写入成功当作所有 BLE 问题均已解决的证明。
+
+回滚同样属于系统修改，需要明确授权。它只删除所选 VID/PID 对应的受管规则，并把当前
+适配器恢复为 `power/control=auto`：
+
+```bash
+pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --remove --hci hci0
+```
+
 <!-- section:s007 -->
 ## Ubuntu 或 BlueZ 只显示未命名 HID 地址
 
