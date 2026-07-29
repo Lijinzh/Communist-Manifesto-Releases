@@ -56,9 +56,10 @@ AutoClipboard、Agent 持续观测时明显更稳定，使用本流程。持续 
 只有结果返回 `recommended: true` 时，才把该适配器专用的 `power/control=on` 作为这种
 故障模式下的 Linux 推荐默认值。常见匹配证据是 `btusb_autosuspend: "Y"` 且
 `power_control: "auto"`，或者当前临时值已经是 `"on"`，但
-`persistent_rule_state` 仍为 `missing`。结果为 `configured` 表示准确 VID/PID 的规则
-已经生效，不要重复改写。证据不匹配时继续检查 BLE、HID、无线干扰和固件，不要应用
-本修复。
+`persistent_rule_state` 仍为 `missing`。`persistent_rule_state: "legacy_managed"` 表示旧版
+规则只在 USB 设备加入时写入，可能在 `btusb` 绑定时被覆盖；取得授权后的 `--apply` 会把
+它升级为当前的加入与绑定双阶段规则。结果为 `configured` 表示准确 VID/PID 的规则已经
+生效，不要重复改写。证据不匹配时继续检查 BLE、HID、无线干扰和固件，不要应用本修复。
 
 只读内核证据可能反复包含：
 
@@ -80,9 +81,10 @@ pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-auto
 ```
 
 只有 JSON 结果同时满足 `success: true`、`status: "configured"`、
-`power_control: "on"` 和 `persistent_rule_state: "managed"` 时才能报告成功。不能重启
-BlueZ、开关适配器电源、清除配对、全局关闭自动挂起或修改其他 USB 设备。必须经过一段
-空闲时间验证真实症状，不能把 sysfs 写入成功当作所有 BLE 问题均已解决的证明。
+`power_control: "on"` 和 `persistent_rule_state: "managed"` 时才能报告成功。重启后必须
+重新运行 `--check`；如果实时值又变成 `auto`，就不能认为持久化已经验证。不能重启 BlueZ、
+开关适配器电源、清除配对、全局关闭自动挂起或修改其他 USB 设备。必须经过一段空闲时间
+验证真实症状，不能把 sysfs 写入成功当作所有 BLE 问题均已解决的证明。
 
 回滚同样属于系统修改，需要明确授权。它只删除所选 VID/PID 对应的受管规则，并把当前
 适配器恢复为 `power/control=auto`：
@@ -90,6 +92,51 @@ BlueZ、开关适配器电源、清除配对、全局关闭自动挂起或修改
 ```bash
 pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --remove --hci hci0
 ```
+
+<!-- section:s006-linux-mediatek-firmware -->
+## Linux MediaTek 固件已更新但仍然断连
+
+必须把“固件文件已经替换”和“控制器实际加载了该固件”视为两个独立结论。MediaTek 组合
+网卡的蓝牙部分通过 USB 暴露，因此不能用 `lspci` 看到的 PCIe Wi-Fi 型号选择蓝牙固件。
+
+先执行只读诊断，并把每条证据绑定到同一个 HCI 控制器：
+
+```bash
+readlink -f /sys/class/bluetooth/hci0/device
+lsusb
+journalctl -k -b --no-pager | rg 'Bluetooth: hci0: (HW/SW Version|Device setup)|unknown connection handle|USB disconnect'
+```
+
+解析 USB 父设备、VID/PID、`btusb` 驱动和控制器厂商，再根据 Linux 证据确定实际使用的
+`btmtk` 固件家族。当前上游 Linux 对应路径为：
+
+- MT7922：`mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin`
+- MT7925：`mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin`
+
+对于已知的 `13d3:3602` 适配器，上游 `btusb.c` 把该 USB ID 列在附加 MT7925 设备下。
+仍需用 `strings -a` 读取已安装候选文件的构建标签，并与内核报告的运行中 `Build Time`
+匹配；不能只相信 USB 产品字符串或记忆中的型号。如果刚复制的 MT7922 文件标签更新，
+但运行中构建时间仍与 MT7925 文件一致，那么该控制器没有使用这次 MT7922 更新。
+
+只把选中的准确文件与官方
+[`kernel-firmware/linux-firmware`](https://gitlab.com/kernel-firmware/linux-firmware) `main`
+分支及该路径的提交历史比较。先下载到 `/tmp`，分别计算本地和上游文件的 SHA-256，并
+提取两个构建标签后才能提出修改。官方源可访问时不得改用非官方镜像。
+
+替换前必须展示准确 HCI、USB VID/PID、选中的本地路径、运行中构建版本、本地构建版本和
+SHA-256、上游构建版本和 SHA-256、来源 URL 以及备份路径，并取得明确的软件修改授权。
+先备份实际使用的文件，只安装选中的上游文件，保持 root 所有权和 `0644` 权限，随后
+重新校验 SHA-256。不能为了保险同时替换 MT7922 和 MT7925。
+
+控制器重新初始化前，新文件并未生效。重启、USB 解绑/重新绑定或模块重载都会断开其他
+蓝牙设备，必须另行取得授权。完成获准的重启后，只有内核的新 `Build Time` 与已安装
+构建标签一致时，才能报告控制器更新完成。
+
+如果最新构建已经实际加载但仍然断连，继续执行上面的适配器专用 autosuspend 检查，
+并检查 BlueZ/HCI、无线干扰以及手柄串口复位证据。反复出现
+`ACL packet for unknown connection handle`，随后 HID 被重新创建，但控制器 USB 设备
+没有消失，更符合主机/控制器连接状态不同步；它不能单独证明 ESP32 重启，也不能证明
+问题已经修复。
 
 <!-- section:s007 -->
 ## Ubuntu 或 BlueZ 只显示未命名 HID 地址

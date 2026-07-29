@@ -5,11 +5,12 @@ action="check"
 action_seen=0
 requested_hci=""
 hci_seen=0
-sysfs_root="/sys"
-udev_rules_dir="/etc/udev/rules.d"
+sysfs_root="${AUTOCLIPBOARD_SYSFS_ROOT:-/sys}"
+udev_rules_dir="${AUTOCLIPBOARD_UDEV_RULES_DIR:-/etc/udev/rules.d}"
 rule_prefix="81-autoclipboard-bluetooth-power"
 managed_header="# Managed by AutoClipboard ai-coding-handle skill."
 temp_rule=""
+previous_rule_backup=""
 
 declare -a candidate_hcis=()
 declare -a candidate_usb_paths=()
@@ -73,12 +74,22 @@ read_value() {
 }
 
 rule_line() {
+  printf '%s\n%s' \
+    "ACTION==\"add\", SUBSYSTEM==\"usb\", ENV{DEVTYPE}==\"usb_device\", ATTR{idVendor}==\"$selected_vendor_id\", ATTR{idProduct}==\"$selected_product_id\", TEST==\"power/control\", ATTR{power/control}=\"on\"" \
+    "ACTION==\"bind\", SUBSYSTEM==\"usb\", DRIVER==\"btusb\", ATTRS{idVendor}==\"$selected_vendor_id\", ATTRS{idProduct}==\"$selected_product_id\", TEST==\"../power/control\", ATTR{../power/control}=\"on\""
+}
+
+legacy_rule_line() {
   printf 'ACTION=="add|bind", SUBSYSTEM=="usb", ATTR{idVendor}=="%s", ATTR{idProduct}=="%s", TEST=="power/control", ATTR{power/control}="on"' \
     "$selected_vendor_id" "$selected_product_id"
 }
 
 render_rule_file() {
   printf '%s\n%s\n' "$managed_header" "$(rule_line)"
+}
+
+render_legacy_rule_file() {
+  printf '%s\n%s\n' "$managed_header" "$(legacy_rule_line)"
 }
 
 load_selected_state() {
@@ -93,6 +104,8 @@ load_selected_state() {
     selected_rule_state="unreadable"
   elif cmp -s <(render_rule_file) "$selected_rule_file"; then
     selected_rule_state="managed"
+  elif cmp -s <(render_legacy_rule_file) "$selected_rule_file"; then
+    selected_rule_state="legacy_managed"
   else
     selected_rule_state="conflict"
   fi
@@ -209,9 +222,25 @@ write_managed_rule() {
     return 1
   fi
   chmod 0644 -- "$temp_rule" || return 1
-  ln -- "$temp_rule" "$selected_rule_file" || return 1
-  rm -- "$temp_rule" || return 1
+  mv -fT -- "$temp_rule" "$selected_rule_file" || return 1
   temp_rule=""
+}
+
+backup_existing_rule() {
+  previous_rule_backup="$(mktemp "$udev_rules_dir/.${rule_prefix}.backup.XXXXXX")" || return 1
+  cp -- "$selected_rule_file" "$previous_rule_backup" || return 1
+  chmod 0644 -- "$previous_rule_backup" || return 1
+}
+
+rollback_rule_change() {
+  local previous_state="$1"
+  if [[ "$previous_state" == "missing" ]]; then
+    rm -f -- "$selected_rule_file"
+  elif [[ -n "$previous_rule_backup" && -e "$previous_rule_backup" ]]; then
+    mv -fT -- "$previous_rule_backup" "$selected_rule_file"
+    previous_rule_backup=""
+  fi
+  reload_udev_rules || true
 }
 
 reload_udev_rules() {
@@ -221,6 +250,9 @@ reload_udev_rules() {
 cleanup() {
   if [[ -n "$temp_rule" && -e "$temp_rule" ]]; then
     rm -f -- "$temp_rule"
+  fi
+  if [[ -n "$previous_rule_backup" && -e "$previous_rule_backup" ]]; then
+    rm -f -- "$previous_rule_backup"
   fi
 }
 trap cleanup EXIT
@@ -344,34 +376,42 @@ if [[ "$action" == "apply" ]]; then
   if [[ "$btusb_autosuspend" != "Y" && "$btusb_autosuspend" != "1" ]]; then
     fail_selected not_recommended "btusb autosuspend is not enabled globally; no changes were made" 11
   fi
-  rule_created=0
-  if [[ "$selected_rule_state" == "missing" ]]; then
+  previous_rule_state="$selected_rule_state"
+  rule_changed=0
+  if [[ "$selected_rule_state" == "legacy_managed" ]]; then
+    if ! backup_existing_rule; then
+      fail_selected apply_failed "could not back up the legacy managed rule; no changes were made" 7
+    fi
+  fi
+  if [[ "$selected_rule_state" == "missing" || "$selected_rule_state" == "legacy_managed" ]]; then
     if ! write_managed_rule; then
       fail_selected apply_failed "could not install the persistent udev rule; no USB power setting was changed" 7
     fi
-    rule_created=1
+    rule_changed=1
   fi
 
   if ! reload_udev_rules; then
-    if [[ "$rule_created" -eq 1 ]]; then
-      rm -f -- "$selected_rule_file"
+    if [[ "$rule_changed" -eq 1 ]]; then
+      rollback_rule_change "$previous_rule_state"
     fi
-    fail_selected apply_failed "could not reload udev rules; no live USB power setting was changed and any newly created rule was rolled back" 7
+    fail_selected apply_failed "could not reload udev rules; no live USB power setting was changed and the previous rule state was restored" 7
   fi
   if ! printf 'on\n' > "$selected_usb_path/power/control"; then
-    if [[ "$rule_created" -eq 1 ]]; then
-      rm -f -- "$selected_rule_file"
-      reload_udev_rules || true
+    if [[ "$rule_changed" -eq 1 ]]; then
+      rollback_rule_change "$previous_rule_state"
     fi
-    fail_selected apply_failed "could not set power/control=on; the newly created rule was rolled back" 7
+    fail_selected apply_failed "could not set power/control=on; the previous rule state was restored" 7
   fi
   load_selected_state
   if [[ "$selected_power_control" != "on" || "$selected_rule_state" != "managed" ]]; then
-    if [[ "$rule_created" -eq 1 ]]; then
-      rm -f -- "$selected_rule_file"
-      reload_udev_rules || true
+    if [[ "$rule_changed" -eq 1 ]]; then
+      rollback_rule_change "$previous_rule_state"
     fi
     fail_selected verification_failed "the live power setting or persistent managed rule failed post-apply verification" 8
+  fi
+  if [[ -n "$previous_rule_backup" && -e "$previous_rule_backup" ]]; then
+    rm -f -- "$previous_rule_backup"
+    previous_rule_backup=""
   fi
   emit_selected true configured false "persistent power/control=on is active for the exact btusb VID/PID"
   exit 0
@@ -386,7 +426,7 @@ if [[ "$(read_value "$selected_usb_path/power/control")" != "auto" ]]; then
   fail_selected verification_failed "power/control did not remain auto; the persistent rule was not removed" 8
 fi
 
-if [[ "$selected_rule_state" == "managed" ]]; then
+if [[ "$selected_rule_state" == "managed" || "$selected_rule_state" == "legacy_managed" ]]; then
   if ! rm -- "$selected_rule_file"; then
     printf '%s\n' "$previous_power_control" > "$selected_usb_path/power/control" 2>/dev/null || true
     fail_selected remove_failed "could not remove the managed udev rule; the previous live power setting was restored" 9

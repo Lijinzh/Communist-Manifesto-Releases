@@ -57,9 +57,12 @@ intended one from independent host evidence and rerun with `--hci hciN`.
 Treat adapter-specific `power/control=on` as the recommended Linux default for this failure mode
 only when the result reports `recommended: true`. The common matching evidence is
 `btusb_autosuspend: "Y"` together with `power_control: "auto"`, or a temporary live value of
-`"on"` whose `persistent_rule_state` is still `missing`. A result of `configured` means the exact
-VID/PID rule is already active; do not rewrite it. When the evidence does not match, continue BLE,
-HID, radio-interference, and firmware diagnostics instead of applying this repair.
+`"on"` whose `persistent_rule_state` is still `missing`. A
+`persistent_rule_state: "legacy_managed"` result identifies the older add-only rule that can be
+overwritten during `btusb` binding; an authorized `--apply` upgrades it to the current add-and-bind
+rule. A result of `configured` means the exact VID/PID rule is active; do not rewrite it. When the
+evidence does not match, continue BLE, HID, radio-interference, and firmware diagnostics instead
+of applying this repair.
 
 Read-only kernel evidence may include repeated messages such as:
 
@@ -82,7 +85,8 @@ pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-auto
 ```
 
 Report success only when the JSON result has `success: true`, `status: "configured"`,
-`power_control: "on"`, and `persistent_rule_state: "managed"`. Do not restart BlueZ, power-cycle
+`power_control: "on"`, and `persistent_rule_state: "managed"`. Re-run `--check` after reboot; if
+the live value returned to `auto`, persistence is not verified. Do not restart BlueZ, power-cycle
 the adapter, clear pairings, disable autosuspend globally, or change another USB device. Validate
 the real symptom after an idle period rather than treating a successful sysfs write as proof that
 all BLE issues are fixed.
@@ -93,6 +97,56 @@ rule for the selected VID/PID and restores the current adapter to `power/control
 ```bash
 pkexec /absolute/path/to/ai-coding-handle/scripts/configure-linux-bluetooth-autosuspend.sh --remove --hci hci0
 ```
+
+<!-- section:s006-linux-mediatek-firmware -->
+## Linux MediaTek firmware was updated but disconnects continue
+
+Treat "the firmware file was replaced" and "the controller loaded that firmware" as separate
+claims. MediaTek combo cards expose Bluetooth through USB, so a PCIe Wi-Fi identity from `lspci`
+must not select the Bluetooth firmware family.
+
+Start read-only and bind every observation to one HCI controller:
+
+```bash
+readlink -f /sys/class/bluetooth/hci0/device
+lsusb
+journalctl -k -b --no-pager | rg 'Bluetooth: hci0: (HW/SW Version|Device setup)|unknown connection handle|USB disconnect'
+```
+
+Resolve the USB parent, VID/PID, `btusb` driver, and controller manufacturer. Then determine the
+active `btmtk` family from Linux evidence. Current upstream Linux selects these paths:
+
+- MT7922: `mediatek/BT_RAM_CODE_MT7922_1_1_hdr.bin`
+- MT7925: `mediatek/mt7925/BT_RAM_CODE_MT7925_1_1_hdr.bin`
+
+For the known `13d3:3602` adapter, upstream `btusb.c` lists the USB ID under the additional
+MT7925 devices. Confirm that conclusion by matching the running kernel `Build Time` to the build
+tag embedded in the installed candidate with `strings -a`; do not rely on the USB product string
+or remembered model alone. If a newly copied MT7922 file has a newer tag while the running build
+matches the MT7925 file, the MT7922 update was not used by that controller.
+
+Compare only the selected file with the official
+[`kernel-firmware/linux-firmware`](https://gitlab.com/kernel-firmware/linux-firmware) `main`
+branch and its path-specific commit history. Download to `/tmp`, calculate SHA-256 for both files,
+and extract both build tags before proposing a change. Never accept an unofficial mirror when the
+official source is reachable.
+
+Before replacement, show the exact HCI, USB VID/PID, selected installed path, running build,
+installed build and SHA-256, upstream build and SHA-256, source URL, and backup path. Obtain
+explicit software confirmation. Back up the active file, install only the selected upstream file
+with root ownership and mode `0644`, then re-check its SHA-256. Do not replace both MT7922 and
+MT7925 files "just in case".
+
+The new file is not active until the controller initializes again. A reboot, USB unbind/rebind,
+or module reload disconnects Bluetooth devices and requires separate authorization. After the
+authorized restart, require the new kernel `Build Time` to match the installed build tag before
+reporting the controller update complete.
+
+If the latest build is active but disconnects remain, continue with the adapter-specific
+autosuspend check above, BlueZ/HCI diagnostics, radio interference, and handle serial reset
+evidence. Repeated `ACL packet for unknown connection handle` followed by HID recreation, without
+the controller USB device disappearing, points to a host/controller connection-state mismatch;
+it does not by itself prove an ESP32 reboot or a fixed issue.
 
 <!-- section:s007 -->
 ## Ubuntu or BlueZ shows only an unnamed HID address
