@@ -7,7 +7,7 @@ Use this workflow only when the user explicitly requests local firmware testing 
 ## Preconditions
 
 - Start from a clean or understood worktree and identify the exact source commit.
-- Probe exactly one device and use its reported port, board, device serial, and strict firmware version.
+- Probe exactly one device and use its reported port, board, device serial, and strict firmware version. The `--device-serial` value is the firmware identity reported as `sid`/`device_serial`; a USB transport serial from `/dev/serial/by-id`, udev, or the USB descriptor identifies the port and must not be substituted unless it exactly matches the firmware identity.
 - Stop on `device_not_connected`, `ambiguous_device`, `board_unknown`, or identity mismatch.
 - Use the V3 environment only for a device reporting `board=v3`; use the D4 environment only for `board=d4`.
 
@@ -44,6 +44,8 @@ uv --project AutoClipboard run python \
 ```
 
 The wrapper must validate the package, write only the app entry at `0x10000`, preserve NVS/SPIFFS, and perform post-flash identity and version verification. Treat both exit code and result JSON `success` as authoritative.
+
+An identity mismatch rejected before the write is a successful safety stop, not a failed flash. Correct the expected firmware `device_serial`, rerun the wrapper, and state explicitly that no flash write occurred during the rejected attempt.
 
 <!-- section:s005 -->
 ## Verification

@@ -7,7 +7,7 @@
 ## 前置条件
 
 - 从干净或状态明确的工作区开始，并记录准确的源码提交。
-- 只探测一个设备，使用设备报告的端口、板型、设备序列号和严格固件版本。
+- 只探测一个设备，使用设备报告的端口、板型、设备序列号和严格固件版本。`--device-serial` 必须使用固件以 `sid`/`device_serial` 报告的身份；`/dev/serial/by-id`、udev 或 USB 描述符中的 USB 传输序列号只用于识别端口，除非与固件身份完全一致，否则不得代替前者。
 - 遇到 `device_not_connected`、`ambiguous_device`、`board_unknown` 或身份不匹配时停止。
 - 只有设备报告 `board=v3` 时才使用 V3 环境；只有设备报告 `board=d4` 时才使用 D4 环境。
 
@@ -44,6 +44,8 @@ uv --project AutoClipboard run python \
 ```
 
 包装器必须验证固件包，只向 `0x10000` 写入应用条目，保留 NVS/SPIFFS，并在刷写后验证身份和版本。进程退出码和结果 JSON 中的 `success` 都是权威依据。
+
+如果身份不匹配在写入前被拒绝，这代表安全拦截成功，不是刷写失败。应改用正确的固件 `device_serial` 重新运行包装器，并明确说明被拒绝的那次尝试没有发生 Flash 写入。
 
 <!-- section:s005 -->
 ## 验证
