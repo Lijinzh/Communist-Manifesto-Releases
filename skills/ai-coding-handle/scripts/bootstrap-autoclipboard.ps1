@@ -137,12 +137,10 @@ function Wait-ForAutoClipboardExecutable {
     return $null
 }
 
-function Invoke-BridgeDoctor {
-    param([string]$Executable, [string]$OutputPath)
-    $bridgeAgent = if ($Agent -eq "generic") { "auto" } else { $Agent }
+function Invoke-AgentBridgeProcess {
+    param([string]$Executable, [string[]]$Arguments, [string]$OutputPath)
     Remove-Item -LiteralPath $OutputPath -Force -ErrorAction SilentlyContinue
-    $arguments = @("--agent-bridge", "doctor", "--agent", $bridgeAgent, "--result-file", ('"' + $OutputPath + '"'), "--quiet")
-    $process = Start-Process -FilePath $Executable -ArgumentList $arguments -PassThru
+    $process = Start-Process -FilePath $Executable -ArgumentList $Arguments -PassThru
     if (-not $process.WaitForExit((Get-ProbeTimeoutSeconds) * 1000)) {
         Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
         $process.WaitForExit()
@@ -154,6 +152,13 @@ function Invoke-BridgeDoctor {
     }
     $result = Get-Content -LiteralPath $OutputPath -Raw | ConvertFrom-Json
     return [pscustomobject]@{ ExitCode = $exitCode; HasResult = $true; TimedOut = $false; Result = $result }
+}
+
+function Invoke-BridgeDoctor {
+    param([string]$Executable, [string]$OutputPath)
+    $bridgeAgent = if ($Agent -eq "generic") { "auto" } else { $Agent }
+    $arguments = @("--agent-bridge", "doctor", "--agent", $bridgeAgent, "--result-file", ('"' + $OutputPath + '"'), "--quiet")
+    return Invoke-AgentBridgeProcess $Executable $arguments $OutputPath
 }
 
 function Assert-BridgeCorePreflight {
@@ -215,10 +220,11 @@ function Configure-ExistingBridge {
     $installResult = Join-Path $TempRoot "install.json"
     $arguments = @("--agent-bridge", "install", "--agent", $Agent)
     if ($DryRun) { $arguments += "--dry-run" }
-    $arguments += @("--result-file", $installResult, "--quiet")
-    & $Executable @arguments
-    if ($LASTEXITCODE -ne 0) { throw "native install failed" }
-    $install = Get-Content -LiteralPath $installResult -Raw | ConvertFrom-Json
+    $arguments += @("--result-file", ('"' + $installResult + '"'), "--quiet")
+    $installProcess = Invoke-AgentBridgeProcess $Executable $arguments $installResult
+    if ($installProcess.TimedOut) { throw "native install timed out" }
+    if ($installProcess.ExitCode -ne 0 -or -not $installProcess.HasResult) { throw "native install failed" }
+    $install = $installProcess.Result
     if (-not $install.success) { throw "native install returned an unsuccessful result" }
     if (@($install.changes).Count -eq 0) { throw "native install did not detect any native agent to configure" }
 
