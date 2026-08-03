@@ -154,17 +154,21 @@ CommunistKB-XXXX
 <!-- section:s013 -->
 ## AutoClipboard 桌面软件
 
-AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙设备，配置 Profile 名称和图标，录制宏按键，调整小屏、灯环和蜂鸣器，查看 IMU 三维姿态，配置演讲光圈，并在受控流程中更新固件。
+AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙设备，配置 Profile 名称和图标，录制宏按键，调整小屏、灯环和蜂鸣器，查看 IMU 三维姿态，配置演讲光圈，并提供账户入口、免费/高级语音输入和受控固件更新流程。
 
 <p align="center">
   <img src="docs/assets/user-guide/autoclipboard-main.webp" alt="AutoClipboard 主界面" width="820">
 </p>
 
 <p align="center">
+  <img src="docs/assets/user-guide/autoclipboard-voice.webp" alt="AutoClipboard 语音配置界面" width="520">
+</p>
+
+<p align="center">
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard 设备设置界面" width="900">
 </p>
 
-这里展示的是当前真实界面。需要查看编号分区图、逐个控件的作用，以及“只改软件”和“会写入硬件”的明确区别，请阅读 [AutoClipboard 软件界面详细说明书](docs/zh-CN/software-interface-manual.md)。使用 Agent 状态同步、Profile 快开、IMU 预览或演讲光圈时，请让 AutoClipboard 保持后台运行。
+这里展示的是 AutoClipboard `0.3.62` 当前源码渲染出的真实界面，不是文生图界面。截图使用隔离的干净设置，未包含个人账户、Agent 会话或实体手柄标识，因此会显示未登录、BLE 未连接等安全演示状态。需要查看编号分区图、逐个控件的作用，以及“只改软件”和“会写入硬件”的明确区别，请阅读 [AutoClipboard 软件界面详细说明书](docs/zh-CN/software-interface-manual.md)。使用 Agent 状态同步、Profile 快开、IMU 预览、语音输入或演讲光圈时，请让 AutoClipboard 保持后台运行。
 
 <!-- section:s014 -->
 ## 下载文件

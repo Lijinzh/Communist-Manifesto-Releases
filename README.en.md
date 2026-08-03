@@ -154,17 +154,21 @@ The screen also shows the current Profile, battery, time, device state, and the 
 <!-- section:s013 -->
 ## AutoClipboard
 
-AutoClipboard is the desktop companion application. It can display the active Bluetooth device, configure Profile names and icons, record macros, adjust the screen, light ring and buzzer, preview IMU orientation, configure the presenter Halo, and perform controlled firmware updates.
+AutoClipboard is the desktop companion application. It can display the active Bluetooth device, configure Profile names and icons, record macros, adjust the screen, light ring and buzzer, preview IMU orientation, configure the presenter Halo, provide account and free/premium voice-input entry points, and perform controlled firmware updates.
 
 <p align="center">
   <img src="docs/assets/user-guide/autoclipboard-main.webp" alt="AutoClipboard main window" width="820">
 </p>
 
 <p align="center">
+  <img src="docs/assets/user-guide/autoclipboard-voice.webp" alt="AutoClipboard voice configuration" width="520">
+</p>
+
+<p align="center">
   <img src="docs/assets/user-guide/autoclipboard-settings.webp" alt="AutoClipboard device settings" width="900">
 </p>
 
-The screenshots show the current real interface. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/en/software-interface-manual.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, or the presenter Halo.
+These are real renders from the current AutoClipboard `0.3.62` source, not generated UI mockups. They were captured with isolated clean settings and contain no personal account, Agent-session, or physical-handle identifiers, so signed-out and BLE-disconnected states are expected. For numbered region diagrams, control-by-control effects, and a clear distinction between software-only and hardware-changing settings, read the [AutoClipboard software interface manual](docs/en/software-interface-manual.md). Keep AutoClipboard running in the background when using Agent status synchronization, Profile quick launch, IMU preview, voice input, or the presenter Halo.
 
 <!-- section:s014 -->
 ## Downloads

@@ -297,7 +297,18 @@ Agent state examples include idle, working, attention, permission, blocked, done
   <img src="../assets/user-guide/autoclipboard-main.webp" alt="AutoClipboard main window" width="900">
 </p>
 
-The main window shows the Bluetooth device name, connection summary, battery information, Agent state, Typeless capture status, and shortcuts to device settings or light tests.
+The main window shows the Bluetooth device name, connection summary, battery information, Agent state, and Typeless capture status. It also provides pairing, device-settings, status-light, light-test, account, voice, software-settings, and clear actions.
+
+### Account and voice input
+
+<p align="center">
+  <img src="../assets/user-guide/autoclipboard-voice.webp" alt="AutoClipboard account and voice configuration" width="520">
+</p>
+
+- `Account / Sign in` opens the ZKO account and entitlement flow. Opening it does not start an audio upload or a purchase.
+- The free voice tier requests Windows system dictation. The operating system manages audio and dictated text; AutoClipboard does not record audio or read the system dictation transcript.
+- The premium tier uses an activation code, account entitlement, and short-lived cloud tokens. Its cloud voice flow begins only after the user explicitly selects and configures it; the free tier is never silently changed into cloud upload.
+- The voice shortcut and whether its trigger keystroke is intercepted can be configured independently. The signed-out and voice-disabled state in the screenshot comes from the clean documentation profile.
 
 <!-- section:s031 -->
 ### Device settings
@@ -314,7 +325,7 @@ The device settings window can provide:
 - IMU three-dimensional preview, calibration, recording, and presenter Halo controls.
 - Type-C device selection, serial diagnostics, Bluetooth repair entry points, and firmware maintenance.
 
-The screenshots show the current real interface. Read the [AutoClipboard software interface manual](software-interface-manual.md) for numbered crops, every visible area, software-versus-hardware classification, and the result of each action.
+These are real renders from the current AutoClipboard `0.3.62` source, not generated UI mockups. The capture used isolated clean settings with real device services disabled, so it proves the software layout and visible controls only; it is not evidence of a physical-handle connection or hardware effect. Read the [AutoClipboard software interface manual](software-interface-manual.md) for numbered crops, every visible area, software-versus-hardware classification, and the result of each action.
 
 <!-- section:s032 -->
 ### Understand the two Bluetooth layers

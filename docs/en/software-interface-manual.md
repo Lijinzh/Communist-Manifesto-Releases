@@ -3,11 +3,11 @@
 <!-- section:s001 -->
 # AutoClipboard software interface manual
 
-This manual explains the current AutoClipboard main window and the real **Device Settings / IMU Preview** window area by area. Every control is identified as software-only, hardware-changing, temporary, read-only, or firmware-related, so users can tell what will happen before they click it.
+This manual explains the current AutoClipboard main window, voice configuration, and **Device Settings / IMU Preview** window area by area. Every control is identified as software-only, hardware-changing, temporary, read-only, or firmware-related, so users can tell what will happen before they click it.
 
-The screenshots are real application screenshots. The Device Settings image was supplied from an actual connected-device session; the crops only add numbered outlines or isolate regions and do not redraw the UI.
+The screenshots are actual renders from the current AutoClipboard source, not generated UI mockups. To keep personal accounts, Agent sessions, Bluetooth suffixes, and serial-port details out of public documentation, the captures use isolated clean settings with real device services disabled. The crops only add numbered outlines or isolate regions; they do not redraw controls or pretend to validate physical hardware.
 
-> AutoClipboard version shown: `0.3.49`. Device values such as battery percentage, Profile name, COM port, Agent count, and Bluetooth suffix vary by computer and handle.
+> AutoClipboard version shown: `0.3.62`. Signed-out, BLE-disconnected, and empty-Agent states are intentional safe-demo states. Battery percentage, Profile name, COM port, Agent count, and Bluetooth suffix vary by computer and handle.
 
 <!-- section:s002 -->
 ## How to read the “changes” column
@@ -33,7 +33,7 @@ Changing a value in Device Settings is not always a harmless preview. Brightness
 | Number | Area | Primary role |
 | --- | --- | --- |
 | 1 | Device and Agent status | Shows Bluetooth, battery, Agent-to-ring synchronization, and the four quick actions. |
-| 2 | Clipboard and Typeless workspace | Receives text, automatically copies it, shows capture state, and exposes software settings. |
+| 2 | Clipboard and Typeless workspace | Receives text, automatically copies it, shows capture state, and exposes account, voice, and software settings. |
 | 3 | Agent dashboard | Summarizes Codex/Claude tasks and their current states. |
 
 The main window is mainly a software workspace. It does not rewrite handle configuration by itself. Hardware effects occur only when a specific action sends a signal or opens Device Settings.
@@ -48,15 +48,15 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 | Item | What it does | Changes | Result |
 | --- | --- | --- | --- |
 | Title, subtitle, and `Waiting for input` | Identifies the application and current text-capture state. | **View only** | The status changes when Typeless capture starts, succeeds, retries, or fails. |
-| `BLE connected: CommunistKB-XXXX` | Shows the handle selected by the AutoClipboard BLE/GATT session. | **View only** | A complete `CommunistKB-` name plus the real four-character suffix confirms which handle the software is using. |
+| `BLE disconnected` / `BLE connected: CommunistKB-XXXX` | Shows whether the AutoClipboard BLE/GATT session is ready and which handle it selected. | **View only** | Once connected, the complete `CommunistKB-` name plus the real four-character suffix confirms which handle the software is using. |
 | Device and battery line | Summarizes Bluetooth keyboard readiness and estimated battery percentage. | **View only** | Helps distinguish a working HID keyboard link from the AutoClipboard device-data session. |
 | Agent and ring line | Shows the aggregated Agent state and the target ring animation. | **View only / software + hardware output** | For example, working tasks can produce the current-theme marquee effect on the handle. |
-| `Connect another host` | Opens the three-host instructions and then Windows Bluetooth settings. | **Software entry + hardware pairing** | The user must first select an `EMPTY` slot under `Settings > BLE Hosts` on the handle; it then opens a 120-second pairing window for the new computer. |
+| `Start pairing` | Opens pairing guidance and can continue to Windows Bluetooth settings. | **Software entry + hardware pairing** | Put the handle into `PAIR` first. For three-host pairing, select an `EMPTY` slot under `Settings > BLE Hosts` to open the 120-second pairing window. |
 | `Device Settings` | Opens the detailed configuration and IMU window. | **No change by opening it** | Hardware changes occur only after using controls inside that window. |
 | `Configure status light` | Installs or repairs the AutoClipboard portions of Codex `hooks.json` and Claude `settings.json`, with backup and confirmation. | **Software + hardware** | Agent lifecycle events can be collected locally and synchronized to the handle ring while AutoClipboard is running. |
 | `Test light effect` | Sends one selected Agent state to the handle. | **Temporary hardware session** | Tests idle breathing, working marquee, yellow attention/permission, red blocked, green completed, or off without changing the Agent task itself. |
 
-`Connect another host` does not invent or append the Bluetooth suffix. Pair the exact `CommunistKB-XXXX` name broadcast by the handle.
+`Start pairing` does not invent or append the Bluetooth suffix. Pair the exact `CommunistKB-XXXX` name broadcast by the handle.
 
 <!-- section:s005 -->
 ## 3. Main-window clipboard and Typeless area
@@ -72,6 +72,8 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 | `Alt` / Typeless pulse panel | Shows whether the Right Alt trigger is idle, armed, captured, timed out, or unavailable. | **Software** | With global mode enabled on Windows, Right Alt arms one external Typeless capture. |
 | Character count | Shows the current editor length. | **View only** | Useful for confirming a long capture was complete. |
 | `Software Settings` | Opens local application preferences. | **Software**, except optional Agent completion output | See the detailed list below. |
+| `Account / Sign in` | Opens the ZKO account, sign-in, and entitlement entry point. | **Software / network entry** | Opening it does not upload audio or begin a purchase; later sign-in and entitlement actions remain explicit. |
+| `Voice` | Opens the free and premium voice configuration. | **Software**; the selected premium cloud tier also uses the network | Enables voice input, shortcut configuration, free system dictation, or an authorized premium cloud flow. |
 | `Clear` | Clears the editor content. | **Software** | Removes the visible buffer; it does not reset the handle or Bluetooth pairing. |
 
 <!-- section:s006 -->
@@ -87,6 +89,20 @@ The main window is mainly a software workspace. It does not rewrite handle confi
 | Model usage query | Stores the selected New API/CCSwitch query configuration locally and displays returned usage in the dashboard. Credentials remain on the current computer. |
 | Language | Selects Chinese or English UI. |
 | Software update | Downloads and installs a newer AutoClipboard application. This updates the desktop software, not handle firmware. |
+
+### Account and voice configuration
+
+<p align="center">
+  <img src="../assets/user-guide/autoclipboard-voice.webp" alt="AutoClipboard account and voice configuration" width="520">
+</p>
+
+| Item | What it does | Changes | Result |
+| --- | --- | --- | --- |
+| `Sign in / Account center` | Opens the ZKO account and entitlement flow. | **Software / network entry** | When signed out, it only shows the entry point; opening the window does not upload audio. |
+| `Enable voice input` | Enables or disables the voice shortcut. | **Software** | When disabled, the shortcut does not start voice input. |
+| Voice shortcut and “intercept shortcut keystroke” | Selects the trigger and whether that keystroke continues to the active application. | **Software** | Can prevent the trigger from producing an extra character or action in the target input field. |
+| Free tier | Requests Windows system dictation. | **Operating-system voice service** | Windows manages audio and dictated text; AutoClipboard does not record audio or read the system dictation transcript. |
+| Premium tier (activation code) | Uses activated account entitlement and short-lived cloud tokens. | **Software + network** | The cloud flow starts only after explicit selection and configuration; the free tier is never silently switched. |
 
 <!-- section:s007 -->
 ## 4. Agent dashboard
