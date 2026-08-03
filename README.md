@@ -177,10 +177,27 @@ AutoClipboard 是手柄的配套桌面软件，可以显示当前连接的蓝牙
 | Windows CH343 USB 串口驱动 | `CH343SER.EXE` |
 | Linux / Ubuntu 软件 | `auto-clipboard_<version>_<arch>.deb` |
 | 该版本提供 macOS 包时 | `AutoClipboard-<version>-macOS.dmg` |
+| Apple Silicon 未公证预览包 | `AutoClipboard-<version>-macOS-unnotarized-preview.dmg` |
 | 当前 V3 手柄固件 | `CommunistManifestoKB-firmware-v3-<version>.zip` |
 | AI Coding Handle Skill 压缩包 | `ai-coding-handle-skill-<version>.zip` |
 
 V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的固件。如果不能确定板型，请先让 Skill 识别设备，再下载或更新固件。
+
+### macOS 未公证预览版安装
+
+当前预览 DMG 面向 Apple Silicon（M1/M2/M3/M4 等 arm64）Mac，使用 ad-hoc 签名，尚未完成 Apple 公证。安装步骤：
+
+1. 下载 `AutoClipboard-<version>-macOS-unnotarized-preview.dmg`，并与 Release 页面公布的 SHA-256 核对。
+2. 双击打开 DMG，把 `AutoClipboard.app` 拖入 `Applications`。
+3. 打开“终端”，运行：
+
+   ```bash
+   xattr -cr /Applications/AutoClipboard.app
+   ```
+
+4. 从“应用程序”打开 AutoClipboard；首次使用时按系统提示授予辅助功能、输入监控或麦克风权限。
+
+该命令只清除 AutoClipboard 应用包的下载隔离属性，不会关闭系统全局 Gatekeeper。只应对从本仓库官方 Release 下载并核对过 SHA-256 的应用执行。Intel Mac 不能使用 arm64 预览包，需要单独的 x86_64 构建。取得 Apple Developer ID 后，正式 macOS 包仍会恢复 Developer ID 签名、公证和 stapling，届时无需运行 `xattr`。
 
 <!-- section:s015 -->
 ## 快速排障

@@ -177,10 +177,27 @@ Open the [latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-
 | Windows CH343 USB serial driver | `CH343SER.EXE` |
 | Linux / Ubuntu application | `auto-clipboard_<version>_<arch>.deb` |
 | macOS application, when included in that release | `AutoClipboard-<version>-macOS.dmg` |
+| Apple Silicon unnotarized preview | `AutoClipboard-<version>-macOS-unnotarized-preview.dmg` |
 | Current V3 handle firmware | `CommunistManifestoKB-firmware-v3-<version>.zip` |
 | AI Coding Handle Skill ZIP | `ai-coding-handle-skill-<version>.zip` |
 
 V3 is the currently maintained hardware revision. Do not flash firmware for a different board revision. If you are uncertain, ask the Skill to identify the device before downloading or updating firmware.
+
+### Installing the unnotarized macOS preview
+
+The current preview DMG targets Apple Silicon Macs (M1/M2/M3/M4 and other arm64 systems). It uses an ad-hoc signature and has not yet been notarized by Apple. To install it:
+
+1. Download `AutoClipboard-<version>-macOS-unnotarized-preview.dmg` and compare it with the SHA-256 published on the Release page.
+2. Open the DMG and drag `AutoClipboard.app` into `Applications`.
+3. Open Terminal and run:
+
+   ```bash
+   xattr -cr /Applications/AutoClipboard.app
+   ```
+
+4. Open AutoClipboard from Applications. Grant Accessibility, Input Monitoring, or Microphone access when macOS requests permissions for the features you use.
+
+This command only removes the download quarantine attribute from the AutoClipboard bundle; it does not disable Gatekeeper globally. Run it only for a SHA-256-verified copy downloaded from this repository's official Release. Intel Macs cannot run the arm64 preview and require a separate x86_64 build. Once Developer ID credentials are available, the normal macOS package will continue to use Developer ID signing, notarization, and stapling and will not require the `xattr` command.
 
 <!-- section:s015 -->
 ## Quick troubleshooting
