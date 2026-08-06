@@ -90,13 +90,13 @@ jobs:
       - name: Install the portable Skill for supported agents
         run: npx --yes skills add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git --skill ai-coding-handle --agent '*' --global --yes --copy
 
-      - name: Verify the Codex Skill installation
+      - name: Verify the portable Agent Skill installation
         shell: python
         run: |
           from pathlib import Path
-          path = Path.home() / ".codex" / "skills" / "ai-coding-handle" / "SKILL.md"
+          path = Path.home() / ".agents" / "skills" / "ai-coding-handle" / "SKILL.md"
           if not path.is_file():
-              raise SystemExit(f"missing installed Codex Skill: {path}")
+              raise SystemExit(f"missing installed portable Agent Skill: {path}")
           text = path.read_text(encoding="utf-8")
           if "name: ai-coding-handle" not in text:
               raise SystemExit("installed Skill has the wrong identity")
