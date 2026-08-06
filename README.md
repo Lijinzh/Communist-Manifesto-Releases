@@ -28,17 +28,33 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
 <!-- section:s003 -->
-## 首先推荐：让大模型安装 Skill
+## 首先推荐：让 Codex 一句话完成配置
 
-如果你正在使用 Codex、Claude Code、OpenCode 或其他支持 Agent Skills 的客户端，建议在手动配置之前，先安装 **AI Coding Handle Skill**。它可以帮助选择并安装合适的 AutoClipboard、配置受支持的 Agent 状态 Hook、识别 D4/V3 硬件，并以只读方式检查 USB、串口、蓝牙和软件状态。
+如果你正在使用 Codex，建议在手动配置之前先安装官方结构的 **ZKO 苍虬一键配置插件**。它内置 `ai-coding-handle` Skill，可以选择并安装合适的 AutoClipboard、配置受支持的 Agent 状态 Hook、识别 D4/V3 硬件，并以只读方式检查 USB、串口、蓝牙和软件状态。
+
+中国大陆网络优先从 Gitee 添加 ZKO Marketplace：
 
 ```bash
-npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle -g
+codex plugin marketplace add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git
+codex plugin add zko-ai-coding-handle@zko-lab
+```
+
+如果 Gitee Git 不可用，改用 GitHub 添加同一个 Marketplace：
+
+```bash
+codex plugin marketplace add Lijinzh/Communist-Manifesto-Releases
+codex plugin add zko-ai-coding-handle@zko-lab
+```
+
+安装完成后新建一个 Codex 任务，再调用 `$ai-coding-handle`。Claude Code、Cursor、OpenCode 和其他支持 Agent Skills 的客户端可使用通用安装方式：
+
+```bash
+npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' -g -y --copy
 ```
 
 也可以直接把下面这段话发给大模型：
 
-> 请安装并使用 `Lijinzh/Communist-Manifesto-Releases` 中的 `ai-coding-handle` Skill，帮我安装或检查 AutoClipboard，并以只读方式排查苍虬手柄为什么无法连接蓝牙。
+> 请优先从 Gitee 的 `shan-yujun/Communist-Manifesto-Releases` 安装 `zko-ai-coding-handle` Codex 插件；如果当前 Agent 不支持 Codex 插件，就从 GitHub 的 `Lijinzh/Communist-Manifesto-Releases` 安装 `ai-coding-handle` Skill。安装后帮我安装或检查 AutoClipboard、识别苍虬 D4/V3、配置当前 Agent Hook 和按键；涉及系统设置、驱动或固件写入前先向我确认。
 
 Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷写固件。任何固件更新仍然需要针对当前设备和更新方案进行单独、明确的确认。
 
@@ -239,6 +255,6 @@ V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的�
 - [GitHub 与 Gitee 发布维护指南](docs/zh-CN/maintainers/gitee-publishing.md)
 - [English documentation tree](README.en.md)
 - [开源 AI Coding Handle Skill](skills/ai-coding-handle)
-- [苍虬产品介绍网页](https://shenqiqishi.github.io/zko_page/)
+- [苍虬产品介绍网页](https://zkolab.com/)
 
 本仓库包含公开发布文件、面向用户的文档、支持脚本以及采用 MIT License 的 AI Coding Handle Skill。AutoClipboard 和手柄固件的应用源码仍为私有内容。

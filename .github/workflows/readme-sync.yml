@@ -6,7 +6,9 @@ on:
       - "**/*.md"
       - "docs/assets/**"
       - "scripts/**"
-      - "skills/ai-coding-handle/scripts/**"
+      - "skills/ai-coding-handle/**"
+      - "plugins/zko-ai-coding-handle/**"
+      - ".agents/plugins/marketplace.json"
       - "tests/**"
       - ".github/workflows/readme-sync.yml"
   push:
@@ -16,7 +18,9 @@ on:
       - "**/*.md"
       - "docs/assets/**"
       - "scripts/**"
-      - "skills/ai-coding-handle/scripts/**"
+      - "skills/ai-coding-handle/**"
+      - "plugins/zko-ai-coding-handle/**"
+      - ".agents/plugins/marketplace.json"
       - "tests/**"
       - ".github/workflows/readme-sync.yml"
 
@@ -35,6 +39,9 @@ jobs:
 
       - name: Verify bilingual documentation
         run: python3 scripts/sync_docs.py --check
+
+      - name: Verify Codex plugin synchronization
+        run: python3 scripts/sync_codex_plugin.py --check
 
       - name: Check PowerShell syntax
         shell: pwsh
@@ -60,3 +67,57 @@ jobs:
         run: |
           find scripts skills/ai-coding-handle/scripts -type f -name '*.sh' -print0 \
             | xargs -0 -r -n1 bash -n
+
+  skill-install-smoke:
+    name: Skill install smoke (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install current Codex CLI
+        run: npm install --global @openai/codex
+
+      - name: Install the portable Skill for supported agents
+        run: npx --yes skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' --global --yes --copy
+
+      - name: Verify the Codex Skill installation
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path.home() / ".codex" / "skills" / "ai-coding-handle" / "SKILL.md"
+          if not path.is_file():
+              raise SystemExit(f"missing installed Codex Skill: {path}")
+          text = path.read_text(encoding="utf-8")
+          if "name: ai-coding-handle" not in text:
+              raise SystemExit("installed Skill has the wrong identity")
+          print(path)
+
+      - name: Add the ZKO Marketplace from GitHub
+        run: codex plugin marketplace add Lijinzh/Communist-Manifesto-Releases --ref main --json
+
+      - name: Install the ZKO Codex plugin
+        run: codex plugin add zko-ai-coding-handle@zko-lab --json
+
+      - name: Verify the Codex plugin is listed
+        shell: python
+        run: |
+          import subprocess
+          output = subprocess.run(
+              ["codex", "plugin", "list"],
+              check=True,
+              capture_output=True,
+              text=True,
+          ).stdout
+          if "zko-ai-coding-handle" not in output:
+              raise SystemExit(output)
+          print(output)

@@ -1,0 +1,44 @@
+{
+  "name": "zko-ai-coding-handle",
+  "version": "0.3.64",
+  "description": "Install and configure AutoClipboard, connect supported coding agents, diagnose ZKO handles, and safely manage firmware.",
+  "author": {
+    "name": "ZKO Lab",
+    "url": "https://zkolab.com/"
+  },
+  "homepage": "https://zkolab.com/skill.html",
+  "repository": "https://github.com/Lijinzh/Communist-Manifesto-Releases",
+  "license": "MIT",
+  "keywords": [
+    "zko",
+    "autoclipboard",
+    "ai-coding-handle",
+    "codex",
+    "claude-code",
+    "agent-hooks",
+    "firmware"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "ZKO 苍虬一键配置",
+    "shortDescription": "一句话安装 AutoClipboard、连接 Agent 并配置苍虬手柄",
+    "longDescription": "为 Windows、Linux 和 macOS 安装或升级 AutoClipboard，配置 Codex 与 Claude Code Agent Hook，识别 D4/V3 手柄，执行只读连接诊断，并在明确确认后安全处理系统设置或固件更新。",
+    "developerName": "ZKO Lab",
+    "category": "Productivity",
+    "capabilities": [
+      "Install AutoClipboard",
+      "Configure Agent hooks",
+      "Diagnose ZKO handles",
+      "Safely manage firmware"
+    ],
+    "websiteURL": "https://zkolab.com/skill.html",
+    "defaultPrompt": [
+      "帮我安装 AutoClipboard，并连接苍虬手柄与当前 Agent。",
+      "检查我的苍虬 D4/V3、蓝牙和 Agent Hook 是否正常。",
+      "帮我配置按键；涉及系统设置或固件写入前先确认。"
+    ],
+    "brandColor": "#20CCE4",
+    "composerIcon": "./assets/zko.svg",
+    "logo": "./assets/zko.svg"
+  }
+}

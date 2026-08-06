@@ -464,4 +464,4 @@ V3 是当前持续维护的硬件版本。固件包与板型严格对应，不�
 - [Agent 状态配置指南](agent-signal-setup.md)
 - [Windows CH343 驱动指南](ch343-driver-installation.md)
 - [AI Coding Handle Skill](../../skills/ai-coding-handle)
-- [苍虬产品介绍网页](https://shenqiqishi.github.io/zko_page/)
+- [苍虬产品介绍网页](https://zkolab.com/)

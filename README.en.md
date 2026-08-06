@@ -28,17 +28,33 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 Starting with the next AutoClipboard release, application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
 <!-- section:s003 -->
-## Recommended first step: install the Skill
+## Recommended first step: let Codex configure it
 
-If you use Codex, Claude Code, OpenCode, or another Agent Skills-compatible client, install the **AI Coding Handle Skill before configuring the handle manually**. The Skill can locate the appropriate AutoClipboard release, help configure supported Agent status hooks, identify D4/V3 hardware, and run read-only USB, serial, Bluetooth, and application diagnostics.
+If you use Codex, install the official-structure **ZKO AI Coding Handle plugin before configuring the handle manually**. It bundles the `ai-coding-handle` Skill, which can locate the appropriate AutoClipboard release, configure supported Agent status hooks, identify D4/V3 hardware, and run read-only USB, serial, Bluetooth, and application diagnostics.
+
+For mainland China, add the ZKO Marketplace from Gitee first:
 
 ```bash
-npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle -g
+codex plugin marketplace add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git
+codex plugin add zko-ai-coding-handle@zko-lab
+```
+
+If Gitee Git is unavailable, add the same Marketplace from GitHub:
+
+```bash
+codex plugin marketplace add Lijinzh/Communist-Manifesto-Releases
+codex plugin add zko-ai-coding-handle@zko-lab
+```
+
+Start a new Codex task after installation, then invoke `$ai-coding-handle`. Claude Code, Cursor, OpenCode, and other Agent Skills-compatible clients can use the portable installer:
+
+```bash
+npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' -g -y --copy
 ```
 
 You can also send this request directly to your coding agent:
 
-> Install and use the `ai-coding-handle` Skill from `Lijinzh/Communist-Manifesto-Releases`. Help me install or check AutoClipboard and perform read-only diagnostics for my ZKO handle's Bluetooth connection.
+> Install the `zko-ai-coding-handle` Codex plugin from the Gitee mirror `shan-yujun/Communist-Manifesto-Releases`. If this agent does not support Codex plugins, install the `ai-coding-handle` Skill from `Lijinzh/Communist-Manifesto-Releases` on GitHub. Then install or check AutoClipboard, identify my ZKO D4/V3, and configure Agent hooks and buttons. Ask before changing system settings, installing drivers, or writing firmware.
 
 The Skill may diagnose automatically, but it does not silently reset system Bluetooth settings or flash firmware. Any firmware update still requires a separate, explicit confirmation for the exact device and update plan.
 
@@ -239,6 +255,6 @@ English project home (this file)
 - [GitHub and Gitee publishing guide](docs/en/maintainers/gitee-publishing.md)
 - [简体中文文档树](README.md)
 - [Open-source AI Coding Handle Skill](skills/ai-coding-handle)
-- [Product introduction website](https://shenqiqishi.github.io/zko_page/)
+- [Product introduction website](https://zkolab.com/)
 
 This repository contains public release assets, user documentation, support scripts, and the MIT-licensed AI Coding Handle Skill. AutoClipboard and firmware application source code remain private.

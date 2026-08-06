@@ -464,4 +464,4 @@ Do not publish private logs, credentials, account tokens, or unrelated personal 
 - [Agent status setup](agent-signal-setup.md)
 - [Windows CH343 driver guide](ch343-driver-installation.md)
 - [AI Coding Handle Skill](../../skills/ai-coding-handle)
-- [Product introduction website](https://shenqiqishi.github.io/zko_page/)
+- [Product introduction website](https://zkolab.com/)

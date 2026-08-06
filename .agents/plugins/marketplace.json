@@ -1,0 +1,20 @@
+{
+  "name": "zko-lab",
+  "interface": {
+    "displayName": "ZKO Lab"
+  },
+  "plugins": [
+    {
+      "name": "zko-ai-coding-handle",
+      "source": {
+        "source": "local",
+        "path": "./plugins/zko-ai-coding-handle"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
