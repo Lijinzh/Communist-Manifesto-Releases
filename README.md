@@ -49,8 +49,10 @@ codex plugin add zko-ai-coding-handle@zko-lab
 安装完成后新建一个 Codex 任务，再调用 `$ai-coding-handle`。Claude Code、Cursor、OpenCode 和其他支持 Agent Skills 的客户端可使用通用安装方式：
 
 ```bash
-npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' -g -y --copy
+npx skills add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git --skill ai-coding-handle --agent '*' -g -y --copy
 ```
+
+如果 Gitee Git 不可用，把来源替换成 `Lijinzh/Communist-Manifesto-Releases` 即可从 GitHub 安装。
 
 也可以直接把下面这段话发给大模型：
 

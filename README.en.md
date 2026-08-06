@@ -49,8 +49,10 @@ codex plugin add zko-ai-coding-handle@zko-lab
 Start a new Codex task after installation, then invoke `$ai-coding-handle`. Claude Code, Cursor, OpenCode, and other Agent Skills-compatible clients can use the portable installer:
 
 ```bash
-npx skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' -g -y --copy
+npx skills add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git --skill ai-coding-handle --agent '*' -g -y --copy
 ```
+
+If Gitee Git is unavailable, replace the source with `Lijinzh/Communist-Manifesto-Releases` to install from GitHub.
 
 You can also send this request directly to your coding agent:
 

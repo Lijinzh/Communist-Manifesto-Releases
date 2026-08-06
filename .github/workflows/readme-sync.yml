@@ -88,7 +88,7 @@ jobs:
         run: npm install --global @openai/codex
 
       - name: Install the portable Skill for supported agents
-        run: npx --yes skills add Lijinzh/Communist-Manifesto-Releases --skill ai-coding-handle --agent '*' --global --yes --copy
+        run: npx --yes skills add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git --skill ai-coding-handle --agent '*' --global --yes --copy
 
       - name: Verify the Codex Skill installation
         shell: python
