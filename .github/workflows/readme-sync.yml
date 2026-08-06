@@ -109,15 +109,14 @@ jobs:
         run: codex plugin add zko-ai-coding-handle@zko-lab --json
 
       - name: Verify the Codex plugin is listed
-        shell: python
+        shell: pwsh
         run: |
-          import subprocess
-          output = subprocess.run(
-              ["codex", "plugin", "list"],
-              check=True,
-              capture_output=True,
-              text=True,
-          ).stdout
-          if "zko-ai-coding-handle" not in output:
-              raise SystemExit(output)
-          print(output)
+          $output = codex plugin list | Out-String
+          if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+          }
+          if ($output -notmatch "zko-ai-coding-handle") {
+            Write-Error $output
+            exit 1
+          }
+          Write-Output $output
