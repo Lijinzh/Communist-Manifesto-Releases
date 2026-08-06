@@ -18,13 +18,13 @@ The process exit code and JSON `success` are authoritative together. Do not infe
 <!-- section:s003 -->
 ## Current tested V3 baseline
 
-The current tested V3 release baseline is firmware `0.3.62` as of 2026-08-01. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
+The current tested V3 release baseline is firmware `0.3.64` as of 2026-08-06. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
 
 This baseline adds controlled recovery for sustained HID notification stalls: transient failures remain quiet, while at least three failures lasting more than one second cause a deliberate BLE disconnect so the existing reconnect path can recover instead of leaving the screen at `LINK` with unresponsive input.
 
 The V3 candidate was built with the maintained V3 environment, flashed through the validated app-only workflow, and verified after writing only `0x10000`. HID validation received 20 press and 20 release reports without loss. USB-powered Halo validation ran for 30 seconds with no sequence gaps; after one brief USB-removal transition, battery-powered Halo ran for 455.6 seconds and 20,847 frames with no sequence gaps, loss, duplicates, disconnects, or reconnects, with P95 inter-frame time of 35.0 ms. Radio quality still depends on host antenna placement and orientation.
 
-This section records a known tested baseline; it does not replace release discovery. Before reporting that `0.3.62` is publicly available or offering an update, require signed `latest.json` metadata and a successful `firmware-check`. If published metadata differs, report the mismatch instead of forcing or inventing an asset.
+This section records a known tested baseline; it does not replace release discovery. Before reporting that `0.3.64` is publicly available or offering an update, require signed `latest.json` metadata and a successful `firmware-check`. If published metadata differs, report the mismatch instead of forcing or inventing an asset.
 
 <!-- section:s004 -->
 ## Stable statuses
