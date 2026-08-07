@@ -27,7 +27,7 @@
 
 - `v0.3.65` 的源码基线固定为主仓库提交 `88caff478679922819d234a86974abc33d2e880a`。
 - Linux amd64 DEB、V3 固件候选包和 Skill ZIP 可以进入 GitHub 草稿 Release；草稿不得包含最终 `latest.json`，不得发布为 latest，也不得提前同步成 Gitee 正式 Release。
-- Windows 发布端待补 `AutoClipboardSetup-0.3.65.exe`；macOS 发布端待补签名、公证并 stapling 的 `AutoClipboard-0.3.65-macOS.dmg`。两端都必须从上述同一提交构建。
+- Windows 发布端已从上述源码提交生成并上传 `AutoClipboardSetup-0.3.65.exe`（50,924,814 字节，SHA-256 `11444f40c6fd727606de40cf7a45a6e0728345b0d658d6e28d9519e0103bfbdc`）；macOS 发布端仍待补签名、公证并 stapling 的 `AutoClipboard-0.3.65-macOS.dmg`。
 - V3 候选包已通过构建和包校验，但两次 live 预检均因 `/dev/ttyACM0`、`/dev/ttyACM1` 固件身份读取超时而在写入前停止。正式发布前必须补齐唯一 V3 的 app-only 烧录、串口身份和 BLE 验证。
 - 全部附件到齐后只生成一次最终 `latest.json`，再发布 GitHub Release、执行 Gitee 同步和匿名附件验证。
 
@@ -64,7 +64,7 @@
 
 - The `v0.3.65` source baseline is fixed at main-repository commit `88caff478679922819d234a86974abc33d2e880a`.
 - The Linux amd64 DEB, V3 firmware candidate, and Skill ZIP may be staged in a GitHub draft Release. The draft must not contain the final `latest.json`, become latest, or be mirrored as a formal Gitee Release.
-- The Windows publisher must add `AutoClipboardSetup-0.3.65.exe`; the macOS publisher must add a signed, notarized, and stapled `AutoClipboard-0.3.65-macOS.dmg`. Both must build the exact source commit above.
+- The Windows publisher has built and uploaded `AutoClipboardSetup-0.3.65.exe` from the exact source commit above (50,924,814 bytes, SHA-256 `11444f40c6fd727606de40cf7a45a6e0728345b0d658d6e28d9519e0103bfbdc`); the macOS publisher must still add a signed, notarized, and stapled `AutoClipboard-0.3.65-macOS.dmg`.
 - The V3 candidate passed build and package validation, but two live preflights stopped before writing because firmware identity timed out on `/dev/ttyACM0` and `/dev/ttyACM1`. A unique V3 app-only flash, serial identity check, and BLE verification remain mandatory before formal publication.
 - Generate the final `latest.json` exactly once after every asset arrives, then publish GitHub, synchronize Gitee, and run anonymous asset verification.
 
