@@ -27,6 +27,16 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
+### `v0.3.65` 发布交接状态
+
+`v0.3.65` 当前是跨平台构建交接版本，并不是公开最新版。源码基线为
+`88caff478679922819d234a86974abc33d2e880a`。Linux amd64 DEB、V3 固件候选包和
+Skill ZIP 已进入 GitHub 草稿 Release；Windows EXE、正式 macOS DMG、最终
+`latest.json` 以及 Gitee 正式镜像仍待补齐。附件没有全部通过双平台验证前，
+上位机继续使用现有公开稳定版，不会自动获取这个草稿版本。
+
+完整更新内容、校验值和剩余事项见 [`v0.3.65` 发布交接说明](docs/zh-CN/maintainers/releases/v0.3.65.md)。
+
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置
 

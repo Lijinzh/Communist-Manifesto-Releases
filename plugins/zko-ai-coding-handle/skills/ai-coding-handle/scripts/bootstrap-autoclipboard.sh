@@ -2,7 +2,7 @@
 set -euo pipefail
 
 METADATA_URL="https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest/download/latest.json"
-RELEASE_URL_RE='^https://github\.com/Lijinzh/Communist-Manifesto-Releases/releases/[^/]+/download/[^/?#]+$'
+RELEASE_URL_RE='^https://github\.com/Lijinzh/Communist-Manifesto-Releases/releases/download/[^/]+/[^/?#]+$'
 REQUIRED_AGENT_BRIDGE_VERSION=1
 
 dry_run=0

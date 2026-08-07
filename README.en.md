@@ -27,6 +27,17 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 
 Starting with the next AutoClipboard release, application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
+### `v0.3.65` release handoff status
+
+`v0.3.65` is currently a cross-platform build handoff, not the public latest release. Its source
+baseline is `88caff478679922819d234a86974abc33d2e880a`. The Linux amd64 DEB, V3 firmware
+candidate, and Skill ZIP are staged in a GitHub draft Release. The Windows EXE, formal macOS DMG,
+final `latest.json`, and formal Gitee mirror are still pending. AutoClipboard continues to use the
+existing public stable release until every asset passes dual-platform verification.
+
+See the [`v0.3.65` release handoff notes](docs/en/maintainers/releases/v0.3.65.md) for changes,
+checksums, and remaining work.
+
 <!-- section:s003 -->
 ## Recommended first step: let Codex configure it
 

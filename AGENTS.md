@@ -23,6 +23,14 @@
 - 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
 - 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件永久保留。只允许清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。
 
+### v0.3.65 当前交接
+
+- `v0.3.65` 的源码基线固定为主仓库提交 `88caff478679922819d234a86974abc33d2e880a`。
+- Linux amd64 DEB、V3 固件候选包和 Skill ZIP 可以进入 GitHub 草稿 Release；草稿不得包含最终 `latest.json`，不得发布为 latest，也不得提前同步成 Gitee 正式 Release。
+- Windows 发布端待补 `AutoClipboardSetup-0.3.65.exe`；macOS 发布端待补签名、公证并 stapling 的 `AutoClipboard-0.3.65-macOS.dmg`。两端都必须从上述同一提交构建。
+- V3 候选包已通过构建和包校验，但两次 live 预检均因 `/dev/ttyACM0`、`/dev/ttyACM1` 固件身份读取超时而在写入前停止。正式发布前必须补齐唯一 V3 的 app-only 烧录、串口身份和 BLE 验证。
+- 全部附件到齐后只生成一次最终 `latest.json`，再发布 GitHub Release、执行 Gitee 同步和匿名附件验证。
+
 ### 修改与验证
 
 - 文档同步工具或结构变更后，运行文档检查、完整单元测试和 `git diff --check`。
@@ -51,6 +59,14 @@
 - After the GitHub Release is complete, run the repository-owned `scripts/sync-github-to-gitee.ps1`. It must synchronize `main`, every Git tag, and the exact latest Release asset set, then perform strict anonymous verification.
 - Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
 - Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every historical Gitee Release and attachment already synchronized. Extra-asset cleanup is allowed only on the current latest Gitee Release.
+
+### Current v0.3.65 handoff
+
+- The `v0.3.65` source baseline is fixed at main-repository commit `88caff478679922819d234a86974abc33d2e880a`.
+- The Linux amd64 DEB, V3 firmware candidate, and Skill ZIP may be staged in a GitHub draft Release. The draft must not contain the final `latest.json`, become latest, or be mirrored as a formal Gitee Release.
+- The Windows publisher must add `AutoClipboardSetup-0.3.65.exe`; the macOS publisher must add a signed, notarized, and stapled `AutoClipboard-0.3.65-macOS.dmg`. Both must build the exact source commit above.
+- The V3 candidate passed build and package validation, but two live preflights stopped before writing because firmware identity timed out on `/dev/ttyACM0` and `/dev/ttyACM1`. A unique V3 app-only flash, serial identity check, and BLE verification remain mandatory before formal publication.
+- Generate the final `latest.json` exactly once after every asset arrives, then publish GitHub, synchronize Gitee, and run anonymous asset verification.
 
 ### Changes and validation
 
