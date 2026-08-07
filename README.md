@@ -27,15 +27,15 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
-### `v0.3.65` 发布交接状态
+### `v0.3.65` Windows / Linux 阶段发布
 
-`v0.3.65` 当前是跨平台构建交接版本，并不是公开最新版。源码基线为
-`88caff478679922819d234a86974abc33d2e880a`。Linux amd64 DEB、V3 固件候选包和
-Skill ZIP 已进入 GitHub 草稿 Release；Windows EXE、正式 macOS DMG、最终
-`latest.json` 以及 Gitee 正式镜像仍待补齐。附件没有全部通过双平台验证前，
-上位机继续使用现有公开稳定版，不会自动获取这个草稿版本。
+`v0.3.65` 本轮正式发布 Windows x64、Linux amd64、V3 固件和 AI Coding Handle Skill，
+源码基线为 `88caff478679922819d234a86974abc33d2e880a`。Windows EXE 和 Linux DEB 已通过
+各自打包门禁；V3 发布包已在 Windows `COM7`、设备序列号 `1C9E` 上完成 app-only 烧录、
+串口身份/版本回读与 BLE/IMU 实机验证。macOS 正式 DMG 由合作伙伴后续补充，当前
+`latest.json` 不包含 macOS；D4 已停止维护，本版本也不发布新的 D4 固件。
 
-完整更新内容、校验值和剩余事项见 [`v0.3.65` 发布交接说明](docs/zh-CN/maintainers/releases/v0.3.65.md)。
+完整更新内容、校验值和发布范围见 [`v0.3.65` 发布说明](docs/zh-CN/maintainers/releases/v0.3.65.md)。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置
