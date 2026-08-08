@@ -9,7 +9,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $MetadataUrl = "https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest/download/latest.json"
-$ReleasePathPattern = '^/Lijinzh/Communist-Manifesto-Releases/releases/download/[^/]+/[^/?#]+$'
+$ReleasePathPattern = '^/Lijinzh/Communist-Manifesto-Releases/releases/(?:latest/download|download/[^/]+)/[^/?#]+$'
 $RequiredAgentBridgeVersion = 1
 $TempRoot = Join-Path ([IO.Path]::GetTempPath()) ("autoclipboard-bootstrap-" + [guid]::NewGuid())
 New-Item -ItemType Directory -Path $TempRoot | Out-Null
