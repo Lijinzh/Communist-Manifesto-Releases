@@ -1,7 +1,7 @@
 [简体中文](../zh-CN/user-guide.md) | **English** | [Back to repository](../../README.en.md)
 
 <!-- section:s001 -->
-# ZKO AI Coding Handle User Guide
+# ZKO Ziku AI Coding Handle User Guide
 
 This guide is written for users who have never used the handle, AutoClipboard, Agent Skills, or the screen controls before. Follow the chapters in order for the first setup; use the troubleshooting chapter later when a specific symptom appears.
 
@@ -87,7 +87,7 @@ The Skill is a guided diagnostic and maintenance tool, not permission to perform
 ## 3. Hardware overview
 
 <p align="center">
-  <img src="../assets/user-guide/handle-hero.webp" alt="ZKO AI Coding Handle front view" width="680">
+  <img src="../assets/user-guide/handle-hero.webp" alt="ZKO Ziku AI Coding Handle front view" width="680">
 </p>
 
 > The DJI microphone in the image is an example accessory and is not included. The handle can be used without that microphone.

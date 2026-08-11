@@ -20,7 +20,7 @@ class CodexPluginTests(unittest.TestCase):
         self.assertEqual(manifest["version"], "0.3.64")
         self.assertEqual(manifest["skills"], "./skills/")
         self.assertEqual(manifest["license"], "MIT")
-        self.assertEqual(manifest["interface"]["displayName"], "ZKO 苍虬一键配置")
+        self.assertEqual(manifest["interface"]["displayName"], "ZKO 字库一键配置")
         self.assertEqual(manifest["interface"]["websiteURL"], "https://zkolab.com/skill.html")
         for asset_key in ("composerIcon", "logo"):
             asset = manifest["interface"][asset_key]

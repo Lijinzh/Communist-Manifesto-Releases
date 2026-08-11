@@ -1,12 +1,12 @@
 **简体中文** | [English](../en/user-guide.md) | [返回仓库首页](../../README.md)
 
 <!-- section:s001 -->
-# 苍虬 AI 编程手柄使用说明书
+# 字库 AI 编程手柄使用说明书
 
-这份说明书面向完全没有接触过苍虬手柄、AutoClipboard、Agent Skills 和小屏操作的新用户。第一次使用时建议按章节顺序完成；以后遇到具体问题，再直接查看故障排查章节。
+这份说明书面向完全没有接触过字库手柄、AutoClipboard、Agent Skills 和小屏操作的新用户。第一次使用时建议按章节顺序完成；以后遇到具体问题，再直接查看故障排查章节。
 
 <p align="center">
-  <img src="../assets/user-guide/workflow.webp" alt="苍虬手柄工作流和功能概览" width="720">
+  <img src="../assets/user-guide/workflow.webp" alt="字库手柄工作流和功能概览" width="720">
 </p>
 
 <!-- section:s002 -->
@@ -61,7 +61,7 @@ npx skills add Lijinzh/Communist-Manifesto-Releases --list
 
 安装完成后，可以先把下面这段话发给大模型：
 
-> 请使用 `ai-coding-handle` Skill，安装或检查 AutoClipboard，识别我连接的苍虬手柄，并以只读方式检查 USB、串口、蓝牙、软件运行状态和 Agent Hook。未经我确认，不要重置蓝牙，也不要更新固件。
+> 请使用 `ai-coding-handle` Skill，安装或检查 AutoClipboard，识别我连接的字库手柄，并以只读方式检查 USB、串口、蓝牙、软件运行状态和 Agent Hook。未经我确认，不要重置蓝牙，也不要更新固件。
 
 <!-- section:s007 -->
 ### Skill 可以帮助完成什么
@@ -87,7 +87,7 @@ Skill 是受控的诊断和维护工具，不代表大模型可以自动执行�
 ## 3. 硬件结构介绍
 
 <p align="center">
-  <img src="../assets/user-guide/handle-hero.webp" alt="苍虬 AI 编程手柄正面实物图" width="680">
+  <img src="../assets/user-guide/handle-hero.webp" alt="字库 AI 编程手柄正面实物图" width="680">
 </p>
 
 > 图片中的 DJI 麦克风是可替换配件和使用场景示意，不包含在手柄包装内。没有这个麦克风也不影响手柄本体使用。
@@ -106,7 +106,7 @@ Skill 是受控的诊断和维护工具，不代表大模型可以自动执行�
 | USB Type-C | 见下方接口照片 | 为手柄充电，并提供串口诊断和固件更新通道 |
 
 <p align="center">
-  <img src="../assets/user-guide/usb-type-c-interface.jpg" alt="苍虬手柄 USB Type-C 接口实物图" width="800">
+  <img src="../assets/user-guide/usb-type-c-interface.jpg" alt="字库手柄 USB Type-C 接口实物图" width="800">
 </p>
 
 照片中最左侧的接口是 USB Type-C，也是本说明书中用于充电和连接电脑数据线的正式用户接口。旁边可见的板上部件不属于本说明书要求普通用户操作的日常接口。
@@ -239,7 +239,7 @@ CommunistKB-XXXX
 ## 7. Profile 与四枚宏按键
 
 <p align="center">
-  <img src="../assets/user-guide/macro-buttons.webp" alt="苍虬手柄四枚可编程宏按键及默认动作" width="660">
+  <img src="../assets/user-guide/macro-buttons.webp" alt="字库手柄四枚可编程宏按键及默认动作" width="660">
 </p>
 
 每个 Profile 都保存自己独立的四个宏槽、显示名称、图标和视觉主题。AutoClipboard 还可以为每个 Profile 绑定电脑上的快开目标和固定点击坐标。
@@ -272,7 +272,7 @@ CommunistKB-XXXX
 ## 8. 小屏、灯环与 Agent 状态
 
 <p align="center">
-  <img src="../assets/user-guide/agent-status.webp" alt="苍虬手柄小屏与 Agent 状态灯" width="650">
+  <img src="../assets/user-guide/agent-status.webp" alt="字库手柄小屏与 Agent 状态灯" width="650">
 </p>
 
 小屏可以显示：
@@ -464,4 +464,4 @@ V3 是当前持续维护的硬件版本。固件包与板型严格对应，不�
 - [Agent 状态配置指南](agent-signal-setup.md)
 - [Windows CH343 驱动指南](ch343-driver-installation.md)
 - [AI Coding Handle Skill](../../skills/ai-coding-handle)
-- [苍虬产品介绍网页](https://zkolab.com/)
+- [字库产品介绍网页](https://zkolab.com/)

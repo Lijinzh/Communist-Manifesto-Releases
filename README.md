@@ -1,14 +1,14 @@
 **简体中文** | [English](README.en.md)
 
 <!-- section:s001 -->
-# 苍虬 · AI 编程手柄
+# 字库 · AI 编程手柄
 
 > 写代码，不用再低头找快捷键。
 
-苍虬 AI 编程手柄把 4 枚可编程宏按键、彩色小屏、Agent 状态灯环、蓝牙键盘、姿态感应和 AutoClipboard 桌面软件结合在一起，适合 AI 编程、语音输入、Codex、Claude Code、演讲展示等需要保持专注的工作流。
+字库 AI 编程手柄把 4 枚可编程宏按键、彩色小屏、Agent 状态灯环、蓝牙键盘、姿态感应和 AutoClipboard 桌面软件结合在一起，适合 AI 编程、语音输入、Codex、Claude Code、演讲展示等需要保持专注的工作流。
 
 <p align="center">
-  <img src="docs/assets/user-guide/handle-hero.webp" alt="苍虬 AI 编程手柄产品概览" width="720">
+  <img src="docs/assets/user-guide/handle-hero.webp" alt="字库 AI 编程手柄产品概览" width="720">
 </p>
 
 > 图片中的 DJI 麦克风仅作为使用场景和可替换配件展示，不包含在手柄包装内。
@@ -40,7 +40,7 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置
 
-如果你正在使用 Codex，建议在手动配置之前先安装官方结构的 **ZKO 苍虬一键配置插件**。它内置 `ai-coding-handle` Skill，可以选择并安装合适的 AutoClipboard、配置受支持的 Agent 状态 Hook、识别 D4/V3 硬件，并以只读方式检查 USB、串口、蓝牙和软件状态。
+如果你正在使用 Codex，建议在手动配置之前先安装官方结构的 **ZKO 字库一键配置插件**。它内置 `ai-coding-handle` Skill，可以选择并安装合适的 AutoClipboard、配置受支持的 Agent 状态 Hook、识别 D4/V3 硬件，并以只读方式检查 USB、串口、蓝牙和软件状态。
 
 中国大陆网络优先从 Gitee 添加 ZKO Marketplace：
 
@@ -66,7 +66,7 @@ npx skills add https://gitee.com/shan-yujun/Communist-Manifesto-Releases.git --s
 
 也可以直接把下面这段话发给大模型：
 
-> 请优先从 Gitee 的 `shan-yujun/Communist-Manifesto-Releases` 安装 `zko-ai-coding-handle` Codex 插件；如果当前 Agent 不支持 Codex 插件，就从 GitHub 的 `Lijinzh/Communist-Manifesto-Releases` 安装 `ai-coding-handle` Skill。安装后帮我安装或检查 AutoClipboard、识别苍虬 D4/V3、配置当前 Agent Hook 和按键；涉及系统设置、驱动或固件写入前先向我确认。
+> 请优先从 Gitee 的 `shan-yujun/Communist-Manifesto-Releases` 安装 `zko-ai-coding-handle` Codex 插件；如果当前 Agent 不支持 Codex 插件，就从 GitHub 的 `Lijinzh/Communist-Manifesto-Releases` 安装 `ai-coding-handle` Skill。安装后帮我安装或检查 AutoClipboard、识别字库 D4/V3、配置当前 Agent Hook 和按键；涉及系统设置、驱动或固件写入前先向我确认。
 
 Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷写固件。任何固件更新仍然需要针对当前设备和更新方案进行单独、明确的确认。
 
@@ -88,7 +88,7 @@ Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷�
 ## 认识手柄硬件
 
 <p align="center">
-  <img src="docs/assets/user-guide/usb-type-c-interface.jpg" alt="苍虬手柄 USB Type-C 接口" width="760">
+  <img src="docs/assets/user-guide/usb-type-c-interface.jpg" alt="字库手柄 USB Type-C 接口" width="760">
 </p>
 
 照片左侧的 USB Type-C 接口用于充电、串口通信、图标传输、设备诊断和固件更新。日常使用只需要按照说明连接 Type-C 接口；旁边可见的板上部件不属于普通用户需要操作的日常接口。
@@ -103,7 +103,7 @@ Skill 可以自动完成检查，但不会静默重置系统蓝牙或擅自刷�
 | 内置 IMU 姿态传感器 | 用于三维姿态预览和演讲光圈 |
 
 <p align="center">
-  <img src="docs/assets/user-guide/macro-buttons.webp" alt="苍虬手柄四枚可编程宏按键" width="620">
+  <img src="docs/assets/user-guide/macro-buttons.webp" alt="字库手柄四枚可编程宏按键" width="620">
 </p>
 
 默认的 Vibe Coding Profile 将四枚按键设置为 `Right Alt`、`Enter`、`Ctrl+V` 和 `Ctrl+Alt+0`。这四个按键都可以在 AutoClipboard 中重新配置。
@@ -166,7 +166,7 @@ CommunistKB-XXXX
 ## 看懂小屏与 Agent 状态灯
 
 <p align="center">
-  <img src="docs/assets/user-guide/agent-status.webp" alt="苍虬手柄 Agent 状态灯和小屏" width="620">
+  <img src="docs/assets/user-guide/agent-status.webp" alt="字库手柄 Agent 状态灯和小屏" width="620">
 </p>
 
 上图用于展示整体视觉效果；当前固件的小屏蓝牙状态以以下短文字为准：
@@ -267,6 +267,6 @@ V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的�
 - [GitHub 与 Gitee 发布维护指南](docs/zh-CN/maintainers/gitee-publishing.md)
 - [English documentation tree](README.en.md)
 - [开源 AI Coding Handle Skill](skills/ai-coding-handle)
-- [苍虬产品介绍网页](https://zkolab.com/)
+- [字库产品介绍网页](https://zkolab.com/)
 
 本仓库包含公开发布文件、面向用户的文档、支持脚本以及采用 MIT License 的 AI Coding Handle Skill。AutoClipboard 和手柄固件的应用源码仍为私有内容。

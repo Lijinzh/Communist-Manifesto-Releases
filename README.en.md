@@ -1,14 +1,14 @@
 [简体中文](README.md) | **English**
 
 <!-- section:s001 -->
-# ZKO AI Coding Handle
+# ZKO Ziku AI Coding Handle
 
 > Keep your eyes on the code and your hand on the workflow.
 
-The ZKO AI Coding Handle combines four programmable macro buttons, a color screen, an Agent status light ring, Bluetooth HID, motion sensing, and the AutoClipboard desktop application. It is designed for AI coding, voice input, Codex, Claude Code, presentations, and other workflows where frequent keyboard or window switching breaks concentration.
+The ZKO Ziku AI Coding Handle combines four programmable macro buttons, a color screen, an Agent status light ring, Bluetooth HID, motion sensing, and the AutoClipboard desktop application. It is designed for AI coding, voice input, Codex, Claude Code, presentations, and other workflows where frequent keyboard or window switching breaks concentration.
 
 <p align="center">
-  <img src="docs/assets/user-guide/handle-hero.webp" alt="ZKO AI Coding Handle product overview" width="720">
+  <img src="docs/assets/user-guide/handle-hero.webp" alt="ZKO Ziku AI Coding Handle product overview" width="720">
 </p>
 
 > The DJI microphone in the promotional image is shown only as an example accessory and is not included with the handle.
@@ -42,7 +42,7 @@ and the exact publication scope.
 <!-- section:s003 -->
 ## Recommended first step: let Codex configure it
 
-If you use Codex, install the official-structure **ZKO AI Coding Handle plugin before configuring the handle manually**. It bundles the `ai-coding-handle` Skill, which can locate the appropriate AutoClipboard release, configure supported Agent status hooks, identify D4/V3 hardware, and run read-only USB, serial, Bluetooth, and application diagnostics.
+If you use Codex, install the official-structure **ZKO Ziku setup plugin before configuring the handle manually**. It bundles the `ai-coding-handle` Skill, which can locate the appropriate AutoClipboard release, configure supported Agent status hooks, identify D4/V3 hardware, and run read-only USB, serial, Bluetooth, and application diagnostics.
 
 For mainland China, add the ZKO Marketplace from Gitee first:
 

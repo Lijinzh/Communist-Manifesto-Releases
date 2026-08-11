@@ -1,4 +1,4 @@
 interface:
-  display_name: "ZKO 苍虬一键配置"
+  display_name: "ZKO 字库一键配置"
   short_description: "Install AutoClipboard, connect agents, and configure ZKO handles"
   default_prompt: "Use $ai-coding-handle to install or diagnose AutoClipboard, connect this agent to the ZKO handle, configure buttons and hooks, and safely check or update handle firmware."

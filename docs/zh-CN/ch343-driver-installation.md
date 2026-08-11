@@ -3,7 +3,7 @@
 <!-- section:s001 -->
 # CH343 Windows 串口驱动安装指南
 
-CH343SER 是南京沁恒微电子（WCH）提供的 Windows USB 转串口驱动。苍虬手柄通过 Type-C 连接 Windows 后，如果设备管理器没有出现可用的 COM 端口、显示未知设备，或者 AutoClipboard 无法发现串口，可以安装此驱动。
+CH343SER 是南京沁恒微电子（WCH）提供的 Windows USB 转串口驱动。字库手柄通过 Type-C 连接 Windows 后，如果设备管理器没有出现可用的 COM 端口、显示未知设备，或者 AutoClipboard 无法发现串口，可以安装此驱动。
 
 Windows 已经自动识别出手柄 COM 端口时，不需要重复安装。
 
