@@ -27,15 +27,16 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
-### `v0.3.65` Windows / Linux 阶段发布
+### `v0.3.66` Windows 阶段发布
 
-`v0.3.65` 本轮正式发布 Windows x64、Linux amd64、V3 固件和 AI Coding Handle Skill，
-源码基线为 `88caff478679922819d234a86974abc33d2e880a`。Windows EXE 和 Linux DEB 已通过
-各自打包门禁；V3 发布包已在 Windows `COM7`、设备序列号 `1C9E` 上完成 app-only 烧录、
-串口身份/版本回读与 BLE/IMU 实机验证。macOS 正式 DMG 由合作伙伴后续补充，当前
-`latest.json` 不包含 macOS；D4 已停止维护，本版本也不发布新的 D4 固件。
+`v0.3.66` 本轮正式发布 Windows x64、V3 固件和 AI Coding Handle Skill，
+源码基线为 `315d670d97a645d3f7a0ac1115af106c8a538583`。桌面软件图标已替换为依据实物照片
+重绘的像素风字库手柄，并在 Windows 本机安装后确认版本、设置恢复和图标资源一致；V3
+最终发布包也已在 Windows `COM7`、设备序列号 `1C9E` 上完成 app-only 烧录、串口回读与
+BLE/IMU 实机验证。Linux DEB 由专用 Linux 构建机后续补充，macOS 正式 DMG 由合作伙伴
+后续补充；当前 `latest.json` 不包含 Linux 或 macOS。D4 已停止维护，本版本也不发布新的 D4 固件。
 
-完整更新内容、校验值和发布范围见 [`v0.3.65` 发布说明](docs/zh-CN/maintainers/releases/v0.3.65.md)。
+完整更新内容、校验值和发布范围见 [`v0.3.66` 发布说明](docs/zh-CN/maintainers/releases/v0.3.66.md)。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置

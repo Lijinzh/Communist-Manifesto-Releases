@@ -18,27 +18,24 @@ The process exit code and JSON `success` are authoritative together. Do not infe
 <!-- section:s003 -->
 ## Current tested V3 baseline
 
-The current tested V3 release baseline is firmware `0.3.64` as of 2026-08-06. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
+The current tested V3 release baseline is firmware `0.3.66` as of 2026-08-12. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
 
-This baseline adds controlled recovery for sustained HID notification stalls: transient failures remain quiet, while at least three failures lasting more than one second cause a deliberate BLE disconnect so the existing reconnect path can recover instead of leaving the screen at `LINK` with unresponsive input.
-
-The V3 candidate was built with the maintained V3 environment, flashed through the validated app-only workflow, and verified after writing only `0x10000`. HID validation received 20 press and 20 release reports without loss. USB-powered Halo validation ran for 30 seconds with no sequence gaps; after one brief USB-removal transition, battery-powered Halo ran for 455.6 seconds and 20,847 frames with no sequence gaps, loss, duplicates, disconnects, or reconnects, with P95 inter-frame time of 35.0 ms. Radio quality still depends on host antenna placement and orientation.
-
-This section records a known tested baseline; it does not replace release discovery. Before reporting that `0.3.64` is publicly available or offering an update, require signed `latest.json` metadata and a successful `firmware-check`. If published metadata differs, report the mismatch instead of forcing or inventing an asset.
-
-### V3 0.3.65 release-candidate handoff
-
-The `0.3.65` V3 app-only candidate was built from source commit
-`88caff478679922819d234a86974abc33d2e880a` with
+The `0.3.66` V3 app-only release package was built from source commit
+`315d670d97a645d3f7a0ac1115af106c8a538583` with
 `esp32dev_pico_v3_screen_114_st7789`. The package is
-`CommunistManifestoKB-firmware-v3-0.3.65.zip`, size `601706`, SHA-256
-`11071f477f2aa4fd2e7561e75e911e482500d544ee2a0bd72ed61342807b5565`.
+`CommunistManifestoKB-firmware-v3-0.3.66.zip`, size `601742`, SHA-256
+`882dabee1b6c63d31d40168864f7c0399156ece27aded9a65fe67330f058cca1`.
 
-This candidate is not yet the published baseline. Two validated local-flash preflights stopped
-before writing because `/dev/ttyACM0` and `/dev/ttyACM1` timed out while confirming firmware
-identity. Do not claim a `0.3.65` live flash, serial verification, BLE verification, or public update
-until a uniquely identified V3 completes the app-only workflow and the final `latest.json` is
-published and verified on both GitHub and Gitee.
+The final package completed the validated app-only workflow on the uniquely identified Windows
+device `COM7`, board `v3`, firmware identity `1C9E`. It wrote only the application region at
+`0x10000`, verified the written hash, and read back firmware `0.3.66`. The serial live smoke covered
+identity/version, status, time, Agent signals, macros, and IMU stream control. A 30-second BLE/IMU
+live smoke received 458 frames at 15.3 Hz with no reported sequence gaps or reset suspicions.
+
+This section records a tested handoff; it does not replace release discovery. Before reporting that
+`0.3.66` is publicly available or offering an update, require signed `latest.json` metadata, a
+successful `firmware-check`, and matching GitHub/Gitee public releases. If published metadata
+differs, report the mismatch instead of forcing or inventing an asset.
 
 <!-- section:s004 -->
 ## Stable statuses

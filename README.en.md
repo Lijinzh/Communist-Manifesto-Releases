@@ -27,16 +27,18 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 
 Starting with the next AutoClipboard release, application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
-### `v0.3.65` Windows / Linux phased release
+### `v0.3.66` Windows phased release
 
-`v0.3.65` formally publishes Windows x64, Linux amd64, V3 firmware, and the AI Coding Handle Skill
-in this phase. The source baseline is `88caff478679922819d234a86974abc33d2e880a`. The Windows EXE
-and Linux DEB passed their packaging gates. The V3 package completed an app-only flash, serial
-identity/version readback, and BLE/IMU live validation on Windows `COM7`, device serial `1C9E`.
-A partner will add the formal macOS DMG later, so macOS is absent from the current `latest.json`.
-D4 is no longer maintained and has no new firmware in this release.
+`v0.3.66` formally publishes Windows x64, V3 firmware, and the AI Coding Handle Skill
+in this phase. The source baseline is `315d670d97a645d3f7a0ac1115af106c8a538583`. The desktop icon
+is now a pixel-art ZKO handle redrawn from physical-product photos. The exact Windows package was
+installed locally and verified for version, settings recovery, and matching icon resources. The
+final V3 package also completed an app-only flash, serial readback, and BLE/IMU live validation on
+Windows `COM7`, device serial `1C9E`. A dedicated Linux builder will add the DEB later, and a partner
+will add the formal macOS DMG later, so Linux and macOS are absent from the current `latest.json`.
+D4 is no longer maintained and has no new firmware here.
 
-See the [`v0.3.65` release notes](docs/en/maintainers/releases/v0.3.65.md) for changes, checksums,
+See the [`v0.3.66` release notes](docs/en/maintainers/releases/v0.3.66.md) for changes, checksums,
 and the exact publication scope.
 
 <!-- section:s003 -->

@@ -23,13 +23,13 @@
 - 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
 - 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件永久保留。只允许清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。
 
-### v0.3.65 当前交接
+### v0.3.66 当前交接
 
-- `v0.3.65` 的源码基线固定为主仓库提交 `88caff478679922819d234a86974abc33d2e880a`。
-- 本版本经所有者明确批准先正式发布 Windows x64、Linux amd64、V3 固件和 Skill；macOS 正式 DMG 由合作伙伴后续编译补充，当前 `latest.json` 不得包含 `app.macos`。
-- Windows EXE 为 50,924,814 字节，SHA-256 `11444f40c6fd727606de40cf7a45a6e0728345b0d658d6e28d9519e0103bfbdc`。D4 已停止维护，本版本不发布新 D4 固件，当前 `latest.json` 不得包含 `firmware.d4`。
-- V3 候选包已在 Windows `COM7`、设备序列号 `1C9E` 上完成 validated app-only 烧录，只写 `0x10000` 应用区；串口身份/版本确认、状态命令及 BLE/IMU 30 秒 live smoke 通过，收到 343 帧，平均 11.43 Hz。
-- 当前正式附件集合固定为 Windows EXE、Linux DEB、V3 固件 ZIP、Skill ZIP 和 `latest.json`。发布后必须执行 GitHub/Gitee 双平台同步和匿名附件验证。
+- `v0.3.66` 的源码基线固定为主仓库提交 `315d670d97a645d3f7a0ac1115af106c8a538583`。
+- 本版本经所有者明确批准先正式发布 Windows x64、V3 固件和 Skill；Linux DEB 由专用 Linux 构建机后续补充，macOS 正式 DMG 由合作伙伴后续编译补充，当前 `latest.json` 不得包含 `app.linux` 或 `app.macos`。
+- Windows EXE 为 50,598,899 字节，SHA-256 `95112d5b9c0330694728b9214743a57871458de5ede45ea6c065b35b4fa5a28e`。D4 已停止维护，本版本不发布新 D4 固件，当前 `latest.json` 不得包含 `firmware.d4`。
+- V3 最终包大小 601,742 字节，SHA-256 `882dabee1b6c63d31d40168864f7c0399156ece27aded9a65fe67330f058cca1`，已在 Windows `COM7`、设备序列号 `1C9E` 上完成 validated app-only 烧录，只写 `0x10000` 应用区；串口身份/版本确认、状态命令及 BLE/IMU 30 秒 live smoke 通过，收到 458 帧，平均 15.3 Hz。
+- 当前正式附件集合固定为 Windows EXE、V3 固件 ZIP、Skill ZIP 和 `latest.json`。发布后必须执行 GitHub/Gitee 双平台同步和匿名附件验证。
 
 ### 修改与验证
 
@@ -60,13 +60,13 @@
 - Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
 - Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every historical Gitee Release and attachment already synchronized. Extra-asset cleanup is allowed only on the current latest Gitee Release.
 
-### Current v0.3.65 handoff
+### Current v0.3.66 handoff
 
-- The `v0.3.65` source baseline is fixed at main-repository commit `88caff478679922819d234a86974abc33d2e880a`.
-- The owner explicitly approved formal publication of Windows x64, Linux amd64, V3 firmware, and the Skill first. A partner will build and add the formal macOS DMG later; the current `latest.json` must not contain `app.macos`.
-- The Windows EXE is 50,924,814 bytes with SHA-256 `11444f40c6fd727606de40cf7a45a6e0728345b0d658d6e28d9519e0103bfbdc`. D4 is no longer maintained, so this release has no new D4 firmware and the current `latest.json` must not contain `firmware.d4`.
-- The V3 candidate completed a validated app-only flash on Windows `COM7`, device serial `1C9E`, writing only the application region at `0x10000`. Serial identity/version readback, status commands, and a 30-second BLE/IMU live smoke passed with 343 frames at an average 11.43 Hz.
-- The formal asset set is fixed to the Windows EXE, Linux DEB, V3 firmware ZIP, Skill ZIP, and `latest.json`. After publication, GitHub/Gitee synchronization and anonymous asset verification remain mandatory.
+- The `v0.3.66` source baseline is fixed at main-repository commit `315d670d97a645d3f7a0ac1115af106c8a538583`.
+- The owner explicitly approved formal publication of Windows x64, V3 firmware, and the Skill first. A dedicated Linux builder will add the DEB later, and a partner will add the formal macOS DMG later; the current `latest.json` must not contain `app.linux` or `app.macos`.
+- The Windows EXE is 50,598,899 bytes with SHA-256 `95112d5b9c0330694728b9214743a57871458de5ede45ea6c065b35b4fa5a28e`. D4 is no longer maintained, so this release has no new D4 firmware and the current `latest.json` must not contain `firmware.d4`.
+- The final V3 package is 601,742 bytes with SHA-256 `882dabee1b6c63d31d40168864f7c0399156ece27aded9a65fe67330f058cca1`. It completed a validated app-only flash on Windows `COM7`, device serial `1C9E`, writing only the application region at `0x10000`. Serial identity/version readback, status commands, and a 30-second BLE/IMU live smoke passed with 458 frames at 15.3 Hz.
+- The formal asset set is fixed to the Windows EXE, V3 firmware ZIP, Skill ZIP, and `latest.json`. After publication, GitHub/Gitee synchronization and anonymous asset verification remain mandatory.
 
 ### Changes and validation
 
