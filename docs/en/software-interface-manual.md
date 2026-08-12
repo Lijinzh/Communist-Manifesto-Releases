@@ -7,7 +7,7 @@ This manual explains the current AutoClipboard main window, voice configuration,
 
 The screenshots are actual renders from the current AutoClipboard source, not generated UI mockups. To keep personal accounts, Agent sessions, Bluetooth suffixes, and serial-port details out of public documentation, the captures use isolated clean settings with real device services disabled. The crops only add numbered outlines or isolate regions; they do not redraw controls or pretend to validate physical hardware.
 
-> AutoClipboard version shown: `0.3.62`. Signed-out, BLE-disconnected, and empty-Agent states are intentional safe-demo states. Battery percentage, Profile name, COM port, Agent count, and Bluetooth suffix vary by computer and handle.
+> AutoClipboard version shown: `0.3.67`. Signed-out, empty-Agent, redacted `CommunistKB-XXXX`, and no-serial-selected states are intentional safe-demo states. Battery percentage, Profile name, COM port, Agent count, and Bluetooth suffix vary by computer and handle.
 
 <!-- section:s002 -->
 ## How to read the “changes” column
