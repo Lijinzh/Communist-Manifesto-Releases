@@ -249,18 +249,28 @@ V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的�
 
 ```text
 中文项目主页（本文件）
-├─ 完整使用指南
-│  ├─ 硬件、蓝牙、波轮、Profile 与固件更新
-│  ├─ Agent 状态同步配置
-│  ├─ AutoClipboard 软件界面详细说明
-│  └─ Windows CH343 驱动安装与排障
-├─ 维护者文档
-│  └─ GitHub 主发布与 Gitee 国内镜像
-└─ AI Coding Handle Skill
-   ├─ 中文技术参考
-   └─ English technical references
+└─ Docs 文档中心
+   ├─ Getting Started
+   │  └─ 5 分钟快速开始
+   ├─ Using
+   │  └─ 日常使用工作流
+   ├─ Features
+   │  └─ 系统能力总览
+   ├─ Guides and Tutorials
+   │  └─ 多主机、Agent、升级与固件教程
+   ├─ Developer Guide
+   │  └─ 贡献、验证与双平台发布
+   └─ Reference
+      └─ 兼容性、状态、协议与资产命名
 ```
 
+- [进入中文 Docs 文档中心](docs/zh-CN/index.md)
+- [Getting Started](docs/zh-CN/getting-started/index.md)
+- [Using](docs/zh-CN/using/index.md)
+- [Features](docs/zh-CN/features/index.md)
+- [Guides and Tutorials](docs/zh-CN/guides-and-tutorials/index.md)
+- [Developer Guide](docs/zh-CN/developer-guide/index.md)
+- [Reference](docs/zh-CN/reference/index.md)
 - [完整中文使用指南](docs/zh-CN/user-guide.md)
 - [Agent 状态同步配置](docs/zh-CN/agent-signal-setup.md)
 - [AutoClipboard 软件界面详细说明](docs/zh-CN/software-interface-manual.md)
@@ -268,6 +278,6 @@ V3 是当前持续维护的硬件版本。不要给设备刷入其他板型的�
 - [GitHub 与 Gitee 发布维护指南](docs/zh-CN/maintainers/gitee-publishing.md)
 - [English documentation tree](README.en.md)
 - [开源 AI Coding Handle Skill](skills/ai-coding-handle)
-- [字库产品介绍网页](https://zkolab.com/)
+- [ZKO 官网文档中心](https://zkolab.com/docs.html)
 
 本仓库包含公开发布文件、面向用户的文档、支持脚本以及采用 MIT License 的 AI Coding Handle Skill。AutoClipboard 和手柄固件的应用源码仍为私有内容。

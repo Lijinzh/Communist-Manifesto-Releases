@@ -252,18 +252,28 @@ The [complete troubleshooting chapter](docs/en/user-guide.md#12-troubleshooting)
 
 ```text
 English project home (this file)
-├─ Complete user guide
-│  ├─ Hardware, Bluetooth, wheel, Profiles, and firmware updates
-│  ├─ Agent status synchronization
-│  ├─ Detailed AutoClipboard interface manual
-│  └─ Windows CH343 driver installation and troubleshooting
-├─ Maintainer documentation
-│  └─ GitHub primary releases and the Gitee China mirror
-└─ AI Coding Handle Skill
-   ├─ English technical references
-   └─ 中文技术参考
+└─ Docs center
+   ├─ Getting Started
+   │  └─ Five-minute quickstart
+   ├─ Using
+   │  └─ Daily-use workflow
+   ├─ Features
+   │  └─ System capability overview
+   ├─ Guides and Tutorials
+   │  └─ Multi-host, Agent, upgrade, and firmware tutorials
+   ├─ Developer Guide
+   │  └─ Contribution, validation, and dual-platform publishing
+   └─ Reference
+      └─ Compatibility, status, protocols, and asset naming
 ```
 
+- [Open the English Docs center](docs/en/index.md)
+- [Getting Started](docs/en/getting-started/index.md)
+- [Using](docs/en/using/index.md)
+- [Features](docs/en/features/index.md)
+- [Guides and Tutorials](docs/en/guides-and-tutorials/index.md)
+- [Developer Guide](docs/en/developer-guide/index.md)
+- [Reference](docs/en/reference/index.md)
 - [Complete English user guide](docs/en/user-guide.md)
 - [Agent status setup](docs/en/agent-signal-setup.md)
 - [Detailed AutoClipboard interface manual](docs/en/software-interface-manual.md)
@@ -271,6 +281,6 @@ English project home (this file)
 - [GitHub and Gitee publishing guide](docs/en/maintainers/gitee-publishing.md)
 - [简体中文文档树](README.md)
 - [Open-source AI Coding Handle Skill](skills/ai-coding-handle)
-- [Product introduction website](https://zkolab.com/)
+- [ZKO website documentation center](https://zkolab.com/docs.html)
 
 This repository contains public release assets, user documentation, support scripts, and the MIT-licensed AI Coding Handle Skill. AutoClipboard and firmware application source code remain private.
