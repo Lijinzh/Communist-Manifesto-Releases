@@ -18,22 +18,24 @@ The process exit code and JSON `success` are authoritative together. Do not infe
 <!-- section:s003 -->
 ## Current tested V3 baseline
 
-The current tested V3 release baseline is firmware `0.3.66` as of 2026-08-12. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
+The current tested V3 release baseline is firmware `0.3.68` as of 2026-08-15. Windows and Linux use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and AutoClipboard backend, not separate platform firmware variants.
 
-The `0.3.66` V3 app-only release package was built from source commit
-`315d670d97a645d3f7a0ac1115af106c8a538583` with
+The `0.3.68` V3 app-only release package was built from source commit
+`88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057` with
 `esp32dev_pico_v3_screen_114_st7789`. The package is
-`CommunistManifestoKB-firmware-v3-0.3.66.zip`, size `601742`, SHA-256
-`882dabee1b6c63d31d40168864f7c0399156ece27aded9a65fe67330f058cca1`.
+`CommunistManifestoKB-firmware-v3-0.3.68.zip`, size `602440`, SHA-256
+`8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`.
 
-The final package completed the validated app-only workflow on the uniquely identified Windows
-device `COM7`, board `v3`, firmware identity `1C9E`. It wrote only the application region at
-`0x10000`, verified the written hash, and read back firmware `0.3.66`. The serial live smoke covered
-identity/version, status, time, Agent signals, macros, and IMU stream control. A 30-second BLE/IMU
-live smoke received 458 frames at 15.3 Hz with no reported sequence gaps or reset suspicions.
+The final package completed the validated app-only workflow on the uniquely identified Linux
+device `/dev/ttyACM1`, board `v3`, firmware identity `A1EA`. It wrote only the application region at
+`0x10000`, verified the written hash, and read back firmware `0.3.68`. The serial live smoke covered
+identity/version, status, time, Agent signals, four macros, and IMU stream control. A 30-second
+BLE/IMU live smoke received 565 frames at 18.83 Hz with no sequence gaps, duplicates, watchdog
+expiry, or reset suspicions. One optional 250 ms status poll timed out without interrupting the
+notify stream.
 
 This section records a tested handoff; it does not replace release discovery. Before reporting that
-`0.3.66` is publicly available or offering an update, require signed `latest.json` metadata, a
+`0.3.68` is publicly available or offering an update, require signed `latest.json` metadata, a
 successful `firmware-check`, and matching GitHub/Gitee public releases. If published metadata
 differs, report the mismatch instead of forcing or inventing an asset.
 

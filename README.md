@@ -27,16 +27,16 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
-### `v0.3.66` Windows 阶段发布
+### `v0.3.68` Windows / Linux 与 V3 固件发布
 
-`v0.3.66` 本轮正式发布 Windows x64、V3 固件和 AI Coding Handle Skill，
-源码基线为 `315d670d97a645d3f7a0ac1115af106c8a538583`。桌面软件图标已替换为依据实物照片
-重绘的像素风字库手柄，并在 Windows 本机安装后确认版本、设置恢复和图标资源一致；V3
-最终发布包也已在 Windows `COM7`、设备序列号 `1C9E` 上完成 app-only 烧录、串口回读与
-BLE/IMU 实机验证。Linux DEB 由专用 Linux 构建机后续补充，macOS 正式 DMG 由合作伙伴
-后续补充；当前 `latest.json` 不包含 Linux 或 macOS。D4 已停止维护，本版本也不发布新的 D4 固件。
+`v0.3.68` 正式提供 Windows x64、Linux amd64、AI Coding Handle Skill 和 V3 固件。
+桌面安装包继续使用已验证的 `v0.3.68` 资产；V3 `0.3.68` 基于固件提交
+`88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`，加入 160/240 MHz 动态性能档、`+6 dBm`
+发射功率、较低出厂亮度和 30 分钟 Deep Sleep 默认策略。最终包已在 Linux
+`/dev/ttyACM1`、设备序列号 `A1EA` 上完成 validated app-only 烧录、串口回读和 30 秒
+BLE/IMU 实机验证。D4 已停止维护，macOS 正式 DMG 仍未进入自动更新元数据。
 
-完整更新内容、校验值和发布范围见 [`v0.3.66` 发布说明](docs/zh-CN/maintainers/releases/v0.3.66.md)。
+完整更新内容、校验值和发布范围见 [`v0.3.68` 发布说明](docs/zh-CN/maintainers/releases/v0.3.68.md)。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置
