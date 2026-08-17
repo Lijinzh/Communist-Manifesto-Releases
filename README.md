@@ -25,18 +25,22 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 | GitHub | 默认首选，正常网络环境优先使用 | [GitHub 最新 Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) |
 | Gitee | GitHub 访问不稳定、下载超时或无法连接时使用 | [Gitee 发布页](https://gitee.com/shan-yujun/Communist-Manifesto-Releases/releases) |
 
-从下一个 AutoClipboard 版本开始，软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
+AutoClipboard 的软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
-### `v0.3.68` Windows / Linux 与 V3 固件发布
+### `v0.3.76` Windows / Linux / macOS 三平台发布
 
-`v0.3.68` 正式提供 Windows x64、Linux amd64、AI Coding Handle Skill 和 V3 固件。
-桌面安装包继续使用已验证的 `v0.3.68` 资产；V3 `0.3.68` 基于固件提交
-`88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`，加入 160/240 MHz 动态性能档、`+6 dBm`
-发射功率、较低出厂亮度和 30 分钟 Deep Sleep 默认策略。最终包已在 Linux
-`/dev/ttyACM1`、设备序列号 `A1EA` 上完成 validated app-only 烧录、串口回读和 30 秒
-BLE/IMU 实机验证。D4 已停止维护，macOS 正式 DMG 仍未进入自动更新元数据。
+`v0.3.76` 提供 Windows x64 EXE、Linux amd64 DEB、macOS Apple Silicon 未公证预览 DMG
+和 AI Coding Handle Skill，三端安装包均从主仓库同一提交
+`c15d0c11b47f738cfa8e03024af2e52abb41354e` 原生构建。该版本加入高级语音多场景润色、
+个人热词和录音启动预缓冲，完善 Profile 专属手柄控制、相对鼠标移动、账户缓存与头像同步、
+独立非模态设置窗口和多套像素主题，并修复 ASR 停止、文本落框、macOS 模型资源及 Linux
+桌面入口问题。V3 固件继续携带已完成 validated app-only 与 BLE/IMU 实机验证的 `0.3.68`，
+D4 已停止维护。
 
-完整更新内容、校验值和发布范围见 [`v0.3.68` 发布说明](docs/zh-CN/maintainers/releases/v0.3.68.md)。
+macOS 包面向 arm64，使用 ad-hoc 签名且未经 Apple 公证；首次安装后需执行
+`xattr -cr /Applications/AutoClipboard.app`，不得将其视为已通过 Gatekeeper 的 Developer ID 包。
+
+完整更新内容、校验值和发布范围见 [`v0.3.76` 发布说明](docs/zh-CN/maintainers/releases/v0.3.76.md)。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置

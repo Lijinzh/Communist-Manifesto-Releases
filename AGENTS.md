@@ -23,13 +23,13 @@
 - 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
 - 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件永久保留。只允许清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。
 
-### v0.3.68 当前交接
+### v0.3.76 当前交接
 
-- Windows、Linux 和 Skill 使用已验证的 `v0.3.68` 正式资产；桌面源码标签对应提交 `bb0ebababb70a16660b5f13dce5335df01b7c314`。
+- Windows、Linux、macOS 和 Skill 使用主仓库标签 `v0.3.76`，桌面源码提交为 `c15d0c11b47f738cfa8e03024af2e52abb41354e`；三个安装包均在对应原生系统构建并完成下载端哈希复核。
 - V3 `0.3.68` 固件基于主仓库提交 `88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`，包大小 602,440 字节，SHA-256 `8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`。
 - 固件已在 Linux `/dev/ttyACM1`、设备序列号 `A1EA` 上完成 validated app-only 烧录，只写 `0x10000` 应用区；串口完整 smoke 通过，30 秒 BLE/IMU 收到 565 帧，平均 18.83 Hz，无序号缺口、重复或重置嫌疑。
-- D4 已停止维护，macOS 正式 DMG 仍省略；正式附件集合固定为 Windows EXE、Linux DEB、V3 固件 ZIP、Skill ZIP 和 `latest.json`。
-- `latest.json` 为 2,171 字节，SHA-256 `1c568037bedc6ddd261f9cdf5f5c76914958575c63fb99cb4f472ac9aff53a8b`。发布后必须执行 GitHub/Gitee 双平台同步和匿名附件验证。
+- D4 已停止维护；macOS 使用 Apple Silicon arm64、ad-hoc 签名、未经 Apple 公证的预览 DMG，并随 `latest.json` 正式分发。不得声称 Developer ID、公证、stapling、Gatekeeper 或 Intel 兼容性通过。
+- 正式附件集合固定为 Windows EXE、Linux DEB、macOS 未公证预览 DMG、V3 `0.3.68` 固件 ZIP、Skill ZIP 和 `latest.json`。`latest.json` 为 2,865 字节，SHA-256 `239b53c3704788928a652c4ff168c09cde5242d9c9c076365d5cf197e0421204`；发布后必须执行 GitHub/Gitee 双平台同步和匿名附件验证。
 
 ### 修改与验证
 
@@ -60,13 +60,13 @@
 - Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
 - Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every historical Gitee Release and attachment already synchronized. Extra-asset cleanup is allowed only on the current latest Gitee Release.
 
-### Current v0.3.68 handoff
+### Current v0.3.76 handoff
 
-- Windows, Linux, and the Skill use the already verified formal `v0.3.68` assets; the desktop source tag resolves to commit `bb0ebababb70a16660b5f13dce5335df01b7c314`.
+- Windows, Linux, macOS, and the Skill use main-repository tag `v0.3.76` at desktop source commit `c15d0c11b47f738cfa8e03024af2e52abb41354e`. Each native installer was built on its target OS and re-hashed after collection.
 - V3 firmware `0.3.68` is based on main-repository commit `88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`. The package is 602,440 bytes with SHA-256 `8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`.
 - It completed a validated app-only flash on Linux `/dev/ttyACM1`, device serial `A1EA`, writing only the application region at `0x10000`. The complete serial smoke passed, and a 30-second BLE/IMU live smoke received 565 frames at 18.83 Hz with no sequence gaps, duplicates, or reset suspicions.
-- D4 is no longer maintained and the formal macOS DMG remains omitted. The formal asset set is fixed to the Windows EXE, Linux DEB, V3 firmware ZIP, Skill ZIP, and `latest.json`.
-- `latest.json` is 2,171 bytes with SHA-256 `1c568037bedc6ddd261f9cdf5f5c76914958575c63fb99cb4f472ac9aff53a8b`. GitHub/Gitee synchronization and anonymous asset verification remain mandatory after publication.
+- D4 is no longer maintained. macOS uses an Apple Silicon arm64, ad-hoc-signed, unnotarized preview DMG and is included in `latest.json`; do not claim Developer ID signing, notarization, stapling, Gatekeeper approval, or Intel compatibility.
+- The formal asset set is the Windows EXE, Linux DEB, macOS unnotarized preview DMG, V3 `0.3.68` firmware ZIP, Skill ZIP, and `latest.json`. `latest.json` is 2,865 bytes with SHA-256 `239b53c3704788928a652c4ff168c09cde5242d9c9c076365d5cf197e0421204`. GitHub/Gitee synchronization and anonymous asset verification remain mandatory after publication.
 
 ### Changes and validation
 

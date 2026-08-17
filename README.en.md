@@ -25,19 +25,24 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 | GitHub | Default and primary source | [Latest GitHub Release](https://github.com/Lijinzh/Communist-Manifesto-Releases/releases/latest) |
 | Gitee | Fallback when GitHub cannot be reached reliably | [Gitee Releases](https://gitee.com/shan-yujun/Communist-Manifesto-Releases/releases) |
 
-Starting with the next AutoClipboard release, application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
+AutoClipboard application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
-### `v0.3.68` Windows / Linux and V3 firmware release
+### `v0.3.76` Windows / Linux / macOS release
 
-`v0.3.68` formally provides Windows x64, Linux amd64, the AI Coding Handle Skill, and V3 firmware.
-The desktop installers remain the already verified `v0.3.68` assets. V3 `0.3.68` is built from
-firmware commit `88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057` and adds dynamic 160/240 MHz
-performance modes, `+6 dBm` transmit power, lower factory brightness, and a 30-minute default Deep
-Sleep policy. The final package completed a validated app-only flash, serial readback, and a
-30-second BLE/IMU live validation on Linux `/dev/ttyACM1`, device serial `A1EA`. D4 is no longer
-maintained, and a formal macOS DMG remains outside automatic-update metadata.
+`v0.3.76` provides a Windows x64 EXE, Linux amd64 DEB, Apple Silicon macOS unnotarized preview DMG,
+and the AI Coding Handle Skill. All three native desktop packages were built from the same main-repo
+commit, `c15d0c11b47f738cfa8e03024af2e52abb41354e`. This release adds multi-scenario premium voice
+refinement, personal hotwords, startup audio prebuffering, profile-specific handle controls,
+relative mouse movement, account caching and avatar synchronization, independent non-modal dialogs,
+and additional pixel themes. It also fixes ASR stopping, post-insertion shortcut handling, bundled
+macOS model resources, and the Linux desktop entry. V3 carries forward the validated `0.3.68`
+firmware, while D4 remains unmaintained.
 
-See the [`v0.3.68` release notes](docs/en/maintainers/releases/v0.3.68.md) for changes, checksums,
+The macOS package targets arm64, uses an ad-hoc signature, and is not Apple-notarized. After the first
+install, run `xattr -cr /Applications/AutoClipboard.app`; this package is not claimed to pass
+Developer ID Gatekeeper assessment.
+
+See the [`v0.3.76` release notes](docs/en/maintainers/releases/v0.3.76.md) for changes, checksums,
 and the exact publication scope.
 
 <!-- section:s003 -->
