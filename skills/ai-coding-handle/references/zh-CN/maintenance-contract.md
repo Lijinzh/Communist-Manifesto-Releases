@@ -18,21 +18,19 @@
 <!-- section:s003 -->
 ## 当前已验证的 V3 基线
 
-截至 2026-08-15，当前已验证的 V3 发布基线是固件 `0.3.68`。Windows 与 Linux 使用同一个 ESP32 固件二进制；差异来自主机蓝牙协议栈和 AutoClipboard 后端，并不存在两套平台专用固件。
+截至 2026-08-22，当前已验证的 V3 发布基线是固件 `0.3.69`。Windows、Linux 与 macOS
+使用同一个 ESP32 固件二进制；差异来自主机蓝牙协议栈和 AutoClipboard 后端，不存在平台专用固件变体。
 
-V3 `0.3.68` 仅应用发布包基于源码提交
-`88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`，使用
-`esp32dev_pico_v3_screen_114_st7789` 构建。包名为
-`CommunistManifestoKB-firmware-v3-0.3.68.zip`，大小 `602440`，SHA-256 为
-`8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`。
+发布包使用 `esp32dev_pico_v3_screen_114_st7789` 构建，名称为
+`CommunistManifestoKB-firmware-v3-0.3.69.zip`。最终大小和 SHA-256 只以签名
+`latest.json` 及 GitHub/Gitee 一致的 Release 附件为准；不得把本地开发包哈希复制进更新计划。
 
-最终发布包已通过 validated app-only 流程刷写到唯一识别的 Linux 设备 `/dev/ttyACM1`、
-板型 `v3`、固件身份 `A1EA`，只写应用区 `0x10000`，写入哈希验证和 `0.3.68` 版本回读通过。
-串口 live smoke 验证了身份/版本、状态、时间、Agent 信号、4 个宏和 IMU 流控制；30 秒
-BLE/IMU live smoke 收到 565 帧，平均 18.83 Hz，没有序号缺口、重复、看门狗超时或重置
-嫌疑。一次可选的 250 ms 状态轮询超时没有中断 notify 流。
+validated app-only 流程使用唯一识别的 Windows 设备 `COM9`、板型 `v3`、固件身份 `183E`，
+只写应用区 `0x10000`，保留 NVS/SPIFFS，完成写入哈希验证和 `0.3.69` 版本回读。自动实体
+smoke 覆盖 Gauss 四方向 HID，以及 Einstein 的真实鼠标移动、左键 down/up 拖选、右键和 Delete。
+最终宏映射回读为 `CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,DELETE`，紧凑状态映射为 `sam=1859`。
 
-本节只记录已验证交接，不能取代 Release 发现。在宣称 `0.3.68` 已公开发布或提供更新前，
+本节只记录已验证交接，不能取代 Release 发现。在宣称 `0.3.69` 已公开发布或提供更新前，
 必须要求签名 `latest.json` 元数据、成功的 `firmware-check`，并确认 GitHub 与 Gitee 发布一致。
 如果公开元数据不同，应报告不一致，不能强行更新或虚构附件。
 
