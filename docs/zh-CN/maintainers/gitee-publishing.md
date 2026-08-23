@@ -16,7 +16,7 @@ Gitee 公开仓库：<https://gitee.com/shan-yujun/Communist-Manifesto-Releases>
 这台 Windows 发布机使用两种互相独立的凭据：
 
 1. `C:\Users\admin\.ssh\id_ed25519_gitee_release`：只负责 Git 代码和标签推送。
-2. Windows Git Credential Manager 中的 `gitee.com` 私人令牌：负责创建仓库、管理 SSH 公钥、创建 Release 和上传附件。
+2. Windows Git Credential Manager 中的 `gitee.com` 私人令牌：负责创建仓库、管理 SSH 公钥、创建 Release 和上传附件。日常 Release 同步只启用 Gitee 强制的 `user_info` 和仓库操作所需的 `projects`，建议使用 30 天有效期。
 
 私人令牌不得写入仓库、脚本、`.env` 或 Git 远端 URL。同步脚本会优先读取临时环境变量 `GITEE_TOKEN`，否则通过 `git credential fill` 从 Windows 凭据管理器读取。
 
@@ -28,6 +28,8 @@ Gitee 公开仓库：<https://gitee.com/shan-yujun/Communist-Manifesto-Releases>
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\sync-github-to-gitee.ps1
 ```
+
+网络默认使用系统直连。只有直连超时或失败时，才临时设置 `HTTP_PROXY` / `HTTPS_PROXY` 为 `http://127.0.0.1:7897` 后重试，并在完成后清除环境变量。如果 `main` 和全部标签已经提前同步，可以增加 `-SkipCodePush` 只同步 Release 附件并执行匿名验证。
 
 脚本依次执行：
 
@@ -44,7 +46,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\sync-github-to-gitee
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\sync-github-to-gitee.ps1 -ReplaceExistingAssets
 ```
 
-正式同步默认删除当前最新 Gitee Release 中 GitHub 不存在的多余附件，但绝不删除历史 Gitee Release 或历史附件。
+正式同步默认删除当前最新 Gitee Release 中 GitHub 不存在的多余附件，但不会自动删除历史 Gitee Release 或历史附件。同名且大小一致的已有附件会安全跳过，因此配额或网络中断后可以续跑。
 
 <!-- section:s004 -->
 ## 单独验证
@@ -54,3 +56,16 @@ uv run --no-project python scripts\gitee_release_sync.py verify
 ```
 
 该命令不需要私人令牌。它会精确比较 GitHub 与 Gitee 的 `main`、全部标签、最新 Release 和附件元数据，并逐个验证 Gitee 附件可以匿名读取。任何差异都会返回非零退出码。
+
+<!-- section:s005 -->
+## 附件容量预检与配额异常
+
+正式同步前后运行匿名容量统计：
+
+```powershell
+uv run --no-project python scripts\gitee_release_sync.py storage
+```
+
+该命令不读取私人令牌，只列出 Gitee Release ID、标签、附件名称、各版本字节数和仓库总占用。发布协调端应在上传前把当前占用与本次 GitHub 六个附件的总大小相加，避免上传到一半才触发 1 GiB 配额。
+
+历史 Gitee Release 默认永久保留。如果配额仍阻塞正式最新版，必须先停止同步并向仓库所有者报告精确删除目标和可释放字节数。只有所有者针对当前目标给出明确确认后，才能把获批清理作为例外执行；必须保留对应 GitHub Release 和两端 Git 标签，并把 Release ID、标签、释放字节数、恢复来源与确认事实写入版本验收记录。同步脚本不会自动执行这种历史清理。

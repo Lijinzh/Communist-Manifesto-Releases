@@ -21,7 +21,7 @@
 - GitHub 是正式构建和主发布源，Gitee 是中国大陆网络备用发布源。任何正式版本必须同时完成两个平台的发布。
 - GitHub Release 构建完成后，统一运行仓库内的 `scripts/sync-github-to-gitee.ps1`。该命令必须同步 `main`、全部 Git 标签和当前最新 Release 的准确附件集合，并执行严格匿名验证。
 - 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
-- 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件永久保留。只允许清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。
+- 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件默认永久保留。只允许同步脚本自动清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。若 1 GiB 配额阻塞正式最新版，只有仓库所有者针对精确 Release ID、标签和释放字节数明确确认后，才能例外清理历史 Gitee Release；对应 GitHub Release 与两端 Git 标签必须保留，且清理证据必须写入版本验收记录。
 
 ### v0.3.76 当前交接
 
@@ -58,7 +58,7 @@
 - GitHub is the official build and primary release source. Gitee is the China-accessible fallback. Every formal version must be published on both platforms.
 - After the GitHub Release is complete, run the repository-owned `scripts/sync-github-to-gitee.ps1`. It must synchronize `main`, every Git tag, and the exact latest Release asset set, then perform strict anonymous verification.
 - Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
-- Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every historical Gitee Release and attachment already synchronized. Extra-asset cleanup is allowed only on the current latest Gitee Release.
+- Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every synchronized historical Gitee Release and attachment by default. The synchronizer may automatically remove only extra assets from the current latest Gitee Release. If the 1 GiB quota blocks the formal latest version, historical Gitee Releases may be removed only as an exception after the repository owner explicitly confirms the exact Release IDs, tags, and bytes to free. The matching GitHub Releases and Git tags on both remotes must remain intact, and the cleanup evidence must be recorded in the version verification record.
 
 ### Current v0.3.76 handoff
 

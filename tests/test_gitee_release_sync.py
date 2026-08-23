@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import call, patch
 
 from scripts.gitee_release_sync import (
     compare_git_refs,
     compare_release_mirrors,
+    report_release_storage,
     release_asset_map,
 )
 
@@ -44,6 +46,45 @@ class ReleaseMirrorComparisonTests(unittest.TestCase):
                 "missing on Gitee: driver.exe",
                 "extra on Gitee: extra.zip",
                 "asset size differs for app.exe: GitHub=10, Gitee=11",
+            ],
+        )
+
+    @patch("scripts.gitee_release_sync._public_json")
+    def test_release_storage_report_is_anonymous_and_sums_assets(self, public_json) -> None:
+        public_json.side_effect = [
+            [{"id": 10, "tag_name": "v1.2.3"}],
+            [
+                {"name": "app.exe", "size": 100},
+                {"name": "latest.json", "size": 20},
+            ],
+        ]
+
+        report = report_release_storage("owner", "repo")
+
+        self.assertEqual(report["repository"], "https://gitee.com/owner/repo")
+        self.assertEqual(report["release_count"], 1)
+        self.assertEqual(report["total_bytes"], 120)
+        self.assertEqual(
+            report["releases"],
+            [
+                {
+                    "tag": "v1.2.3",
+                    "release_id": 10,
+                    "asset_count": 2,
+                    "bytes": 120,
+                    "mib": 0.0,
+                    "assets": [
+                        {"name": "app.exe", "size": 100},
+                        {"name": "latest.json", "size": 20},
+                    ],
+                }
+            ],
+        )
+        self.assertEqual(
+            public_json.call_args_list,
+            [
+                call("/repos/owner/repo/releases?per_page=100&page=1"),
+                call("/repos/owner/repo/releases/10/attach_files?per_page=100"),
             ],
         )
 

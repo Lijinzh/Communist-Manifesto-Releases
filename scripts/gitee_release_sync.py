@@ -588,6 +588,59 @@ def verify_public_mirror(
     }
 
 
+def report_release_storage(owner: str, repo: str) -> dict[str, object]:
+    releases: list[dict[str, object]] = []
+    page = 1
+    while True:
+        payload = _public_json(f"/repos/{owner}/{repo}/releases?per_page=100&page={page}")
+        if not isinstance(payload, list):
+            raise RuntimeError("Gitee public releases returned an unexpected payload.")
+        if not payload:
+            break
+        for release in payload:
+            if not isinstance(release, dict) or not release.get("id") or not release.get("tag_name"):
+                raise RuntimeError("Gitee public release returned an unexpected payload.")
+            release_id = int(release["id"])
+            attachments = _public_json(
+                f"/repos/{owner}/{repo}/releases/{release_id}/attach_files?per_page=100"
+            )
+            if not isinstance(attachments, list):
+                raise RuntimeError("Gitee public attachments returned an unexpected payload.")
+            assets: list[dict[str, object]] = []
+            release_bytes = 0
+            for attachment in attachments:
+                if not isinstance(attachment, dict) or not attachment.get("name"):
+                    raise RuntimeError("Gitee public attachment returned an unexpected payload.")
+                size = attachment.get("size")
+                if not isinstance(size, int) or isinstance(size, bool) or size < 0:
+                    raise RuntimeError("Gitee public attachment has an invalid size.")
+                release_bytes += size
+                assets.append({"name": str(attachment["name"]), "size": size})
+            releases.append(
+                {
+                    "tag": str(release["tag_name"]),
+                    "release_id": release_id,
+                    "asset_count": len(assets),
+                    "bytes": release_bytes,
+                    "mib": round(release_bytes / (1024 * 1024), 2),
+                    "assets": sorted(assets, key=lambda item: str(item["name"])),
+                }
+            )
+        if len(payload) < 100:
+            break
+        page += 1
+        if page > 100:
+            raise RuntimeError("Gitee release inventory exceeded the supported page limit.")
+    total_bytes = sum(int(release["bytes"]) for release in releases)
+    return {
+        "repository": f"https://gitee.com/{owner}/{repo}",
+        "release_count": len(releases),
+        "total_bytes": total_bytes,
+        "total_mib": round(total_bytes / (1024 * 1024), 2),
+        "releases": releases,
+    }
+
+
 def _public_json(path: str) -> object:
     request = urllib.request.Request(
         f"{GITEE_API_BASE}{path}",
@@ -621,6 +674,7 @@ def _parser() -> argparse.ArgumentParser:
 
     subparsers.add_parser("make-public", help="Make the populated Gitee mirror publicly readable.")
     subparsers.add_parser("verify", help="Verify anonymous public access to the Gitee mirror.")
+    subparsers.add_parser("storage", help="Report anonymous Gitee Release attachment storage usage.")
     return parser
 
 
@@ -630,6 +684,15 @@ def main(argv: list[str] | None = None) -> int:
         print(
             json.dumps(
                 verify_public_mirror(args.owner, args.repo, args.github_repo),
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
+    if args.command == "storage":
+        print(
+            json.dumps(
+                report_release_storage(args.owner, args.repo),
                 ensure_ascii=False,
                 indent=2,
             )
