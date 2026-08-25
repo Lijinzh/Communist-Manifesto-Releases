@@ -18,24 +18,26 @@ The process exit code and JSON `success` are authoritative together. Do not infe
 <!-- section:s003 -->
 ## Current tested V3 baseline
 
-The current tested V3 release baseline is firmware `0.3.69` as of 2026-08-22. Windows, Linux, and
+The current tested V3 release baseline is firmware `0.3.70` as of 2026-08-26. Windows, Linux, and
 macOS use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and
 AutoClipboard backend, not separate platform firmware variants.
 
 The package is built with `esp32dev_pico_v3_screen_114_st7789` and published as
-`CommunistManifestoKB-firmware-v3-0.3.69.zip`. Its final size and SHA-256 are authoritative only in
+`CommunistManifestoKB-firmware-v3-0.3.70.zip`. Its final size and SHA-256 are authoritative only in
 the signed `latest.json` and matching GitHub/Gitee Release assets; never copy a hash from a local
 development archive into an update plan.
 
 The validated app-only workflow targets the uniquely identified Windows device `COM9`, board `v3`,
 firmware identity `183E`. It writes only the application region at `0x10000`, preserves NVS/SPIFFS,
-verifies the written hash, and reads back firmware `0.3.69`. Automated physical smoke covers the
-Gauss four-direction HID mapping and the Einstein real-mouse controls: relative movement, left-button
-down/up drag selection, right click, and Delete. The final mapping reads back as
-`CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,DELETE` with compact status mapping `sam=1859`.
+verifies the written hash, and reads back firmware `0.3.70`. Post-flash serial status confirms Gauss
+`UP,DOWN,LEFT,RIGHT` and Einstein `CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,BACKSPACE`, with compact
+status mapping `sam=1859`. Source-policy smoke confirms that Gauss directions and Einstein Backspace
+start repeating after 500 ms at a 120 ms interval and discard stale repeats after release or Profile
+change. The Windows HID link did not reconnect during this handoff, so neither Backspace nor the new
+long-hold repeat behavior is claimed as HID physical-live evidence.
 
 This section records a tested handoff; it does not replace release discovery. Before reporting that
-`0.3.69` is publicly available or offering an update, require signed `latest.json` metadata, a
+`0.3.70` is publicly available or offering an update, require signed `latest.json` metadata, a
 successful `firmware-check`, and matching GitHub/Gitee public releases. If published metadata
 differs, report the mismatch instead of forcing or inventing an asset.
 

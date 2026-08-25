@@ -18,19 +18,22 @@
 <!-- section:s003 -->
 ## 当前已验证的 V3 基线
 
-截至 2026-08-22，当前已验证的 V3 发布基线是固件 `0.3.69`。Windows、Linux 与 macOS
+截至 2026-08-26，当前已验证的 V3 发布基线是固件 `0.3.70`。Windows、Linux 与 macOS
 使用同一个 ESP32 固件二进制；差异来自主机蓝牙协议栈和 AutoClipboard 后端，不存在平台专用固件变体。
 
 发布包使用 `esp32dev_pico_v3_screen_114_st7789` 构建，名称为
-`CommunistManifestoKB-firmware-v3-0.3.69.zip`。最终大小和 SHA-256 只以签名
+`CommunistManifestoKB-firmware-v3-0.3.70.zip`。最终大小和 SHA-256 只以签名
 `latest.json` 及 GitHub/Gitee 一致的 Release 附件为准；不得把本地开发包哈希复制进更新计划。
 
 validated app-only 流程使用唯一识别的 Windows 设备 `COM9`、板型 `v3`、固件身份 `183E`，
-只写应用区 `0x10000`，保留 NVS/SPIFFS，完成写入哈希验证和 `0.3.69` 版本回读。自动实体
-smoke 覆盖 Gauss 四方向 HID，以及 Einstein 的真实鼠标移动、左键 down/up 拖选、右键和 Delete。
-最终宏映射回读为 `CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,DELETE`，紧凑状态映射为 `sam=1859`。
+只写应用区 `0x10000`，保留 NVS/SPIFFS，完成写入哈希验证和 `0.3.70` 版本回读。烧录后串口
+状态确认 Gauss 为 `UP,DOWN,LEFT,RIGHT`，Einstein 为
+`CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,BACKSPACE`，紧凑状态映射为 `sam=1859`。源码策略 smoke
+确认 Gauss 方向键与 Einstein Backspace 按住 500 ms 后以 120 ms 间隔连发，并在松手或切换
+Profile 后丢弃旧重复动作。本次交接时 Windows HID 链路未重新连接，因此不把 Backspace 或新增长按
+连发写成 HID `physical-live` 证据。
 
-本节只记录已验证交接，不能取代 Release 发现。在宣称 `0.3.69` 已公开发布或提供更新前，
+本节只记录已验证交接，不能取代 Release 发现。在宣称 `0.3.70` 已公开发布或提供更新前，
 必须要求签名 `latest.json` 元数据、成功的 `firmware-check`，并确认 GitHub 与 Gitee 发布一致。
 如果公开元数据不同，应报告不一致，不能强行更新或虚构附件。
 
