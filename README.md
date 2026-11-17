@@ -38,7 +38,7 @@ Agent 心跳、只读状态轮询与 IMU 推流遵守静置睡眠策略。D4 已
 macOS 包面向 arm64，使用 ad-hoc 签名且未经 Apple 公证；首次安装后执行
 `xattr -cr /Applications/AutoClipboard.app`，不声称通过 Gatekeeper、Developer ID 或 Intel 验收。
 
-构建与镜像验证完成后，安装包和校验值以最新 Release 的 `latest.json` 为准。
+三平台构建和双源完整下载校验均已通过，详见 [`v0.3.89` 发布验收](docs/zh-CN/maintainers/releases/v0.3.89.md)。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置

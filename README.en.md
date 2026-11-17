@@ -41,8 +41,8 @@ The macOS arm64 package is ad-hoc signed and not Apple-notarized. After installa
 `xattr -cr /Applications/AutoClipboard.app`. Developer ID, Gatekeeper, and Intel compatibility
 are not claimed.
 
-Once build and mirror verification finish, use the latest Release `latest.json` for package sizes
-and checksums.
+Native builds and complete download hash verification passed on both sources. See the
+[`v0.3.89` release verification](docs/en/maintainers/releases/v0.3.89.md).
 
 <!-- section:s003 -->
 ## Recommended first step: let Codex configure it
