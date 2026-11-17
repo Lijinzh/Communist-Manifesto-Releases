@@ -27,20 +27,18 @@ GitHub 仍然是主要发布源。如果所在网络访问 GitHub 很慢、超�
 
 AutoClipboard 的软件更新与固件更新会先尝试 GitHub；GitHub 不可用时，自动改用 Gitee 重新获取更新。无论文件来自哪个源，安装前都会继续核对文件大小和 SHA-256 校验值，不会因为启用备用源而跳过安全校验。
 
-### `v0.3.76` Windows / Linux / macOS 三平台发布
+### `v0.3.89` Windows / Linux / macOS 三平台发布
 
-`v0.3.76` 提供 Windows x64 EXE、Linux amd64 DEB、macOS Apple Silicon 未公证预览 DMG
-和 AI Coding Handle Skill，三端安装包均从主仓库同一提交
-`c15d0c11b47f738cfa8e03024af2e52abb41354e` 原生构建。该版本加入高级语音多场景润色、
-个人热词和录音启动预缓冲，完善 Profile 专属手柄控制、相对鼠标移动、账户缓存与头像同步、
-独立非模态设置窗口和多套像素主题，并修复 ASR 停止、文本落框、macOS 模型资源及 Linux
-桌面入口问题。V3 固件继续携带已完成 validated app-only 与 BLE/IMU 实机验证的 `0.3.68`，
-D4 已停止维护。
+`v0.3.89` 提供 Windows x64 EXE、Linux amd64 DEB、macOS Apple Silicon 未公证预览 DMG
+和 AI Coding Handle Skill，三平台均从主仓库提交 `f45eb4bec69536c93b9e00d70153ac6e5b44ce35` 原生构建。
+上位机新增“Agent 工作时允许深度睡眠”设备开关（默认开启，断电保留）。V3 固件
+`0.3.71` 对每次放入底座只提示一次，并显示约 4 秒大电池动画；满电停充和补充电不会反复提示。
+Agent 心跳、只读状态轮询与 IMU 推流遵守静置睡眠策略。D4 已停止维护。
 
-macOS 包面向 arm64，使用 ad-hoc 签名且未经 Apple 公证；首次安装后需执行
-`xattr -cr /Applications/AutoClipboard.app`，不得将其视为已通过 Gatekeeper 的 Developer ID 包。
+macOS 包面向 arm64，使用 ad-hoc 签名且未经 Apple 公证；首次安装后执行
+`xattr -cr /Applications/AutoClipboard.app`，不声称通过 Gatekeeper、Developer ID 或 Intel 验收。
 
-完整更新内容、校验值和发布范围见 [`v0.3.76` 发布说明](docs/zh-CN/maintainers/releases/v0.3.76.md)。
+构建与镜像验证完成后，安装包和校验值以最新 Release 的 `latest.json` 为准。
 
 <!-- section:s003 -->
 ## 首先推荐：让 Codex 一句话完成配置

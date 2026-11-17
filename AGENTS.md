@@ -23,13 +23,12 @@
 - 只有 GitHub 与 Gitee 的 `main`、历史标签、最新 Release 版本号、附件名称和附件大小完全一致，而且每个 Gitee 附件都可匿名读取，才能把发布标记为完成。
 - 不批量迁移启用 Gitee 镜像之前的历史 Release 附件；已经同步到 Gitee 的历史 Release 和附件默认永久保留。只允许同步脚本自动清理当前最新 Gitee Release 中 GitHub 不存在的多余附件。若 1 GiB 配额阻塞正式最新版，只有仓库所有者针对精确 Release ID、标签和释放字节数明确确认后，才能例外清理历史 Gitee Release；对应 GitHub Release 与两端 Git 标签必须保留，且清理证据必须写入版本验收记录。
 
-### v0.3.76 当前交接
+### v0.3.89 当前交接
 
-- Windows、Linux、macOS 和 Skill 使用主仓库标签 `v0.3.76`，桌面源码提交为 `c15d0c11b47f738cfa8e03024af2e52abb41354e`；三个安装包均在对应原生系统构建并完成下载端哈希复核。
-- V3 `0.3.68` 固件基于主仓库提交 `88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`，包大小 602,440 字节，SHA-256 `8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`。
-- 固件已在 Linux `/dev/ttyACM1`、设备序列号 `A1EA` 上完成 validated app-only 烧录，只写 `0x10000` 应用区；串口完整 smoke 通过，30 秒 BLE/IMU 收到 565 帧，平均 18.83 Hz，无序号缺口、重复或重置嫌疑。
-- D4 已停止维护；macOS 使用 Apple Silicon arm64、ad-hoc 签名、未经 Apple 公证的预览 DMG，并随 `latest.json` 正式分发。不得声称 Developer ID、公证、stapling、Gatekeeper 或 Intel 兼容性通过。
-- 正式附件集合固定为 Windows EXE、Linux DEB、macOS 未公证预览 DMG、V3 `0.3.68` 固件 ZIP、Skill ZIP 和 `latest.json`。`latest.json` 为 2,865 字节，SHA-256 `239b53c3704788928a652c4ff168c09cde5242d9c9c076365d5cf197e0421204`；发布后必须执行 GitHub/Gitee 双平台同步和匿名附件验证。
+- Windows、Linux、macOS 和 Skill 统一版本 `0.3.89`，主仓库标签 `v0.3.89`，源码提交 `f45eb4bec69536c93b9e00d70153ac6e5b44ce35`；三平台安装包必须由相应原生系统构建。
+- V3 固件为 `0.3.71`，包含充电会话去重、大电池动画和 Agent 静置睡眠策略；上位机新增默认开启、断电保留的 Agent 深睡开关。功能源码已在开发版本标识 `0.3.70` 下完成 V3 `1C9E` app-only 实机验证；不得将旧包版本回读冒充 `0.3.71` 新包实机证据。
+- macOS 使用 Apple Silicon arm64、ad-hoc 签名、未公证预览 DMG；Developer ID、公证、stapling、Gatekeeper 和 Intel 兼容性未声称。D4 已停止维护。
+- 六个正式资产为 Windows EXE、Linux DEB、macOS 未公证预览 DMG、V3 固件 ZIP、Skill ZIP 和唯一 `latest.json`。必须通过 GitHub/Gitee 同步、哈希与匿名附件验证后才标记发布完成。
 
 ### 修改与验证
 
@@ -60,13 +59,12 @@
 - Publication is complete only when GitHub and Gitee have identical `main`, historical tags, latest Release versions, asset names, and asset sizes, and every Gitee asset is anonymously readable.
 - Do not bulk-migrate Release assets from before the Gitee mirror was enabled. Preserve every synchronized historical Gitee Release and attachment by default. The synchronizer may automatically remove only extra assets from the current latest Gitee Release. If the 1 GiB quota blocks the formal latest version, historical Gitee Releases may be removed only as an exception after the repository owner explicitly confirms the exact Release IDs, tags, and bytes to free. The matching GitHub Releases and Git tags on both remotes must remain intact, and the cleanup evidence must be recorded in the version verification record.
 
-### Current v0.3.76 handoff
+### Current v0.3.89 handoff
 
-- Windows, Linux, macOS, and the Skill use main-repository tag `v0.3.76` at desktop source commit `c15d0c11b47f738cfa8e03024af2e52abb41354e`. Each native installer was built on its target OS and re-hashed after collection.
-- V3 firmware `0.3.68` is based on main-repository commit `88f55b4b05d7bc6af4af2a5fc1c1ddf23cf03057`. The package is 602,440 bytes with SHA-256 `8d02fc673aba92499ad39729fe10fd133ffe58ab054a022b5c23117fa4abef7e`.
-- It completed a validated app-only flash on Linux `/dev/ttyACM1`, device serial `A1EA`, writing only the application region at `0x10000`. The complete serial smoke passed, and a 30-second BLE/IMU live smoke received 565 frames at 18.83 Hz with no sequence gaps, duplicates, or reset suspicions.
-- D4 is no longer maintained. macOS uses an Apple Silicon arm64, ad-hoc-signed, unnotarized preview DMG and is included in `latest.json`; do not claim Developer ID signing, notarization, stapling, Gatekeeper approval, or Intel compatibility.
-- The formal asset set is the Windows EXE, Linux DEB, macOS unnotarized preview DMG, V3 `0.3.68` firmware ZIP, Skill ZIP, and `latest.json`. `latest.json` is 2,865 bytes with SHA-256 `239b53c3704788928a652c4ff168c09cde5242d9c9c076365d5cf197e0421204`. GitHub/Gitee synchronization and anonymous asset verification remain mandatory after publication.
+- Windows, Linux, macOS, and the Skill use version `0.3.89`, main-repository tag `v0.3.89`, and source commit `f45eb4bec69536c93b9e00d70153ac6e5b44ce35`. Each installer must be built on its native target OS.
+- V3 firmware `0.3.71` adds charging-session deduplication, a large battery animation, and Agent inactivity sleep policy. The desktop adds a persistent Agent deep-sleep setting enabled by default. Feature source was validated by app-only flashing V3 `1C9E` under development label `0.3.70`; this is not a `0.3.71` package version-readback claim.
+- macOS is Apple Silicon arm64, ad-hoc signed, and an unnotarized preview. Developer ID, notarization, stapling, Gatekeeper, and Intel compatibility are not claimed. D4 remains unmaintained.
+- The six formal assets are the Windows EXE, Linux DEB, macOS unnotarized preview DMG, V3 firmware ZIP, Skill ZIP, and one `latest.json`. Publication is complete only after GitHub/Gitee synchronization, hash checks, and anonymous asset verification.
 
 ### Changes and validation
 

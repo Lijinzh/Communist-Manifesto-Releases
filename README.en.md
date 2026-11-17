@@ -27,23 +27,22 @@ GitHub remains the primary release source. If GitHub is slow or unavailable on y
 
 AutoClipboard application and firmware update checks try GitHub first and automatically retry through Gitee when GitHub is unavailable. Downloads from either source are still verified against the declared file size and SHA-256 checksum before installation.
 
-### `v0.3.76` Windows / Linux / macOS release
+### `v0.3.89` Windows / Linux / macOS release
 
-`v0.3.76` provides a Windows x64 EXE, Linux amd64 DEB, Apple Silicon macOS unnotarized preview DMG,
-and the AI Coding Handle Skill. All three native desktop packages were built from the same main-repo
-commit, `c15d0c11b47f738cfa8e03024af2e52abb41354e`. This release adds multi-scenario premium voice
-refinement, personal hotwords, startup audio prebuffering, profile-specific handle controls,
-relative mouse movement, account caching and avatar synchronization, independent non-modal dialogs,
-and additional pixel themes. It also fixes ASR stopping, post-insertion shortcut handling, bundled
-macOS model resources, and the Linux desktop entry. V3 carries forward the validated `0.3.68`
-firmware, while D4 remains unmaintained.
+`v0.3.89` provides a Windows x64 EXE, Linux amd64 DEB, Apple Silicon macOS unnotarized preview
+DMG, and AI Coding Handle Skill. All three native packages use main-repository commit
+`f45eb4bec69536c93b9e00d70153ac6e5b44ce35`. The desktop adds a persistent “Allow deep sleep while Agent is active”
+device setting, enabled by default. V3 firmware `0.3.71` gives one notification and a four-second
+large battery animation per docking session; full-charge top-ups do not repeat the notification.
+Agent heartbeats, read-only status polling, and IMU streaming follow inactivity sleep policy.
+D4 remains unmaintained.
 
-The macOS package targets arm64, uses an ad-hoc signature, and is not Apple-notarized. After the first
-install, run `xattr -cr /Applications/AutoClipboard.app`; this package is not claimed to pass
-Developer ID Gatekeeper assessment.
+The macOS arm64 package is ad-hoc signed and not Apple-notarized. After installation, run
+`xattr -cr /Applications/AutoClipboard.app`. Developer ID, Gatekeeper, and Intel compatibility
+are not claimed.
 
-See the [`v0.3.76` release notes](docs/en/maintainers/releases/v0.3.76.md) for changes, checksums,
-and the exact publication scope.
+Once build and mirror verification finish, use the latest Release `latest.json` for package sizes
+and checksums.
 
 <!-- section:s003 -->
 ## Recommended first step: let Codex configure it
