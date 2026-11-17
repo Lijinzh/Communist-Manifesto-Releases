@@ -18,28 +18,23 @@ The process exit code and JSON `success` are authoritative together. Do not infe
 <!-- section:s003 -->
 ## Current tested V3 baseline
 
-The current tested V3 release baseline is firmware `0.3.70` as of 2026-08-26. Windows, Linux, and
-macOS use the same ESP32 firmware binary; differences belong to the host Bluetooth stack and
-AutoClipboard backend, not separate platform firmware variants.
+The current release target is V3 firmware `0.3.71` (2026-11-17), packaged as
+`CommunistManifestoKB-firmware-v3-0.3.71.zip` with the sole maintained environment
+`esp32dev_pico_v3_screen_114_st7789`. All desktop platforms use the same firmware.
 
-The package is built with `esp32dev_pico_v3_screen_114_st7789` and published as
-`CommunistManifestoKB-firmware-v3-0.3.70.zip`. Its final size and SHA-256 are authoritative only in
-the signed `latest.json` and matching GitHub/Gitee Release assets; never copy a hash from a local
-development archive into an update plan.
+It adds one notification per charging session, a four-second large battery animation, and a
+persistent “allow deep sleep while Agent is active” setting (enabled by default). Background
+Agent heartbeats, status reads, and IMU streaming do not refresh physical inactivity.
+The feature source was tested on Linux V3 `1C9E` via validated app-only flashing under the
+development version label `0.3.70`: disabling the setting kept it awake after 34.382 seconds;
+enabling it caused deep sleep after 30.490 seconds with a temporary 30-second timeout. Both
+values survived restart; the final timeout was restored to 1800 seconds with the setting enabled.
+The release version is rebuilt separately; these results do not claim a `0.3.71` version readback,
+physical dock cycling, full-charge top-up, display inspection, or current measurements.
 
-The validated app-only workflow targets the uniquely identified Windows device `COM9`, board `v3`,
-firmware identity `183E`. It writes only the application region at `0x10000`, preserves NVS/SPIFFS,
-verifies the written hash, and reads back firmware `0.3.70`. Post-flash serial status confirms Gauss
-`UP,DOWN,LEFT,RIGHT` and Einstein `CURSOR_MOVE,CURSOR_LEFT,CURSOR_RIGHT,BACKSPACE`, with compact
-status mapping `sam=1859`. Source-policy smoke confirms that Gauss directions and Einstein Backspace
-start repeating after 500 ms at a 120 ms interval and discard stale repeats after release or Profile
-change. The Windows HID link did not reconnect during this handoff, so neither Backspace nor the new
-long-hold repeat behavior is claimed as HID physical-live evidence.
-
-This section records a tested handoff; it does not replace release discovery. Before reporting that
-`0.3.70` is publicly available or offering an update, require signed `latest.json` metadata, a
-successful `firmware-check`, and matching GitHub/Gitee public releases. If published metadata
-differs, report the mismatch instead of forcing or inventing an asset.
+Final size and SHA-256 must come from matching `latest.json` and public GitHub/Gitee assets.
+Before offering an update, require a successful `firmware-check`; never reuse a development
+archive hash or force a version when public metadata differs.
 
 <!-- section:s004 -->
 ## Stable statuses
